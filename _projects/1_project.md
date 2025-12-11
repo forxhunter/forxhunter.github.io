@@ -1,89 +1,45 @@
 ---
 layout: page
-title: Yeast Whole cell modeling 
-description: My primary research focus
-img: assets/img/12.jpg
+title: Why we should include spatial information in whole cell modeling
+description: Spatial Heterogeneity Modulates Activation Dynamics of the Yeast Galactose Regulatory Circuit
+img: assets/img/geo_final_pure.png
 importance: 1
 category: research
 related_publications: true
 ---
 
-This is my primary research project focusing on [your research area].
+# Project Overview
 
-## Project Overview
+Spatial organization is a fundamental—but often overlooked—determinant of regulatory behavior in eukaryotic cells. In this project, I build the first spatially resolved, hybrid RDME–ODE model of the Saccharomyces cerevisiae galactose switch, integrating cryogenic electron tomography (cryo-ET)–derived cell geometry, chromosome topology, endoplasmic reticulum (ER) structure, and ribosome distributions into a comprehensive whole-cell simulation framework.
 
-This project investigates [describe your research focus here]. The work involves [methodology/approach].
+{% include figure.liquid loading="eager" path="assets/img/spatial_hetero.png" title="Spatial heterogeneity in yeast galactose switch" class="img-fluid rounded z-depth-1" %}
 
-## Key Findings
+Using Lattice Microbes with a custom multi-GPU reaction–diffusion solver, the model captures how intracellular architecture modulates gene activation, transcriptional output, translation efficiency, and metabolic response. This project bridges structural cell biology and quantitative modeling to demonstrate how 4D spatial–stochastic effects reshape canonical gene regulatory circuits.
 
-- Finding 1: [describe key result]
-- Finding 2: [describe another result]
-- Finding 3: [describe impact]
+{% include figure.liquid loading="eager" path="assets/img/mgpu.png" title="Multi-GPU" class="img-fluid rounded z-depth-1" %}
+# Research Goals
 
-To showcase your project with a background image, add the img tag to the front matter:
+Build a spatially faithful yeast cell from cryo-FIB–ET reconstructions, including nucleus, ER subdomains, vacuole, mitochondria, and membrane systems.
 
-    ---
-    layout: page
-    title: project
-    description: a project with a background image
-    img: /assets/img/12.jpg
-    ---
+Couple stochastic gene regulation (transcription, mRNA dynamics, promoter states, nuclear trafficking) with deterministic metabolism (galactose transport and Leloir pathway initiation).
 
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/1.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/3.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
-</div>
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    This image can also have a caption. It's like magic.
-</div>
+Determine how spatial constraints, organelle geometry, and ribosome allocation influence switch sensitivity, timing, noise, and protein yields.
 
-You can also put regular text between your rows of images, even citations {% cite einstein1950meaning %}.
-Say you wanted to write a bit about your project before you posted the rest of the images.
-You describe how you toiled, sweated, _bled_ for your project, and then... you reveal its glory in the next row of images.
+Provide a platform for future eukaryotic whole-cell modeling, scalable to larger networks and complex cellular states.
 
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
-</div>
+# Key Findings
+## 1. Spatial heterogeneity fundamentally alters regulatory dynamics
 
-The code is simple.
-Just wrap your images with `<div class="col-sm">` and place them inside `<div class="row">` (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/">Bootstrap Grid</a> system).
-To make images responsive, add `img-fluid` class to each; for rounded corners and shadows use `rounded` and `z-depth-1` classes.
-Here's the code for the last row of images above:
+Introducing realistic geometry and diffusion barriers increases GAL gene activation probability, elevates GAL2 mRNA synthesis, and accelerates early transporter accumulation. Even without adding organelles, spatial structure alone increases Gal2p production and intracellular galactose uptake relative to well-mixed ODE/CME models. The system diverges from the homogeneous model within minutes of induction, demonstrating that spatial effects are not minor corrections but core determinants of system behavior. 
 
-{% raw %}
+## 2. Chromosome topology has minimal effect on switch output
 
-```html
-<div class="row justify-content-sm-center">
-  <div class="col-sm-8 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-  <div class="col-sm-4 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-</div>
-```
+Embedding all 16 yeast chromosomes into the nucleus creates realistic diffusion barriers and gene localization patterns, yet the system displays near-identical GAL2 activation, transcriptional output, and metabolic response. This suggests that, for this network, regulator abundance and diffusion rates dominate over locus positioning, at least in interphase nuclear architecture. 
 
-{% endraw %}
+## 3. ER geometry suppresses Gal2p synthesis and delays membrane delivery
+
+Explicitly modeling pmaER, cecER, and tubular ER, and restricting translation of Gal2p to ER-bound ribosomes, significantly reduces the fraction of actively translating GAL2 transcripts. Newly synthesized Gal2p accumulates transiently in the ER lumen and reaches the plasma membrane more slowly, demonstrating that protein trafficking pathways impose kinetic bottlenecks that shape gene expression outputs. 
+
+## 4. Ribosome competition creates a major translational bottleneck
+
+Incorporating transcriptome-inferred effective ribosome pools reveals that GAL transcripts occupy only a small fraction of the translational machinery. This reduces Gal2p translation efficiency by nearly half and shifts translation events outward toward peripheral ER. This physical repositioning increases trafficking distances and further limits membrane transporter accumulation. The result: translational resource allocation is a hidden, global regulator of the metabolic switch.
