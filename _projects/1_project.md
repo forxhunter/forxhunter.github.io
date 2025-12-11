@@ -1,18 +1,26 @@
 ---
 layout: page
-title: project 1
-description: with background image
+title: Yeast Whole cell modeling 
+description: My primary research focus
 img: assets/img/12.jpg
 importance: 1
-category: work
+category: research
 related_publications: true
 ---
 
-Every project has a beautiful feature showcase page.
-It's easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.
+This is my primary research project focusing on [your research area].
 
-To give your project a background in the portfolio page, just add the img tag to the front matter like so:
+## Project Overview
+
+This project investigates [describe your research focus here]. The work involves [methodology/approach].
+
+## Key Findings
+
+- Finding 1: [describe key result]
+- Finding 2: [describe another result]
+- Finding 3: [describe impact]
+
+To showcase your project with a background image, add the img tag to the front matter:
 
     ---
     layout: page

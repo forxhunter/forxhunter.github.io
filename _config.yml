@@ -86,8 +86,8 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # Blog
 # -----------------------------------------------------------------------------
 
-blog_name: al-folio # blog_name will be displayed in your blog page
-blog_description: a simple whitespace theme for academics
+blog_name: Tianyu's Blog # blog_name will be displayed in your blog page
+blog_description: Thoughts, research, and insights
 permalink: /blog/:year/:title/
 lsi: true # produce an index for related posts
 
@@ -182,6 +182,7 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - INSTALL.md
+  - templates/
   - LICENSE
   - lighthouse_results/
   - package.json
