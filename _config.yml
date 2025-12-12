@@ -100,13 +100,34 @@ related_blog_posts:
   max_related: 5
 
 # Giscus comments (RECOMMENDED)
+#<script src="https://giscus.app/client.js"
+#         data-repo="forxhunter/forxhunter.github.io"
+#         data-repo-id="R_kgDOPWM87g"
+#         data-category="Q&A"
+#         data-category-id="DIC_kwDOPWM87s4Cztyt"
+#         data-mapping="pathname"
+#         data-strict="1"
+#         data-reactions-enabled="1"
+#         data-emit-metadata="0"
+#         data-input-position="bottom"
+#         data-theme="preferred_color_scheme"
+#         data-lang="en"
+#         crossorigin="anonymous"
+#         async>
+# </script>
 # Follow instructions on https://giscus.app/ to setup for your repo to fill out the information below.
+# Steps to enable:
+# 1. Go to https://giscus.app/
+# 2. Enter your repository: forxhunter/forxhunter.github.io
+# 3. Follow the setup wizard to install the Giscus app
+# 4. Copy the repo_id and category_id from the generated script
+# 5. Fill them in below
 giscus:
-  repo: # <your-github-user-name>/<your-github-repo-name>
-  repo_id: # leave empty or specify your repo_id (see https://giscus.app/)
-  category: Comments # name of the category under which discussions will be created
-  category_id: # leave empty or specify your category_id (see https://giscus.app/)
-  mapping: title # identify discussions by post title
+  repo: forxhunter/forxhunter.github.io # <your-github-user-name>/<your-github-repo-name>
+  repo_id: R_kgDOPWM87g # TODO: Get this from https://giscus.app/ after setup
+  category: Q&A # name of the category under which discussions will be created
+  category_id: DIC_kwDOPWM87s4Cztyt # TODO: Get this from https://giscus.app/ after setup
+  mapping: pathname # identify discussions by post title
   strict: 1 # use strict identification mode
   reactions_enabled: 1 # enable (1) or disable (0) emoji reactions
   input_position: bottom # whether to display input form below (bottom) or above (top) the comments
