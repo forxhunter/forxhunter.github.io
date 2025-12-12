@@ -50,15 +50,15 @@ pip <span class="nb">install </span>cuda-tile cupy-cuda12x numpy
 <span class="k">def</span> <span class="nf">vector_add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">tile_size</span><span class="p">:</span> <span class="n">ct</span><span class="p">.</span><span class="n">Constant</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
     <span class="c1"># Get the Block ID (we work in blocks/tiles now, not just threads!)
 </span>    <span class="n">pid</span> <span class="o">=</span> <span class="n">ct</span><span class="p">.</span><span class="nf">bid</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    
+
     <span class="c1"># Load data as TILE objects
 </span>    <span class="c1"># Note: We define the SHAPE of the data we want, not just a pointer
 </span>    <span class="n">a_tile</span> <span class="o">=</span> <span class="n">ct</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">(</span><span class="n">pid</span><span class="p">,),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">tile_size</span><span class="p">,))</span>
     <span class="n">b_tile</span> <span class="o">=</span> <span class="n">ct</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">(</span><span class="n">pid</span><span class="p">,),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">tile_size</span><span class="p">,))</span>
-    
+
     <span class="c1"># The math looks like normal Python!
 </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">a_tile</span> <span class="o">+</span> <span class="n">b_tile</span>
-    
+
     <span class="c1"># Store the tile back to memory
 </span>    <span class="n">ct</span><span class="p">.</span><span class="nf">store</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">(</span><span class="n">pid</span><span class="p">,),</span> <span class="n">tile</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
 
@@ -66,7 +66,7 @@ pip <span class="nb">install </span>cuda-tile cupy-cuda12x numpy
 </span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">vector_size</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">12</span>
     <span class="n">tile_size</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">4</span>  <span class="c1"># We process 16 elements per tile
-</span>    
+</span>
     <span class="c1"># Calculate how many tiles we need (Grid size)
 </span>    <span class="n">grid</span> <span class="o">=</span> <span class="p">(</span><span class="nf">ceil</span><span class="p">(</span><span class="n">vector_size</span> <span class="o">/</span> <span class="n">tile_size</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
@@ -76,7 +76,7 @@ pip <span class="nb">install </span>cuda-tile cupy-cuda12x numpy
     <span class="n">c</span> <span class="o">=</span> <span class="n">cp</span><span class="p">.</span><span class="nf">zeros_like</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 
     <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Launching kernel on </span><span class="si">{</span><span class="n">vector_size</span><span class="si">}</span><span class="s"> elements...</span><span class="sh">"</span><span class="p">)</span>
-    
+
     <span class="c1"># Launch!
 </span>    <span class="n">ct</span><span class="p">.</span><span class="nf">launch</span><span class="p">(</span><span class="n">cp</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">get_current_stream</span><span class="p">(),</span> <span class="n">grid</span><span class="p">,</span> <span class="n">vector_add</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">tile_size</span><span class="p">))</span>
 
