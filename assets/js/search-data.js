@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-welcome-to-my-blog",
+        },{id: "post-",
+        
+          title: "",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/2025-12-12-whole-cell-model-overview/";
+          
+        },
+      },{id: "post-welcome-to-my-blog",
         
           title: "Welcome to My Blog",
         
