@@ -13,6 +13,7 @@ For decades, biology has been a field of "parts lists"—sequencing genes, catal
 As we move through 2025, the field has split into two powerful, converging streams: the Mechanistic Modelers, who build cells equation-by-equation from the bottom up, and the AI Architects, who are training massive models to learn the "language" of biology from the top down.
 
 # Main Methods
+
 Here is the current state of the field, the key players, and the progress achieved so far.
 
 ## 1. Physics-Based Modeling
@@ -20,7 +21,8 @@ Here is the current state of the field, the key players, and the progress achiev
 The traditional "bottom-up" approach: simulating the actual physics and chemistry of the cell.
 
 ### Zan Luthey-Schulten Lab (University of Illinois at Urbana-Champaign)
-*The Frontiers of Spatiotemporal Reality*
+
+_The Frontiers of Spatiotemporal Reality_
 
 While many whole-cell models assume a "well-mixed" environment (treating the cell as a homogeneous bag of chemicals), the Luthey-Schulten group integrates spatiotemporal heterogeneity in 4D (3D space + time). They utilize a sophisticated hybrid workflow that combines Lattice Microbes (for stochastic reaction-diffusion of proteins/RNA) with LAMMPS (for Brownian dynamics of the chromosome) and ODEs (for metabolism).
 
@@ -30,33 +32,32 @@ Current Progress: The lab has achieved the first-ever 4D whole-cell simulation o
 
 Recent Achievement: In 2025, the group successfully simulated the growth and division of JCVI-syn3A in 4D, revealing that every replicate cell is unique due to the stochastic nature of chemical reactions. The model successfully captured the "train-track" replication of the chromosome and its segregation to daughter cells using Brownian dynamics. Crucially, the simulations recovered key experimental measurements—including the exact 105-minute doubling time, protein distributions, and the origin-to-terminus (ori:ter) ratio of the genome—validating that a "digital twin" can now predict complex cellular phenotypes from first principles.
 
+Key Reference:
 
-Key Reference: 
 > Thornburg et al. (2025) "Bringing the Genetically Minimal Cell to Life on a Computer in 4D." bioRxiv.
 > Thornburg et al. (2022) "Fundamental behaviors emerge from simulations of a living minimal cell." Cell.
 
-
-
 ### Markus Covert Lab (Stanford University)
-*The Pioneers of Colony-Level Simulation*
 
-Markus Covert’s group established the field's foundation in 2012 with the first complete whole-cell model of *Mycoplasma genitalium*. They are the leaders in **hybrid multi-algorithmic modeling**, a technique that partitions the cell into distinct modules (e.g., FBA for metabolism, stochastic solvers for gene expression) and mathematically integrates them to simulate a single cell's lifecycle.
+_The Pioneers of Colony-Level Simulation_
 
-**Current Progress**: The lab has pivoted to *Escherichia coli*, a significantly more complex organism. Their *E. coli* model accounts for the functions of **over 43% of all characterized genes**. Recently, they have expanded this work to the **"whole-colony" scale** using the **Vivarium** software platform, allowing them to embed thousands of individual whole-cell models into a shared spatial environment to study emergent population behaviors like antibiotic heteroresistance.
+Markus Covert’s group established the field's foundation in 2012 with the first complete whole-cell model of _Mycoplasma genitalium_. They are the leaders in **hybrid multi-algorithmic modeling**, a technique that partitions the cell into distinct modules (e.g., FBA for metabolism, stochastic solvers for gene expression) and mathematically integrates them to simulate a single cell's lifecycle.
+
+**Current Progress**: The lab has pivoted to _Escherichia coli_, a significantly more complex organism. Their _E. coli_ model accounts for the functions of **over 43% of all characterized genes**. Recently, they have expanded this work to the **"whole-colony" scale** using the **Vivarium** software platform, allowing them to embed thousands of individual whole-cell models into a shared spatial environment to study emergent population behaviors like antibiotic heteroresistance.
 
 {% include figure.liquid loading="eager" path="assets/img/wcm_review/ecoli.png" title="e_coli" class="img-fluid rounded z-depth-1" %}
 
-**Recent Achievement**: In 2024, the group published a study in *Cell Systems* using the *E. coli* model to determine the evolutionary benefits of operon structures. The simulations revealed two distinct modes of utility: for **low-expression genes**, operons significantly increase the **probability of co-expression** (ensuring functionally dependent proteins are present simultaneously), while for **high-expression genes**, operons **stabilize the stoichiometry** of protein subunits to prevent wasteful overproduction.
+**Recent Achievement**: In 2024, the group published a study in _Cell Systems_ using the _E. coli_ model to determine the evolutionary benefits of operon structures. The simulations revealed two distinct modes of utility: for **low-expression genes**, operons significantly increase the **probability of co-expression** (ensuring functionally dependent proteins are present simultaneously), while for **high-expression genes**, operons **stabilize the stoichiometry** of protein subunits to prevent wasteful overproduction.
 
 **Key References**:
-> Sun et al. (2024) "Cross-evaluation of *E. coli*’s operon structures via a whole-cell model suggests alternative cellular benefits for low- versus high-expressing operons." *Cell Systems*.
+
+> Sun et al. (2024) "Cross-evaluation of _E. coli_’s operon structures via a whole-cell model suggests alternative cellular benefits for low- versus high-expressing operons." _Cell Systems_.
 >
-> Skalnik et al. (2023) "Whole-cell modeling of *E. coli* colonies enables quantification of single-cell heterogeneity in antibiotic responses." *PLOS Computational Biology*.
-
-
+> Skalnik et al. (2023) "Whole-cell modeling of _E. coli_ colonies enables quantification of single-cell heterogeneity in antibiotic responses." _PLOS Computational Biology_.
 
 ### Jonathan Karr Lab (Icahn School of Medicine at Mount Sinai)
-*The Infrastructure of Trust*
+
+_The Infrastructure of Trust_
 
 You cannot build a whole-cell model if you cannot trust its parts. Jonathan Karr, first author of the original 2012 whole-cell model, has shifted focus to the critical infrastructure required to verify and reproduce these massive systems.
 
@@ -71,7 +72,8 @@ Key Reference: Smith et al. (2025) "Verification and reproducible curation of th
 The new "top-down" approach: using Transformer models (like ChatGPT) to predict cell behavior without knowing the underlying equations.
 
 ### The "AI Virtual Cell" (CZI Biohub / Arc Institute)
-*The Silicon Valley Moonshot*
+
+_The Silicon Valley Moonshot_
 
 Backed by the Chan Zuckerberg Initiative (CZI) and NVIDIA, this project aims to leapfrog physics by training massive "Foundation Models" on biological data. In October 2025, this ambition scaled up significantly with the announcement of the Virtual Cells Platform (VCP), a centralized open-source hub powered by NVIDIA’s GPU infrastructure to host models, datasets, and benchmarks.
 
@@ -86,7 +88,7 @@ Backed by the Chan Zuckerberg Initiative (CZI) and NVIDIA, this project aims to 
 **Challenge Results**: The inaugural Virtual Cell Challenge, concluded in December 2025, tasked the global AI community with predicting the effects of genetic perturbations in human stem cells. The top honors went to:
 
 - **BioMap Research (Team BM_xTVC)**: 1st Place ($100k prize)
-- **XLearning Lab**: 2nd Place ($50k prize)  
+- **XLearning Lab**: 2nd Place ($50k prize)
 - **Team Outlier**: 3rd Place ($25k prize)
 
 **Key Insight**: They frame cell biology as a language problem. If you read enough DNA/RNA "text," you can write the future of the cell.
@@ -94,8 +96,10 @@ Backed by the Chan Zuckerberg Initiative (CZI) and NVIDIA, this project aims to 
 ## 3. The Software Ecosystem
 
 The tools that make it possible.
+
 ### Virtual Cell (VCell) Team (UConn Health)
-*PI: Leslie Loew*
+
+_PI: Leslie Loew_
 
 While "AI Virtual Cell" is a project name, VCell is the actual software platform used by thousands of biologists since the late 90s.
 
@@ -106,13 +110,14 @@ While "AI Virtual Cell" is a project name, VCell is the actual software platform
 Reference: https://vcell.org/
 
 ### Vivarium (Agmon & Covert)
-*PI: Eran Agmon (University of Connecticut)*
+
+_PI: Eran Agmon (University of Connecticut)_
 
 As models get complex, you need "glue" to stick them together. Vivarium is a Python-based interface that allows a metabolic model written in one language to talk to a signaling model written in another. It is the operating system for the mechanistic whole-cell models of the future.
 
 **Current Progress**: Vivarium is evolving into a formal "Compositional Systems Biology" framework. In 2024, Agmon introduced "Process Bigraphs," a new mathematical structure for Vivarium that standardizes how biological processes (like transcription or metabolism) nest and connect, similar to how circuits are designed.
 
-**Recent Application**: Beyond bacteria, Vivarium is now driving multi-scale cancer research. In a 2024 *Cell Systems* paper, the team used Vivarium to integrate multiplexed imaging with agent-based models, successfully identifying how tumor phenotypes shift during T-cell therapy.
+**Recent Application**: Beyond bacteria, Vivarium is now driving multi-scale cancer research. In a 2024 _Cell Systems_ paper, the team used Vivarium to integrate multiplexed imaging with agent-based models, successfully identifying how tumor phenotypes shift during T-cell therapy.
 
 Reference: Agmon E, Spangler RK, Skalnik CJ, Poole W, Peirce SM, Morrison JH, Covert MW. Vivarium: an interface and engine for integrative multiscale modeling in computational biology. Bioinformatics. 2022 Mar 28;38(7):1972-1979. doi: 10.1093/bioinformatics/btac049. PMID: 35134830; PMCID: PMC8963310.
 

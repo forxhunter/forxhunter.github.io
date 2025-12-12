@@ -13,7 +13,7 @@ institution: University of Illinois at Urbana-Champaign
 **Presentation**  
 🕒 **9:00 AM – 9:15 AM**, **September 5, 2025**  
 📍 **Heritage Hall, I Hotel & Conference Center**  
-👤 **Tianyu Wu (Biophysics)**  
+👤 **Tianyu Wu (Biophysics)**
 
 ---
 
@@ -23,4 +23,4 @@ For UNB promoters, we impose near-zero occupancy of sequence-specific factors to
 
 An initial coarse- and fine-grid scan seeds a differential-evolution optimiser, refining eight kinetic rate constants per gene. This two-stage search reduces root-mean-square error three-fold relative to grid-only fitting while preserving class-specific kinetic fingerprints. The resulting promoter-resolved parameter set reveals how GRF insulation, co-activator loading, and Rap1 circuitry differentially sculpt initiation and pause-escape dynamics across the metabolic genome.
 
-By delivering a compact, mechanistic input layer for next-generation whole-cell models, our approach bridges sequence-level regulation and systems-scale metabolism, laying the groundwork for predictive simulations of nutrient-responsive growth in *Saccharomyces cerevisiae*.
+By delivering a compact, mechanistic input layer for next-generation whole-cell models, our approach bridges sequence-level regulation and systems-scale metabolism, laying the groundwork for predictive simulations of nutrient-responsive growth in _Saccharomyces cerevisiae_.

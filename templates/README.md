@@ -14,6 +14,7 @@ These can be used as templates when creating new projects. Simply copy them back
 ## Usage
 
 To use a template:
+
 1. Copy the desired template from this folder to `_projects/`
 2. Rename it following the pattern `N_project.md` where N is the next number
 3. Update the front matter (title, description, category, etc.)
