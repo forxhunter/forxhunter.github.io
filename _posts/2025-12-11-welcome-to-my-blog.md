@@ -3,7 +3,7 @@ layout: post
 title: Welcome to My Blog
 date: 2025-12-11 16:00:00
 description: My first blog post - welcome to my academic journey
-tags: research yeast
+tags: 
 categories: tutorials
 featured: true
 ---
