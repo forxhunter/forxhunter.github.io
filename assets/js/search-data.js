@@ -37,15 +37,15 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-",
+        },{id: "post-the-race-for-the-digital-twin-state-of-whole-cell-modeling-in-2025",
         
-          title: "",
+          title: "The Race for the Digital Twin: State of Whole-Cell Modeling in 2025",
         
-        description: "",
+        description: "brief overview of current states of whole-cell modeling/virtual cell",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2025/2025-12-11-whole-cell-model-overview/";
+            window.location.href = "/blog/2025/whole-cell-model-overview/";
           
         },
       },{id: "post-welcome-to-my-blog",
