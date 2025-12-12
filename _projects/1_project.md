@@ -6,6 +6,7 @@ img: assets/img/geo_final_pure.png
 importance: 1
 category: research
 related_publications: true
+giscus_comments: true
 ---
 
 # Project Overview

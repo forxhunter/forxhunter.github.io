@@ -6,6 +6,7 @@ description: brief overview of current states of whole-cell modeling/virtual cel
 tags: wcm
 categories: introduction
 featured: true
+giscus_comments: true
 ---
 
 For decades, biology has been a field of "parts lists"—sequencing genes, cataloging proteins, and mapping pathways. But the "Grand Challenge" of the 21st century is different: can we simulate an entire living cell inside a computer? The goal is a Virtual Cell—a digital twin that predicts exactly how a cell will behave under any condition, from drug treatments to genetic engineering.

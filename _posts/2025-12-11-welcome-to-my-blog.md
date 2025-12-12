@@ -6,6 +6,7 @@ description: My first blog post - welcome to my academic journey
 tags:
 categories: tutorials
 featured: true
+giscus_comments: true
 ---
 
 Welcome to my blog! This is where I'll be sharing my thoughts, research insights, and academic journey.
