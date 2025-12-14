@@ -37,15 +37,15 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-",
+        },{id: "post-the-era-of-the-quot-ai-architect-quot-why-we-must-master-not-avoid-intelligent-tools",
         
-          title: "",
+          title: "The Era of the &quot;AI Architect&quot;: Why We Must Master, Not Avoid, Intelligent...",
         
-        description: "",
+        description: "how to use AI tools to improve your work/research",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2025/2025-12-14-work_with_LLM/";
+            window.location.href = "/blog/2025/work_with_LLM/";
           
         },
       },{id: "post-the-race-for-the-digital-twin-state-of-whole-cell-modeling-in-2025",
