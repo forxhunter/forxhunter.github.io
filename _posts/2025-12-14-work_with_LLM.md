@@ -1,7 +1,7 @@
 ---
 layout: post
-title: The Era of the "AI Architect": Why We Must Master, Not Avoid, Intelligent Tools
-date: 2025-12-14 16:00:00
+title: "The Era of the \"AI Architect\": Why We Must Master, Not Avoid, Intelligent Tools"
+date: 2025-12-14 12:00:00
 description: how to use AI tools to improve your work/research
 tags: AI
 categories: introduction
