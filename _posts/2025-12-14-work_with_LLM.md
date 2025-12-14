@@ -30,7 +30,7 @@ The Strategy:
 
 ---
 
-{% include figure.liquid loading="eager" path="assets/img/work_with_llm/code_review.png" title="code_review" class="img-fluid rounded z-depth-1" %}
+{% include figure.liquid loading="eager" path="assets/img/work_with_LLM/code_review.png" title="code_review" class="img-fluid rounded z-depth-1" %}
 
 ## 2. Code Review: The "Junior Developer" Mindset
 
