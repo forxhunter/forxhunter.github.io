@@ -30,6 +30,8 @@ The Strategy:
 
 ---
 
+{% include figure.liquid loading="eager" path="assets/img/work_with_llm/code_review.png" title="code_review" class="img-fluid rounded z-depth-1" %}
+
 ## 2. Code Review: The "Junior Developer" Mindset
 
 A dangerous habit is pasting AI-generated code directly into a project. You must treat every AI output exactly as you would a Pull Request from a bright but inexperienced junior intern. This is very tricky, because it basically **shifts your most intensive work from writing a bunch of codes to review even more codes written by LLMs**.
