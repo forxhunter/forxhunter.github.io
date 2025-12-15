@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-the-era-of-the-quot-ai-architect-quot-why-we-must-master-not-avoid-intelligent-tools",
+        },{id: "post-the-beginner-39-s-guide-to-understanding-nvidia-gpus",
+        
+          title: "The Beginner&#39;s Guide to Understanding NVIDIA GPUs",
+        
+        description: "how GPU works to speed up your code",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/gpu-basics/";
+          
+        },
+      },{id: "post-the-era-of-the-quot-ai-architect-quot-why-we-must-master-not-avoid-intelligent-tools",
         
           title: "The Era of the &quot;AI Architect&quot;: Why We Must Master, Not Avoid, Intelligent...",
         
