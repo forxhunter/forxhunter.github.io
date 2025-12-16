@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-the-beginner-39-s-guide-to-understanding-nvidia-gpus",
+        },{id: "post-the-generalist-and-the-specialist-understanding-the-nvidia-gpu-and-google-tpu-architectures",
+        
+          title: "The Generalist and the Specialist: Understanding the NVIDIA GPU and Google TPU Architectures...",
+        
+        description: "Compare the NVIDIA GPU and Google TPU",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/TPU-vs-GPU/";
+          
+        },
+      },{id: "post-the-beginner-39-s-guide-to-understanding-nvidia-gpus",
         
           title: "The Beginner&#39;s Guide to Understanding NVIDIA GPUs",
         
