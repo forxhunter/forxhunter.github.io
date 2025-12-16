@@ -36,6 +36,9 @@ repo_trophies:
   theme_light: flat # https://github.com/ryo-ma/github-profile-trophy
   theme_dark: gitdimmed # https://github.com/ryo-ma/github-profile-trophy
 
+# custom vercel instance for github-readme-stats
+github_stats_endpoint: https://vercel-github-repo.vercel.app/api
+
 # -----------------------------------------------------------------------------
 # RSS Feed
 # -----------------------------------------------------------------------------
