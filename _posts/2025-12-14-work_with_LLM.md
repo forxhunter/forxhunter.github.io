@@ -5,7 +5,7 @@ date: 2025-12-14 12:00:00
 description: how to use AI tools to improve your work/research
 tags: AI
 categories: introduction
-featured: true
+featured: false
 giscus_comments: true
 ---
 

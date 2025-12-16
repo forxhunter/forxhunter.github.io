@@ -4,7 +4,7 @@ title: "The Beginner's Guide to Understanding NVIDIA GPUs"
 date: 2025-12-15 12:00:00
 description: how GPU works to speed up your code
 tags: gpu
-categories: tutorials
+categories: introduction
 featured: true
 giscus_comments: true
 ---
