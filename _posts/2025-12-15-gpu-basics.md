@@ -21,8 +21,8 @@ This guide is designed to bridge the gap between the **code you write** (the sof
 
 Before we dive into the jargon, let's establish the fundamental difference between the processor in your laptop (CPU) and the graphics card (GPU).
 
-*   **The CPU is a Ferrari.** It's designed to take a small number of passengers (threads) from Point A to Point B as fast as humanly possible. It has giant caches and complex logic to make sure *one single task* finishes quickly. This is **Latency** optimization.
-*   **The GPU is a Bus Service.** It's not trying to get one person across town in record time. It's trying to move *thousands* of people across town at once. It might take a bit longer for the bus to start and stop, but the sheer volume of people moved per minute is massive. This is **Throughput** optimization.
+- **The CPU is a Ferrari.** It's designed to take a small number of passengers (threads) from Point A to Point B as fast as humanly possible. It has giant caches and complex logic to make sure _one single task_ finishes quickly. This is **Latency** optimization.
+- **The GPU is a Bus Service.** It's not trying to get one person across town in record time. It's trying to move _thousands_ of people across town at once. It might take a bit longer for the bus to start and stop, but the sheer volume of people moved per minute is massive. This is **Throughput** optimization.
 
 {% include figure.liquid loading="eager" path="assets/img/gpu_basics/cpu-gpu.svg" title="cpu-vs-gpu" class="img-fluid rounded z-depth-1" %}
 
@@ -46,11 +46,12 @@ Each individual execution of that function is called a **[Thread](https://modal.
 One core isn't very useful. So NVIDIA groups them together.
 
 **The Hardware Reality: The Streaming Multiprocessor (SM)**
-This is the *real* heart of the GPU. An **[SM](https://modal.com/gpu-glossary/device-hardware/streaming-multiprocessor)** is like a department in a factory. It contains:
-*   A bunch of CUDA Cores (usually 64 or 128).
-*   Some Tensor Cores.
-*   Some fast memory (we'll get to that).
-*   Schedulers to hand out work.
+This is the _real_ heart of the GPU. An **[SM](https://modal.com/gpu-glossary/device-hardware/streaming-multiprocessor)** is like a department in a factory. It contains:
+
+- A bunch of CUDA Cores (usually 64 or 128).
+- Some Tensor Cores.
+- Some fast memory (we'll get to that).
+- Schedulers to hand out work.
 
 An H100 GPU, for example, has 144 of these SMs.
 
@@ -67,15 +68,15 @@ Managing 10,000 individual threads would be chaos. So, in your code, you group t
 The entire GPU itself (the "Device") is just a collection of all those SMs we just talked about, connected to some big memory banks (VRAM).
 
 **The Software Abstraction: The Grid**
-The collection of *all* your Thread Blocks is called the **[Grid](https://modal.com/gpu-glossary/device-software/thread-block-grid)**.
+The collection of _all_ your Thread Blocks is called the **[Grid](https://modal.com/gpu-glossary/device-software/thread-block-grid)**.
 
 > **The Bridge**: The **Grid** covers the entire problem you are solving. The GPU's hardware scheduler breaks up this Grid and feeds the Blocks to the available SMs. If you have a huge Grid and a small GPU, the hardware just queues up the Blocks and runs them as fast as it can. This is why CUDA code scales automatically: a better GPU just executes more Blocks at once.
 
-| Software Concept | Hardware Home |
-| :--- | :--- |
-| **Thread** | **Core** |
+| Software Concept | Hardware Home                     |
+| :--------------- | :-------------------------------- |
+| **Thread**       | **Core**                          |
 | **Thread Block** | **Streaming Multiprocessor (SM)** |
-| **Grid** | **Entire Device (GPU)** |
+| **Grid**         | **Entire Device (GPU)**           |
 
 {% include figure.liquid loading="eager" path="assets/img/gpu_basics/cuda-programming-model.svg" title="cuda-programming-model" class="img-fluid rounded z-depth-1" %}
 
@@ -86,16 +87,18 @@ The collection of *all* your Thread Blocks is called the **[Grid](https://modal.
 Understanding where your data lives is the single most important part of GPU performance.
 
 1.  **[Global Memory](https://modal.com/gpu-glossary/device-software/global-memory) (GPU RAM)**:
-    *   **Analogy**: This is the warehouse down the street. It's huge (80GB+), but it takes a long time to travel there to pick up a package (data).
-    *   **Reality**: This is the VRAM on the card.
+
+    - **Analogy**: This is the warehouse down the street. It's huge (80GB+), but it takes a long time to travel there to pick up a package (data).
+    - **Reality**: This is the VRAM on the card.
 
 2.  **[Shared Memory](https://modal.com/gpu-glossary/device-software/shared-memory) (L1 Cache)**:
-    *   **Analogy**: This is a communal workbench shared by all the workers (threads) in the same room (Block). It's really fast, but small.
-    *   **Reality**: Physically located inside the SM. You, the programmer, have to manually move data here if you want to use it efficiently.
+
+    - **Analogy**: This is a communal workbench shared by all the workers (threads) in the same room (Block). It's really fast, but small.
+    - **Reality**: Physically located inside the SM. You, the programmer, have to manually move data here if you want to use it efficiently.
 
 3.  **[Registers](https://modal.com/gpu-glossary/device-software/registers)**:
-    *   **Analogy**: This is the pocket of the individual worker. It's instant to reach, but you only have so many pockets.
-    *   **Reality**: Private memory for each thread to store its local variables.
+    - **Analogy**: This is the pocket of the individual worker. It's instant to reach, but you only have so many pockets.
+    - **Reality**: Private memory for each thread to store its local variables.
 
 ## 5. The Secret Sauce: Warps and Latency Hiding
 
@@ -105,7 +108,7 @@ You might think that if you have 32 threads, they all run independently. They do
 The hardware groups threads into bundles of 32 called **[Warps](https://modal.com/gpu-glossary/device-software/warp)**.
 
 **The Drill Sergeant (SIMT)**
-A Warp executes in "Lock-step". It's like a drill sergeant commanding a platoon: "Everyone take a step forward!" If one soldier needs to tie their shoe (an `if` statement that takes a different path), *everyone else has to wait*. This is why "branching" code is bad on GPUs.
+A Warp executes in "Lock-step". It's like a drill sergeant commanding a platoon: "Everyone take a step forward!" If one soldier needs to tie their shoe (an `if` statement that takes a different path), _everyone else has to wait_. This is why "branching" code is bad on GPUs.
 
 **Running the Bus Service (Latency Hiding)**
 Remember the "Bus Service" analogy?
@@ -115,10 +118,10 @@ It instantly switches to another Warp that is ready to calculate. By the time Wa
 
 {% include figure.liquid loading="eager" path="assets/img/gpu_basics/wave-scheduling.png" title="wave-scheduling" class="img-fluid rounded z-depth-1" %}
 
-This is **Latency Hiding**, and it is the key to GPU performance. You need to launch *way more threads* than you have cores, just to keep the hardware busy while it waits for memory.
+This is **Latency Hiding**, and it is the key to GPU performance. You need to launch _way more threads_ than you have cores, just to keep the hardware busy while it waits for memory.
 
 ## Summary
 
-*   **Software**: You write a **Kernel**. You launch a **Grid** of **Thread Blocks**, each containing hundreds of **Threads**.
-*   **Hardware**: The GPU assigns Blocks to **SMs**. The SMs group threads into **Warps** of 32. These Warps execute instructions on **Cores**.
-*   **Performance**: If you align your software structure (Blocks/Threads) to respect the hardware reality (SMs/Warps), you get incredible speed. If you fight the hardware, you get a very expensive space heater.
+- **Software**: You write a **Kernel**. You launch a **Grid** of **Thread Blocks**, each containing hundreds of **Threads**.
+- **Hardware**: The GPU assigns Blocks to **SMs**. The SMs group threads into **Warps** of 32. These Warps execute instructions on **Cores**.
+- **Performance**: If you align your software structure (Blocks/Threads) to respect the hardware reality (SMs/Warps), you get incredible speed. If you fight the hardware, you get a very expensive space heater.
