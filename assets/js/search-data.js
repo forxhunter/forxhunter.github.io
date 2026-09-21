@@ -128,11 +128,21 @@ ninja.data = [{
           description: "",
           section: "News",handler: () => {
               window.location.href = "/news/announcement_6/";
+            },},{id: "news-platform-talk-and-session-co-chair-systems-biophysics-at-bps2026",
+          title: 'Platform Talk and Session Co-Chair – Systems Biophysics at BPS2026',
+          description: "",
+          section: "News",handler: () => {
+              window.location.href = "/news/announcement_7/";
             },},{id: "projects-why-we-should-include-spatial-information-in-whole-cell-modeling",
           title: 'Why we should include spatial information in whole cell modeling',
           description: "Spatial Heterogeneity Modulates Activation Dynamics of the Yeast Galactose Regulatory Circuit",
           section: "Projects",handler: () => {
               window.location.href = "/projects/1_project/";
+            },},{id: "projects-what-must-a-host-and-its-engineered-endosymbiont-exchange",
+          title: 'What must a host and its engineered endosymbiont exchange?',
+          description: "A genome-scale model of synthetic yeast–cyanobacteria endosymbiosis resolves the host&#39;s energetic dependence and the direction of interface carbon",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/2_project/";
             },},{
         id: 'social-email',
         title: 'email',
