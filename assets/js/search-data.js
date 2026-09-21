@@ -143,6 +143,11 @@ ninja.data = [{
           description: "A genome-scale model of synthetic yeast–cyanobacteria endosymbiosis resolves the host&#39;s energetic dependence and the direction of interface carbon",
           section: "Projects",handler: () => {
               window.location.href = "/projects/2_project/";
+            },},{id: "projects-can-a-metabolic-network-be-drawn-the-way-a-curator-would-draw-it",
+          title: 'Can a metabolic network be drawn the way a curator would draw it?...',
+          description: "MetaCarto turns any genome-scale model into publication-quality Escher maps by construction — no annealing, no random seed, no hand editing",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/3_project/";
             },},{
         id: 'social-email',
         title: 'email',
