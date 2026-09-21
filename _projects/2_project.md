@@ -5,7 +5,6 @@ description: A genome-scale model of synthetic yeast–cyanobacteria endosymbios
 img: assets/img/project2.png
 importance: 2
 category: research
-related_publications: true
 giscus_comments: true
 ---
 
