@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Preprint Publication - Spatial Heterogeneity Alters the Dynamics of the Yeast Galactose Switch: Insights from 4D RDME–ODE Hybrid Simulations
+title: "Preprint Publication - Spatial Heterogeneity Alters the Dynamics of the Yeast Galactose Switch: Insights from 4D RDME–ODE Hybrid Simulations"
 date: 2025-07-23 10:00:00-0500
 inline: false
 related_posts: false

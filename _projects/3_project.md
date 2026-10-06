@@ -114,6 +114,8 @@ MetaCarto and its maps are CC BY 4.0, so attribution is a term of the licence. I
 
 > Wu, T. (2026). MetaCarto: biologically faithful automatic layout for genome-scale metabolic maps. _bioRxiv_. [https://doi.org/10.64898/2026.09.19.752882](https://doi.org/10.64898/2026.09.19.752882)
 
+{% raw %}
+
 ```bibtex
 @article{wu_metacarto_2026,
   author  = {Wu, Tianyu},
@@ -124,7 +126,11 @@ MetaCarto and its maps are CC BY 4.0, so attribution is a term of the licence. I
 }
 ```
 
+{% endraw %}
+
 and, if you used MetaCarto 2 specifically, the software as well:
+
+{% raw %}
 
 ```bibtex
 @software{Wu_MetaCarto_constructive_layout,
@@ -134,5 +140,7 @@ and, if you used MetaCarto 2 specifically, the software as well:
   url     = {https://github.com/forxhunter/MetaCarto}
 }
 ```
+
+{% endraw %}
 
 Please also cite the underlying model from [BiGG Models](http://bigg.ucsd.edu/) and, where maps are displayed, [Escher](https://doi.org/10.1371/journal.pcbi.1004321).
