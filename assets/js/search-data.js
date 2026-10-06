@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-the-generalist-and-the-specialist-understanding-the-nvidia-gpu-and-google-tpu-architectures",
+        },{id: "post-why-metabolic-maps-turn-into-hairballs-and-how-to-draw-one-that-doesn-39-t",
+        
+          title: "Why metabolic maps turn into hairballs, and how to draw one that doesn&#39;t...",
+        
+        description: "A force-directed layout of a metabolic model collapses onto ATP and water. Three ideas from MetaCarto that get a curator-style map out of the same network instead.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/metabolic-hairballs/";
+          
+        },
+      },{id: "post-the-generalist-and-the-specialist-understanding-the-nvidia-gpu-and-google-tpu-architectures",
         
           title: "The Generalist and the Specialist: Understanding the NVIDIA GPU and Google TPU Architectures...",
         
@@ -113,16 +124,16 @@ ninja.data = [{
           description: "",
           section: "News",handler: () => {
               window.location.href = "/news/announcement_1/";
+            },},{id: "news-preprint-publication-spatial-heterogeneity-alters-the-dynamics-of-the-yeast-galactose-switch-insights-from-4d-rdme-ode-hybrid-simulations",
+          title: 'Preprint Publication - Spatial Heterogeneity Alters the Dynamics of the Yeast Galactose Switch:...',
+          description: "",
+          section: "News",handler: () => {
+              window.location.href = "/news/announcement_5/";
             },},{id: "news-talk-in-ipols-2025-about-spatial-heterogeneity-alters-the-dynamics-of-the-yeast-galactose-switch",
           title: 'Talk in iPoLS 2025 about Spatial Heterogeneity Alters the Dynamics of the Yeast...',
           description: "",
           section: "News",handler: () => {
               window.location.href = "/news/announcement_2/";
-            },},{id: "news-",
-          title: '',
-          description: "",
-          section: "News",handler: () => {
-              window.location.href = "/news/announcement_5/";
             },},{id: "news-oral-presentation-mcb-retreat-2025",
           title: 'Oral Presentation – MCB Retreat 2025',
           description: "",
@@ -133,7 +144,10 @@ ninja.data = [{
           description: "",
           section: "News",handler: () => {
               window.location.href = "/news/announcement_7/";
-            },},{id: "projects-why-we-should-include-spatial-information-in-whole-cell-modeling",
+            },},{id: "news-released-metacarto-2-every-one-of-the-108-bigg-models-drawn-as-curator-style-escher-maps-plus-each-whole-model-on-a-single-canvas-with-no-text-overlapping-anything-browse-the-maps-in-the-viewer-run-it-on-your-own-model-or-read-the-preprint-on-biorxiv-world-map",
+          title: 'Released MetaCarto 2: every one of the 108 BiGG models drawn as curator-style...',
+          description: "",
+          section: "News",},{id: "projects-why-we-should-include-spatial-information-in-whole-cell-modeling",
           title: 'Why we should include spatial information in whole cell modeling',
           description: "Spatial Heterogeneity Modulates Activation Dynamics of the Yeast Galactose Regulatory Circuit",
           section: "Projects",handler: () => {
@@ -145,7 +159,7 @@ ninja.data = [{
               window.location.href = "/projects/2_project/";
             },},{id: "projects-can-a-metabolic-network-be-drawn-the-way-a-curator-would-draw-it",
           title: 'Can a metabolic network be drawn the way a curator would draw it?...',
-          description: "MetaCarto turns any genome-scale model into publication-quality Escher maps by construction — no annealing, no random seed, no hand editing",
+          description: "MetaCarto 2 draws any genome-scale model as publication-quality Escher maps, deterministically, with no hand editing. All 108 BiGG models are already drawn and browsable.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/3_project/";
             },},{
