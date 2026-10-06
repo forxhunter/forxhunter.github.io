@@ -60,7 +60,7 @@ Nothing here was moved by hand, and running it again gives exactly the same pict
 
 ## Scaling it up
 
-The same pipeline runs on every model in BiGG. With MetaCarto 2 that comes to 2,764 pathway maps covering 251,140 of 251,424 reactions, plus one whole-model canvas per species. No map has text overlapping a node, a line or other text. All of them are in an Escher viewer you can open in the browser, with nothing to install:
+The same pipeline runs on every model in BiGG. With MetaCarto 2 that comes to 2,763 pathway maps covering 251,405 of 251,424 reactions, plus one whole-model canvas per species. No map has text overlapping a node, a line or other text. All of them are in an Escher viewer you can open in the browser, with nothing to install:
 
 **[forxhunter.github.io/escher](https://forxhunter.github.io/escher/)**. Use _Map ▸ Load map from library…_ to pick any model.
 

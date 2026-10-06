@@ -33,7 +33,8 @@ Genome-scale metabolic models are routinely solved and almost never drawn. A for
 - **A whole model on one canvas.** Each pathway keeps the drawing it has on its own map, and pathways are packed by the shape their ink actually covers rather than their bounding box. Central carbon sits in the middle, every other superclass grows around it as one region, and transport and exchange wrap the outside like a membrane.
 - **Nothing drawn on anything else.** No map in the collection has text on a node, on an edge or on other text. A label that does not fit is moved further out. It is never hidden and never overlapped.
 - **Any model, not only BiGG.** Compounds and cofactors are recognised from the model's own chemistry and cross-references, not from BiGG's id spelling. Human-GEM, Yeast-GEM and ModelSEED models all run end to end, from SBML, JSON, YAML or MATLAB.
-- **99.9% of reactions drawn**, up from 95.6% in MetaCarto 1.
+- **99.99% of reactions drawn**, up from 95.6% in MetaCarto 1.
+- **Cycles drawn as cycles, whatever the flux does.** The TCA, urea and methionine cycles are recognised by their compounds and always drawn round. 98 of the 108 BiGG models now show a complete TCA ring.
 - **Draw your own map.** Select by pathway, KEGG superclass, reaction, keyword, or everything within _N_ steps of a metabolite. You get the same engine and the same quality gates.
 - **An editor built for automatic maps.** The [Escher fork](https://forxhunter.github.io/escher/) can drag a reaction as a whole and select a whole pathway by double-clicking its caption. Labels stay clear of nodes as you move them.
 
@@ -63,20 +64,20 @@ Greedy feedback-arc-set, layer assignment, cluster-constrained crossing reductio
 
 The canvas is planned on each pathway's rasterised ink. Pathways cannot overlap, because placement tests collision on a grid with clearance. Small and mid-size models are packed several deterministic ways, and the tightest packing wins only if regions stay as cohesive and linked pathways stay as close as in the default.
 
-{% include figure.liquid loading="lazy" path="assets/img/metacarto/recon3d_canvas.png" title="Recon3D on one canvas" class="img-fluid rounded z-depth-1" zoomable=true caption="Recon3D, the human reconstruction: 10,592 of its 10,600 reactions on one page. At this size it is texture, not a figure. <a href='https://github.com/forxhunter/MetaCarto/blob/main/docs/figures/v2_Recon3D_Canvas.svg' target='_blank' rel='noopener noreferrer'>Open the 19 MB SVG</a> and zoom in, or load it in the viewer." %}
+{% include figure.liquid loading="lazy" path="assets/img/metacarto/recon3d_canvas.png" title="Recon3D on one canvas" class="img-fluid rounded z-depth-1" zoomable=true caption="Recon3D, the human reconstruction: 10,598 of its 10,600 reactions on one page. At this size it is texture, not a figure. <a href='https://github.com/forxhunter/MetaCarto/blob/main/docs/figures/v2_Recon3D_Canvas.svg' target='_blank' rel='noopener noreferrer'>Open the 19 MB SVG</a> and zoom in, or load it in the viewer." %}
 
 # The Generated Collection
 
 Every model in the [BiGG database](http://bigg.ucsd.edu/) is drawn and published under CC BY 4.0, as Escher JSON and SVG, at [Awesome_visualization_Metabolic_Network](https://github.com/forxhunter/Awesome_visualization_Metabolic_Network).
 
-|                                       | all 108 BiGG models                    |
-| ------------------------------------- | -------------------------------------- |
-| reactions drawn                       | 251,140 of 251,424 (99.9%), none twice |
-| pathway maps / whole-model canvases   | 2,764 / 108                            |
-| text on a node, an edge or other text | 0, in every map and canvas             |
-| pathways overlapping on a canvas      | 0                                      |
-| segments axis-aligned, median map     | 0.985                                  |
-| crossings per edge, median map        | 0.070                                  |
+|                                       | all 108 BiGG models                     |
+| ------------------------------------- | --------------------------------------- |
+| reactions drawn                       | 251,405 of 251,424 (99.99%), none twice |
+| pathway maps / whole-model canvases   | 2,763 / 108                             |
+| text on a node, an edge or other text | 0, in every map and canvas              |
+| pathways overlapping on a canvas      | 0                                       |
+| segments axis-aligned, median map     | 0.985                                   |
+| crossings per edge, median map        | 0.068                                   |
 
 **[Browse them in the viewer](https://forxhunter.github.io/escher/)**. It opens on the `e_coli_core` canvas, and _Map ▸ Load map from library…_ reads the whole collection directly, with nothing to download.
 
@@ -102,7 +103,7 @@ Every map is scored against explicit gates: orthogonality, crossings, node separ
 
 # Known Limitations
 
-- 284 of 251,424 BiGG reactions have no drawable primary pair and are omitted.
+- 19 of 251,424 BiGG reactions have no drawable primary pair and are omitted.
 - Large merged pages of around 120 reactions still cross themselves. One page in ten has more than 0.4 crossings per edge.
 - About four reactions in a hundred still have an edge passing through a metabolite they have nothing to do with. Reactions that share nothing should never touch, so this is the next thing to fix.
 - Whole-model canvases are for zooming, not printing. At 10,600 reactions a page, labels land well under a point however well the page is packed. The per-pathway maps are the printable artifact.
