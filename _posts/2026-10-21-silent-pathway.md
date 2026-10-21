@@ -83,7 +83,6 @@ Most of this agreement was concentrated in genes named by the prior. On genes ou
   <noscript><img src="{{ '/assets/img/silent-pathway/fig2_zeroshot.png' | relative_url }}" alt="Figure 2, zero-shot results" class="img-fluid"></noscript>
 </div>
 
-
 **Figure 2. The resting state contains information about the response pattern, with limited information about its magnitude.** (a) AUPRC for identifying each cell type's top 100 absolute responders across 13,306 genes; chance = 0.0075. “+ state” orders prior genes by resting expression. (b) Fraction of genome-wide top responders represented by different gene selections. (c) Cell-type-specific response slopes for genes in the same PROGENy footprint. (d) Correlation between prior-guided, control-only latent predictions and observed $\Delta$; grey bars exclude every interferon-prior gene (2,353 of 3,088 modelled genes). Zero-shot latent correlations describe direction, not calibrated response magnitude.
 {: .sp-caption}
 
@@ -110,7 +109,6 @@ Together the matched comparisons show a clear pattern: **the information supplie
   <noscript><img src="{{ '/assets/img/silent-pathway/fig3_fewshot.png' | relative_url }}" alt="Figure 3, few-shot response prediction" class="img-fluid"></noscript>
 </div>
 
-
 **Figure 3. Prior information matters most with very few intervention measurements.** (a) $R^2$ on the response $\Delta$ across 3,088 genes, evaluated on held-out donors and averaged across donor–cell-type predictions. Dashed curves use the ISG prior. For scGen, the dashed curve should be compared with the equally shrunk baseline in panel (c), not only with plain scGen. (b, c) Paired change in $R^2$ from adding each prior to the same EB or scGen estimator, evaluated on identical revealed cells. Bands and intervals are 95% hierarchical bootstraps; negative values below −0.6 are clipped in panel (a).
 {: .sp-caption}
 
@@ -129,7 +127,6 @@ A virtual-cell benchmark therefore needs to say precisely what is being predicte
   <div class="sp-panel"><p class="sp-panel-title"><b>b</b> Accuracy on the strongest response genes, by cell type</p><div class="sp-chart" data-chart="mCellType"></div></div>
   <noscript><img src="{{ '/assets/img/silent-pathway/fig4_metrics_celltypes.png' | relative_url }}" alt="Figure 4, response and expression metrics" class="img-fluid"></noscript>
 </div>
-
 
 **Figure 4. A strong cell-state score need not imply a strong intervention prediction.** (a) The same predictions evaluated on mean absolute expression and on stimulated-minus-control response $\Delta$. (b) At ten revealed cells, $R^2$ on the 50 strongest true responders in each held-out donor and cell type. These genes are selected for evaluation only. Values below −0.6 are clipped in the chart; hover for exact values.
 {: .sp-caption}
@@ -169,9 +166,7 @@ The broader implication is simple: a virtual cell needs to specify **which part 
 <details markdown="1">
 <summary><strong>Full few-shot performance table</strong></summary>
 
-
 <div class="sp-table-wrap" markdown="1">
-
 
 | Model                        | 0 cells |   1 cell |  3 cells | 10 cells | 30 cells | 100 cells | 1000 cells | 4 donors |
 | ---------------------------- | ------: | -------: | -------: | -------: | -------: | --------: | ---------: | -------: |
@@ -198,11 +193,10 @@ Values are mean $R^2$ on $\Delta$ across held-out donors and random draws. The 0
 
 ## References
 
-1. Kang, H. M. et al. (2018). Multiplexed droplet single-cell RNA-sequencing using natural genetic variation. *Nature Biotechnology* **36**, 89–94. [https://doi.org/10.1038/nbt.4042](https://doi.org/10.1038/nbt.4042)
-2. Lotfollahi, M., Wolf, F. A. & Theis, F. J. (2019). scGen predicts single-cell perturbation responses. *Nature Methods* **16**, 715–721. [https://doi.org/10.1038/s41592-019-0494-8](https://doi.org/10.1038/s41592-019-0494-8)
-3. Tiwari, K., Mahajan, G., Bellad, R. P., Dhruw, N. K. & Jha, A. K. (2026). Genetic perturbation prediction models fail out-of-distribution: a rigorous benchmark and systematic evaluation. *bioRxiv*. [https://doi.org/10.64898/2026.10.16.759604](https://doi.org/10.64898/2026.10.16.759604)
+1. Kang, H. M. et al. (2018). Multiplexed droplet single-cell RNA-sequencing using natural genetic variation. _Nature Biotechnology_ **36**, 89–94. [https://doi.org/10.1038/nbt.4042](https://doi.org/10.1038/nbt.4042)
+2. Lotfollahi, M., Wolf, F. A. & Theis, F. J. (2019). scGen predicts single-cell perturbation responses. _Nature Methods_ **16**, 715–721. [https://doi.org/10.1038/s41592-019-0494-8](https://doi.org/10.1038/s41592-019-0494-8)
+3. Tiwari, K., Mahajan, G., Bellad, R. P., Dhruw, N. K. & Jha, A. K. (2026). Genetic perturbation prediction models fail out-of-distribution: a rigorous benchmark and systematic evaluation. _bioRxiv_. [https://doi.org/10.64898/2026.10.16.759604](https://doi.org/10.64898/2026.10.16.759604)
 
 <!-- TODO: Add code and per-run results link once the repository is public. -->
 
 <script src="{{ '/assets/js/silent-pathway/charts.js' | relative_url }}" data-src="{{ '/assets/json/silent-pathway/data.json' | relative_url }}" defer></script>
-
