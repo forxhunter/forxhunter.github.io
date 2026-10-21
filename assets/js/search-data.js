@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-why-metabolic-maps-turn-into-hairballs-and-how-to-draw-one-that-doesn-39-t",
+        },{id: "post-can-a-virtual-cell-predict-a-pathway-it-has-never-seen-switch-on",
+        
+          title: "Can a virtual cell predict a pathway it has never seen switch on?...",
+        
+        description: "A pilot on 24,562 human blood cells asks what expression data, mechanistic knowledge and a handful of experiments each contribute to predicting an interferon response a model has never observed.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/silent-pathway/";
+          
+        },
+      },{id: "post-why-metabolic-maps-turn-into-hairballs-and-how-to-draw-one-that-doesn-39-t",
         
           title: "Why metabolic maps turn into hairballs, and how to draw one that doesn&#39;t...",
         
