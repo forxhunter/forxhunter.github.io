@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-can-a-virtual-cell-predict-a-pathway-it-has-never-seen-switch-on",
+        },{id: "post-domain-models-need-a-plug-not-a-fork",
+        
+          title: "Domain Models Need a Plug, Not a Fork",
+        
+        description: "Specialist AI models can ship their expertise as a reusable module that plugs into each new, larger model. Here is a five part contract that makes it work.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/plug-not-fork/";
+          
+        },
+      },{id: "post-can-a-virtual-cell-predict-a-pathway-it-has-never-seen-switch-on",
         
           title: "Can a virtual cell predict a pathway it has never seen switch on?...",
         
