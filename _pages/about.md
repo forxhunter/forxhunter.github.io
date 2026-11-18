@@ -33,6 +33,6 @@ I am a Ph.D. candidate in Biophysics and Quantitative Biology at the University 
 
 Lately I have been asking what these systems can know about conditions they have never observed, for example [whether a virtual cell can predict a pathway it has never seen switch on]({% link _posts/2026-10-21-silent-pathway.md %}), and how domain expertise can ship as [a module that plugs into each new foundation model]({% link _posts/2026-11-16-plug-not-fork.md %}) instead of a fork of an old one. The same question runs through my work on discovery systems: when two mechanistic explanations fit the same data equally well, which further measurement tells them apart?
 
-My background is in whole-cell modeling, where I built GPU-accelerated models of metabolism in baker's yeast (_Saccharomyces cerevisiae_). That mechanistic training still shapes how I build and test AI models for biology.
+My background is in AI for protein engineering, where I build models that predict and optimize physicochemical properties such as aggregation propensity, with applications including Rubisco engineering.
 
 <!-- Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them. -->

@@ -5,7 +5,7 @@
     "image": "",
     "email": "tianyu16@illinois.edu",
     "url": "https://forxhunter.github.io",
-    "summary": "Ph.D. candidate at the University of Illinois Urbana-Champaign working on AI for Biology (AI4Bio) and protein design, with a focus on automatic scientific discovery: building generative AI systems that propose scientific hypotheses and designs. Background in GPU-accelerated whole-cell modeling.",
+    "summary": "Ph.D. candidate at the University of Illinois Urbana-Champaign working on AI for Biology (AI4Bio) and protein design, with a focus on automatic scientific discovery: building generative AI systems that propose scientific hypotheses and designs. Background in AI for protein engineering, focused on physicochemical properties such as aggregation propensity, with applications including Rubisco engineering.",
     "location": {
       "address": "Roger Adams Laboratory, Room 101",
       "city": "Urbana",
@@ -141,7 +141,7 @@
     {
       "name": "AI for Biology",
       "icon": "fa-solid fa-tag",
-      "keywords": ["Protein design", "Virtual cells", "Perturbation prediction", "Whole-cell modeling"]
+      "keywords": ["Protein engineering", "Aggregation propensity", "Rubisco engineering", "Protein design", "Virtual cells"]
     }
   ]
 }
