@@ -1,0 +1,44 @@
+---
+import NewsList from '@components/NewsList.astro';
+import { site } from '@config/site';
+import Page from '@layouts/Page.astro';
+import { getCollection } from 'astro:content';
+
+const announcements = (await getCollection('announcements'))
+  .filter((e) => !e.data.hidden)
+  .sort((a, b) => {
+    if (a.data.pinned !== b.data.pinned) return a.data.pinned ? -1 : 1;
+    return b.data.date.getTime() - a.data.date.getTime();
+  });
+---
+
+<Page title="News" description={`News and announcements from ${site.author.name}`}>
+  <div class="post">
+    <header class="post-header">
+      <h1 class="post-title">news</h1>
+    </header>
+    <article>
+      {
+        announcements.length === 0 ? (
+          <p style="color: var(--global-text-color-light);">No announcements yet.</p>
+        ) : (
+          <NewsList items={announcements} />
+        )
+      }
+    </article>
+  </div>
+</Page>
+
+<style>
+  .post-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .post-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--global-text-color);
+    font-family: var(--font-sans);
+    margin-bottom: 0;
+  }
+</style>

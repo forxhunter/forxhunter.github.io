@@ -1,0 +1,499 @@
+---
+/**
+ * One-page home. Every section is on this page, read top to bottom from the
+ * bio, and each links out to its full page for the long version.
+ */
+import ProfilePhoto from '@components/about/ProfilePhoto.astro';
+import NewsList from '@components/NewsList.astro';
+import ProjectCard from '@components/projects/ProjectCard.astro';
+import SocialLinks from '@components/SocialLinks.astro';
+import { site } from '@config/site';
+import Base from '@layouts/Base.astro';
+import { getAuthors, getTitle, getVenue, getYear, parseBibtex } from '@utils/bibtex';
+import { getCollection } from 'astro:content';
+
+import AboutContent from '../data/about.mdx';
+import bibRaw from '../data/papers.bib?raw';
+import resume from '../data/resume.json';
+
+const base = site.base;
+
+// Research
+const projects = (await getCollection('projects')).sort(
+  (a, b) => (a.data.importance ?? 999) - (b.data.importance ?? 999),
+);
+
+// Publications, newest first, grouped by year
+const papers = parseBibtex(bibRaw).sort((a, b) => getYear(b) - getYear(a));
+const years = [...new Set(papers.map(getYear))];
+
+// Experience, education and service, from the same file as the CV page
+type Job = { name: string; position: string; highlights?: string[] };
+type School = { institution: string; area?: string; studyType?: string; location?: string };
+type Service = { organization: string; position: string };
+const work = (resume.work ?? []) as Job[];
+const education = (resume.education ?? []) as School[];
+const service = ((resume as { volunteer?: Service[] }).volunteer ?? []) as Service[];
+
+// News
+const announcements = site.announcements.enabled
+  ? (await getCollection('announcements'))
+      .filter((e) => !e.data.hidden)
+      .sort((a, b) => {
+        if (a.data.pinned !== b.data.pinned) return a.data.pinned ? -1 : 1;
+        return b.data.date.getTime() - a.data.date.getTime();
+      })
+      .slice(0, site.announcements.limit)
+  : [];
+
+// Writing
+const posts = site.latestPosts.enabled
+  ? (await getCollection('posts'))
+      .filter((p) => !p.data.hidden && !p.data.draft)
+      .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+      .slice(0, site.latestPosts.limit)
+  : [];
+
+const formatDate = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
+const sections = [
+  { id: 'about', label: 'about', show: true },
+  { id: 'research', label: 'research', show: projects.length > 0 },
+  { id: 'publications', label: 'publications', show: papers.length > 0 },
+  { id: 'experience', label: 'experience', show: work.length + education.length + service.length > 0 },
+  { id: 'news', label: 'news', show: announcements.length > 0 },
+  { id: 'writing', label: 'writing', show: posts.length > 0 },
+  { id: 'contact', label: 'contact', show: true },
+].filter((s) => s.show);
+---
+
+<Base isHome={true}>
+  <div class="post page-container py-8">
+    <header class="post-header" id="about">
+      <h1 class="post-title">{(site.title as string) === 'blank' ? site.author.name : site.title}</h1>
+      {site.author.subtitle && <p class="desc" set:html={site.author.subtitle} />}
+    </header>
+
+    <article>
+      <ProfilePhoto align="right" />
+      <div class="clearfix">
+        <div class="prose max-w-none">
+          <AboutContent />
+        </div>
+      </div>
+
+      <nav class="home-nav" aria-label="Sections of this page">
+        {sections.map((s) => <a href={`#${s.id}`}>{s.label}</a>)}
+      </nav>
+
+      {
+        projects.length > 0 && (
+          <section class="home-section" id="research">
+            <div class="home-section-head">
+              <h2>research</h2>
+              <a href={`${base}/projects/`}>all projects &rarr;</a>
+            </div>
+            <div class="home-projects">
+              {projects.map((project) => (
+                <ProjectCard project={project} />
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        papers.length > 0 && (
+          <section class="home-section" id="publications">
+            <div class="home-section-head">
+              <h2>publications</h2>
+              <a href={`${base}/publications/`}>abstracts, BibTeX and search &rarr;</a>
+            </div>
+            {years.map((year) => (
+              <>
+                <h3 class="home-year">{year}</h3>
+                <ol class="home-papers">
+                  {papers
+                    .filter((entry) => getYear(entry) === year)
+                    .map((entry) => {
+                      const url = entry.fields.html ?? (entry.fields.doi ? `https://doi.org/${entry.fields.doi}` : '');
+                      const venue = getVenue(entry);
+                      return (
+                        <li>
+                          {url ? (
+                            <a class="paper-title" href={url} target="_blank" rel="noopener noreferrer">
+                              {getTitle(entry)}
+                            </a>
+                          ) : (
+                            <span class="paper-title">{getTitle(entry)}</span>
+                          )}
+                          <span class="paper-meta">
+                            {getAuthors(entry)}
+                            {venue && (
+                              <>
+                                {' · '}
+                                <em>{venue}</em>
+                              </>
+                            )}
+                          </span>
+                        </li>
+                      );
+                    })}
+                </ol>
+              </>
+            ))}
+          </section>
+        )
+      }
+
+      {
+        work.length + education.length + service.length > 0 && (
+          <section class="home-section" id="experience">
+            <div class="home-section-head">
+              <h2>experience</h2>
+              <a href={`${base}/cv/`}>full cv &rarr;</a>
+            </div>
+            {work.length > 0 && (
+              <ul class="home-timeline">
+                {work.map((job) => (
+                  <li>
+                    <div class="role">{job.position}</div>
+                    <div class="org">{job.name}</div>
+                    {job.highlights && job.highlights.length > 0 && (
+                      <ul>
+                        {job.highlights.map((item) => (
+                          <li>{item}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {education.length > 0 && (
+              <>
+                <h3 class="home-subhead">education</h3>
+                <ul class="home-timeline">
+                  {education.map((school) => (
+                    <li>
+                      <div class="role">{[school.studyType, school.area].filter(Boolean).join(', ')}</div>
+                      <div class="org">{[school.institution, school.location].filter(Boolean).join(', ')}</div>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+            {service.length > 0 && (
+              <>
+                <h3 class="home-subhead">academic service</h3>
+                <ul class="home-service">
+                  {service.map((entry) => (
+                    <li>
+                      {entry.position}, {entry.organization}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </section>
+        )
+      }
+
+      {
+        announcements.length > 0 && (
+          <section class="home-section" id="news">
+            <div class="home-section-head">
+              <h2>news</h2>
+              <a href={`${base}/news/`}>all news &rarr;</a>
+            </div>
+            <div class={site.announcements.scrollable ? 'scrollable-list' : ''}>
+              <NewsList items={announcements} />
+            </div>
+          </section>
+        )
+      }
+
+      {
+        posts.length > 0 && (
+          <section class="home-section" id="writing">
+            <div class="home-section-head">
+              <h2>writing</h2>
+              <a href={`${base}/blog/`}>all posts &rarr;</a>
+            </div>
+            <table class="home-posts">
+              <tbody>
+                {posts.map((post) => (
+                  <tr>
+                    <th scope="row">{formatDate(post.data.date)}</th>
+                    <td>
+                      <a href={`${base}/blog/${post.id}/`}>{post.data.title}</a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+        )
+      }
+
+      <section class="home-section" id="contact">
+        <div class="home-section-head">
+          <h2>contact</h2>
+        </div>
+        <div class="social">
+          <div class="contact-icons">
+            <SocialLinks />
+          </div>
+          <p class="contact-note">You can reach me by email using the envelope icon above.</p>
+        </div>
+      </section>
+    </article>
+  </div>
+</Base>
+
+<script>
+  // Highlight the section the reader is in.
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.home-nav a'));
+  const sections = links
+    .map((link) => document.querySelector<HTMLElement>(link.getAttribute('href') ?? ''))
+    .filter((el): el is HTMLElement => el !== null);
+
+  const setCurrent = (id: string) => {
+    for (const link of links) link.classList.toggle('is-current', link.getAttribute('href') === `#${id}`);
+  };
+
+  if (sections.length > 0) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible.length > 0) setCurrent(visible[0].target.id);
+      },
+      { rootMargin: '-20% 0px -70% 0px', threshold: 0 },
+    );
+    for (const section of sections) observer.observe(section);
+  }
+</script>
+
+<style>
+  .clearfix::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  .post-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    font-family: var(--font-sans);
+    color: var(--global-text-color);
+  }
+
+  .desc {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--global-text-color-light);
+  }
+
+  .home-nav {
+    position: sticky;
+    top: var(--navbar-height);
+    z-index: 10;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.4rem;
+    overflow-x: auto;
+    margin: 2rem 0 0;
+    padding: 0.6rem 0;
+    background-color: var(--global-bg-color);
+    border-bottom: 1px solid var(--global-divider-color);
+    scrollbar-width: none;
+  }
+
+  .home-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .home-nav a {
+    flex: 0 0 auto;
+    padding: 0.2rem 0.7rem;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 999px;
+    color: var(--global-text-color-light);
+    font-size: 0.85rem;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .home-nav a:hover,
+  .home-nav a.is-current {
+    color: var(--global-hover-text-color);
+    background-color: var(--global-hover-color);
+    border-color: var(--global-hover-color);
+  }
+
+  .home-section {
+    padding-top: 2.5rem;
+    /* keep the heading clear of the navbar and the sticky section bar after a jump */
+    scroll-margin-top: calc(var(--navbar-height) + 3.5rem);
+  }
+
+  .home-section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--global-divider-color);
+  }
+
+  .home-section-head h2 {
+    margin: 0 0 0.3rem;
+    font-size: 1.5rem;
+    color: var(--global-text-color);
+  }
+
+  .home-section-head a {
+    flex: 0 0 auto;
+    font-size: 0.85rem;
+    color: var(--global-theme-color);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .home-projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  .home-year {
+    margin: 1.2rem 0 0.4rem;
+    font-size: 1rem;
+    color: var(--global-text-color-light);
+  }
+
+  .home-papers {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .home-papers li {
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .paper-title {
+    display: block;
+    font-weight: 600;
+    color: var(--global-text-color);
+    text-decoration: none;
+  }
+
+  a.paper-title:hover {
+    color: var(--global-theme-color);
+  }
+
+  .paper-meta {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--global-text-color-light);
+  }
+
+  .home-subhead {
+    margin: 1.5rem 0 0.6rem;
+    font-size: 1.1rem;
+    color: var(--global-text-color);
+  }
+
+  .home-timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .home-timeline > li {
+    padding: 0 0 1.2rem 1rem;
+    border-left: 2px solid var(--global-divider-color);
+  }
+
+  .home-timeline > li:last-child {
+    padding-bottom: 0;
+  }
+
+  .home-timeline .role {
+    font-weight: 600;
+    color: var(--global-text-color);
+  }
+
+  .home-timeline .org {
+    font-size: 0.9rem;
+    color: var(--global-text-color-light);
+  }
+
+  .home-timeline ul {
+    margin: 0.4rem 0 0;
+    padding-left: 1.1rem;
+    font-size: 0.9rem;
+    color: var(--global-text-color);
+    list-style: disc;
+  }
+
+  .home-service {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: var(--global-text-color);
+  }
+
+  .home-service li + li {
+    margin-top: 0.3rem;
+  }
+
+  .home-posts {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .home-posts tr {
+    border-bottom: 1px solid var(--global-divider-color);
+  }
+
+  .home-posts th {
+    width: 20%;
+    padding: 0.5rem 1rem 0.5rem 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+    vertical-align: top;
+    color: var(--global-text-color-light);
+  }
+
+  .home-posts td {
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+  }
+
+  .home-posts a {
+    color: var(--global-theme-color);
+    text-decoration: none;
+  }
+
+  .contact-note {
+    margin-top: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--global-text-color-light);
+  }
+
+  @media (max-width: 576px) {
+    .home-section-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.2rem;
+    }
+  }
+</style>

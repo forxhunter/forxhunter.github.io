@@ -1,0 +1,85 @@
+---
+/**
+ * News rows, as al-folio drew them: an inline announcement shows its body in
+ * the list, a titled one links to its own page under /news/.
+ */
+import { site } from '@config/site';
+import { type CollectionEntry, render } from 'astro:content';
+
+interface Props {
+  items: CollectionEntry<'announcements'>[];
+}
+
+const { items } = Astro.props;
+
+const rows = await Promise.all(
+  items.map(async (item) => ({
+    item,
+    Content: item.data.inline || !item.data.title ? (await render(item)).Content : null,
+  })),
+);
+
+const formatDate = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<table class="news-table">
+  <tbody>
+    {
+      rows.map(({ item, Content }) => (
+        <tr>
+          <th scope="row">{formatDate(item.data.date)}</th>
+          <td>
+            {Content ? (
+              <Content />
+            ) : (
+              <a class="news-title" href={`${site.base}/news/${item.id}/`}>
+                {item.data.title}
+              </a>
+            )}
+          </td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
+
+<style>
+  .news-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .news-table tr {
+    border-bottom: 1px solid var(--global-divider-color);
+  }
+
+  .news-table th {
+    width: 20%;
+    padding: 0.5rem 1rem 0.5rem 0;
+    color: var(--global-text-color-light);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+    vertical-align: top;
+  }
+
+  .news-table td {
+    padding: 0.5rem 0;
+    color: var(--global-text-color);
+    font-size: 0.9rem;
+  }
+
+  .news-table td :global(p) {
+    margin: 0;
+  }
+
+  .news-title {
+    color: var(--global-theme-color);
+    text-decoration: none;
+  }
+
+  .news-title:hover {
+    text-decoration: underline;
+  }
+</style>

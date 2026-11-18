@@ -2,132 +2,53 @@ name: Deploy site
 
 on:
   push:
-    branches:
-      - master
-      - main
-    paths:
-      - "assets/**"
-      - "_sass/**"
-      - "_scripts/**"
-      - "**.bib"
-      - "**.html"
-      - "**.js"
-      - "**.liquid"
-      - "**/*.md"
-      - "**.yml"
-      - "**.json"
-      - "Gemfile"
-      - "Gemfile.lock"
-      - "!.github/workflows/axe.yml"
-      - "!.github/workflows/broken-links.yml"
-      - "!.github/workflows/deploy-docker-tag.yml"
-      - "!.github/workflows/deploy-image.yml"
-      - "!.github/workflows/docker-slim.yml"
-      - "!.github/workflows/lighthouse-badger.yml"
-      - "!.github/workflows/prettier.yml"
-      - "!lighthouse_results/**"
-      - "!CONTRIBUTING.md"
-      - "!CUSTOMIZE.md"
-      - "!FAQ.md"
-      - "!INSTALL.md"
-      - "!README.md"
+    branches: [main]
   pull_request:
-    branches:
-      - master
-      - main
-    paths:
-      - "assets/**"
-      - "_sass/**"
-      - "_scripts/**"
-      - "**.bib"
-      - "**.html"
-      - "**.js"
-      - "**.liquid"
-      - "**/*.md"
-      - "**.yml"
-      - "**.json"
-      - "Gemfile"
-      - "Gemfile.lock"
-      - "!.github/workflows/axe.yml"
-      - "!.github/workflows/broken-links.yml"
-      - "!.github/workflows/deploy-docker-tag.yml"
-      - "!.github/workflows/deploy-image.yml"
-      - "!.github/workflows/docker-slim.yml"
-      - "!.github/workflows/lighthouse-badger.yml"
-      - "!.github/workflows/prettier.yml"
-      - "!lighthouse_results/**"
-      - "!CONTRIBUTING.md"
-      - "!CUSTOMIZE.md"
-      - "!FAQ.md"
-      - "!INSTALL.md"
-      - "!README.md"
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: write
 
-# Only one deploy per branch at a time. Two pushes in quick succession used to
-# race each other onto gh-pages, and the slower one failed with
-# "cannot lock ref 'refs/heads/gh-pages'". Superseding the older run also
-# avoids spending CI minutes on a commit that is already out of date.
+# A newer push supersedes an in-flight deploy instead of racing it onto gh-pages.
 concurrency:
   group: deploy-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   deploy:
-    # available images: https://github.com/actions/runner-images#available-images
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v4
-      - name: Setup Ruby 💎
-        uses: ruby/setup-ruby@v1
+      - uses: actions/checkout@v5
         with:
-          ruby-version: "3.3"
-          bundler-cache: true
-      - name: Setup Python 🐍
-        uses: actions/setup-python@v5
+          # The sitemap reads each file's last commit date from git history.
+          fetch-depth: 0
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - uses: actions/setup-node@v5
         with:
-          python-version: "3.13"
-      - name: Install nbconvert 📓
-        run: pip3 install --upgrade --quiet nbconvert
-      # Jekyll keys this cache by content digest, so restoring it across runs
-      # only skips re-converting Markdown and Sass that did not change.
-      # Deliberately not paired with --incremental, which reuses whole pages
-      # and misses edits to a layout or include they depend on.
-      - name: Restore Jekyll cache 🗃️
-        uses: actions/cache@v4
-        with:
-          path: .jekyll-cache
-          key: jekyll-cache-${{ runner.os }}-${{ hashFiles('_config.yml', 'Gemfile.lock') }}-${{ github.sha }}
-          restore-keys: |
-            jekyll-cache-${{ runner.os }}-${{ hashFiles('_config.yml', 'Gemfile.lock') }}-
-            jekyll-cache-${{ runner.os }}-
-      - name: Update _config.yml ⚙️
-        uses: fjogeleit/yaml-update-action@main
-        with:
-          commitChange: false
-          valueFile: "_config.yml"
-          propertyPath: "giscus.repo"
-          value: ${{ github.repository }}
-      - name: Build 🔧
-        run: |
-          export JEKYLL_ENV=production
-          bundle exec jekyll build --profile
-      - name: Purge unused CSS 🧹
-        run: npx --yes purgecss@6 -c purgecss.config.js
-      - name: Deploy 🚀
+          node-version: "24"
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build
+        run: yarn build
+
+      # Publishes to the gh-pages branch, which is what GitHub Pages already
+      # serves for this repository, so no Pages setting has to change.
+      - name: Deploy
         if: github.event_name != 'pull_request'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: _site
-      # Runs against the site we just built, so it needs no second build of its
-      # own. It reports after the deploy: a broken link turns the run red
-      # without holding up the site.
-      - name: Check for broken links 🔗
-        uses: lycheeverse/lychee-action@v1.9.0
+          folder: dist
+
+      - name: Check for broken links
+        uses: lycheeverse/lychee-action@v2
         with:
           fail: true
-          # only check local links
-          args: --offline --remap '_site(/?.*)/assets/(.*) _site/assets/$2' --no-progress '_site/**/*.html'
+          # only check links within the site
+          args: --offline --root-dir ${{ github.workspace }}/dist --no-progress 'dist/**/*.html'

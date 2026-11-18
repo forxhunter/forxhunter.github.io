@@ -1,0 +1,16 @@
+---
+/**
+ * Jekyll published year archives at /blog/<year>/. as-folio keeps them at
+ * /blog/year/<year>/, so send the old address there.
+ */
+import { site } from '@config/site';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const years = new Set((await getCollection('posts')).map((post) => String(post.data.date.getFullYear())));
+  return [...years].map((year) => ({ params: { year } }));
+}
+
+const { year } = Astro.params;
+return Astro.redirect(`${site.base}/blog/year/${year}/`, 301);
+---

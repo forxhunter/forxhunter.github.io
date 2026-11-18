@@ -1,0 +1,202 @@
+{
+  "basics": {
+    "name": "Tianyu Wu",
+    "label": "Ph.D. Candidate, Biophysics and Quantitative Biology",
+    "image": "",
+    "email": "tianyu16@illinois.edu",
+    "url": "https://forxhunter.github.io",
+    "summary": "Ph.D. candidate at the University of Illinois Urbana-Champaign working on AI for Biology (AI4Bio) and protein design, with a focus on automatic scientific discovery: building generative AI systems that propose scientific hypotheses and designs. Background in AI for protein engineering, focused on physicochemical properties such as aggregation propensity, with applications including Rubisco engineering.",
+    "location": {
+      "address": "Roger Adams Laboratory, Room 101",
+      "city": "Urbana",
+      "region": "Illinois",
+      "countryCode": "US"
+    },
+    "profiles": [
+      {
+        "network": "LinkedIn",
+        "username": "tianyu-wu-914669290",
+        "url": "https://www.linkedin.com/in/tianyu-wu-914669290"
+      },
+      {
+        "network": "ORCID",
+        "username": "0009-0000-1436-6167",
+        "url": "https://orcid.org/0009-0000-1436-6167"
+      },
+      {
+        "network": "GitHub",
+        "username": "forxhunter",
+        "url": "https://github.com/forxhunter"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "Diwakar Shukla Group, University of Illinois Urbana-Champaign",
+      "position": "Graduate Researcher, AI for Biology and Protein Design",
+      "summary": "Generative AI systems that propose scientific hypotheses and designs.",
+      "highlights": [
+        "Learned ranker for protein-ligand pose prediction that reaches 86.0% top-1 accuracy on PoseBusters v2.",
+        "Protein language models (ESM2) adapted with LoRA fine-tuning.",
+        "Tests of whether LLM representations and outputs can be trusted, using acceptance guards and null controls (NeurIPS 2026 XAI4Science workshop).",
+        "Methods for automatic scientific discovery: deciding which measurement separates competing mechanistic explanations of the same data."
+      ]
+    },
+    {
+      "name": "Luthey-Schulten Group, University of Illinois Urbana-Champaign",
+      "position": "Graduate Researcher, Whole-Cell Modeling",
+      "summary": "Spatially resolved whole-cell simulation of baker's yeast (Saccharomyces cerevisiae).",
+      "highlights": [
+        "Built the first 4D hybrid RDME-ODE simulations of the yeast galactose switch on the GPU-based Lattice Microbes platform, with cell geometry taken from cryo-electron tomograms.",
+        "Benchmarked the multi-GPU solver under different spatial decompositions.",
+        "Platform talk and session co-chair, Systems Biophysics, Biophysical Society Annual Meeting 2026."
+      ]
+    }
+  ],
+  "volunteer": [
+    {
+      "organization": "International Conference on Machine Learning (ICML)",
+      "position": "Reviewer"
+    },
+    {
+      "organization": "PLOS Computational Biology",
+      "position": "Reviewer"
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of Illinois Urbana-Champaign",
+      "location": "Urbana, IL",
+      "url": "https://illinois.edu",
+      "area": "Biophysics and Quantitative Biology",
+      "studyType": "Ph.D."
+    }
+  ],
+  "publications": [
+    {
+      "name": "MetaCarto: biologically faithful automatic layout for genome-scale metabolic maps",
+      "publisher": "bioRxiv",
+      "releaseDate": "2026-09-19",
+      "url": "https://doi.org/10.64898/2026.09.19.752882",
+      "summary": "T. Wu. An automatic layout framework that draws genome-scale metabolic models as curator-style pathway maps. Applied to all 108 BiGG models to produce 2,621 maps without manual rearrangement."
+    },
+    {
+      "name": "Spatial heterogeneity alters the dynamics of the yeast galactose switch: Insights from 4D RDME-ODE hybrid simulations (meeting abstract)",
+      "publisher": "Biophysical Journal 125(4), 15a",
+      "releaseDate": "2026-02-01",
+      "url": "https://doi.org/10.1016/j.bpj.2025.11.287",
+      "summary": "T. Wu, M.-C. Spindler, A. Apsley, H. Li, Z. R. Thornburg, J. Mahamid, Z. Luthey-Schulten. Platform talk, Systems Biophysics, BPS 2026 Annual Meeting."
+    },
+    {
+      "name": "Spatial Heterogeneity Alters the Dynamics of the Yeast Galactose Switch: Insights from 4D RDME-ODE Hybrid Simulations",
+      "publisher": "bioRxiv",
+      "releaseDate": "2025-07-23",
+      "url": "https://doi.org/10.1101/2025.07.23.666409",
+      "summary": "T. Wu, M.-C. Spindler, E. Earnest, H. Li, Z. R. Thornburg, J. Mahamid, Z. Luthey-Schulten. The first 4D simulations of the galactose switch in a tomogram-based yeast cell."
+    },
+    {
+      "name": "Visualizing Cell Structures with Minecraft",
+      "publisher": "The Biophysicist",
+      "releaseDate": "2025-02-01",
+      "url": "https://doi.org/10.35459/tbp.2024.000275",
+      "summary": "T. Wu, Z. R. Thornburg, K. Tan, S. Kenkel, S. A. Boppart, R. Bhargava, Z. Luthey-Schulten."
+    }
+  ],
+  "projects": [
+    {
+      "name": "Computational Protein Engineering: Form II Rubisco (Rhodospirillum rubrum)",
+      "summary": "An end-to-end computational pipeline for engineering a carbon-fixing enzyme, from predictive models to designs a collaborating wet lab can test.",
+      "highlights": [
+        "Trained and benchmarked sequence- and structure-based models on deep mutational scanning data; established calibration and error floors before using predictions to rank candidates.",
+        "Ran molecular dynamics, free-energy, and quantum-chemical calculations on the catalytic site; built decoy and radial controls to test whether a proposed structural descriptor is actually site-local.",
+        "Designed de novo binders and redesigned active sites with generative backbone models; converted the surviving designs into ordered constructs, matched controls, and assay protocols for experimental validation."
+      ],
+      "startDate": "2026"
+    },
+    {
+      "name": "Predicting Protein Aggregation Propensity with Protein Language Models",
+      "summary": "A sequence-based machine-learning framework for aggregation propensity, from whole-protein prediction to residue-level aggregation-prone regions. First-author manuscript in preparation.",
+      "highlights": [
+        "Built a protein language model-based predictor of aggregation propensity, trained on a published high-throughput stability library and extended to residue-level aggregation-prone region detection.",
+        "Designed nested and external validation protocols; benchmarked against public curated aggregation databases and training-free biophysical baselines.",
+        "Ran in-silico deep mutational scanning on an antibody Fab; coordinated experimental validation (DLS, BLI) with collaborators."
+      ]
+    },
+    {
+      "name": "MetaCarto",
+      "summary": "Automatic, deterministic layout of genome-scale metabolic models as Escher-compatible maps, with a browsable viewer for all 108 BiGG models.",
+      "highlights": [
+        "Metabolic networks",
+        "Graph layout",
+        "Open source"
+      ],
+      "startDate": "2026-09-01",
+      "url": "https://github.com/forxhunter/MetaCarto"
+    },
+    {
+      "name": "Can a virtual cell predict a pathway it has never seen switch on?",
+      "summary": "A pilot on 24,562 human blood cells that separates what expression data, mechanistic knowledge and a handful of stimulated cells each contribute to predicting an unseen interferon response.",
+      "highlights": [
+        "Virtual cell",
+        "Single-cell perturbation prediction"
+      ],
+      "startDate": "2026-10-01",
+      "url": "https://forxhunter.github.io/blog/2026/silent-pathway/"
+    },
+    {
+      "name": "Domain Module Contract",
+      "summary": "A proposal for shipping domain expertise as a module that plugs into each new foundation model instead of a fork of an old one.",
+      "highlights": [
+        "Foundation models",
+        "Modular fine-tuning"
+      ],
+      "startDate": "2026-11-01",
+      "url": "https://forxhunter.github.io/blog/2026/plug-not-fork/"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Machine learning",
+      "icon": "fa-solid fa-hashtag",
+      "keywords": [
+        "Large language models",
+        "Protein language models (ESM2)",
+        "LoRA fine-tuning",
+        "Learned ranking",
+        "Model evaluation"
+      ]
+    },
+    {
+      "name": "Scientific computing",
+      "icon": "fa-solid fa-hashtag",
+      "keywords": [
+        "GPU parallel programming",
+        "Lattice Microbes",
+        "Stochastic and deterministic simulation (RDME, ODE)",
+        "Genome-scale metabolic modeling"
+      ]
+    }
+  ],
+  "interests": [
+    {
+      "name": "Automatic scientific discovery",
+      "icon": "fa-solid fa-tag",
+      "keywords": [
+        "Hypothesis generation",
+        "Experiment selection",
+        "Identifiability of mechanisms"
+      ]
+    },
+    {
+      "name": "AI for Biology",
+      "icon": "fa-solid fa-tag",
+      "keywords": [
+        "Protein engineering",
+        "Aggregation propensity",
+        "Rubisco engineering",
+        "Protein design",
+        "Virtual cells"
+      ]
+    }
+  ]
+}
