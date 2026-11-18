@@ -198,6 +198,8 @@ kramdown:
 include: ["_pages", "_scripts"]
 exclude:
   - assets/video/tutorial_al_folio.mp4 # 25 MB al-folio demo video, unused and only linked from INSTALL.md
+  - "**/*.css.map" # 2.8 MB of source maps for vendored libraries; only ever fetched with devtools open
+  - "**/*.js.map"
   - bin/
   - CONTRIBUTING.md
   - CUSTOMIZE.md
