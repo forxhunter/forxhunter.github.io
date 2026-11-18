@@ -104,6 +104,15 @@
       "startDate": "2026"
     },
     {
+      "name": "Predicting Protein Aggregation Propensity with Protein Language Models",
+      "summary": "A sequence-based machine-learning framework for aggregation propensity, from whole-protein prediction to residue-level aggregation-prone regions. First-author manuscript in preparation.",
+      "highlights": [
+        "Built a protein language model-based predictor of aggregation propensity, trained on a published high-throughput stability library and extended to residue-level aggregation-prone region detection.",
+        "Designed nested and external validation protocols; benchmarked against public curated aggregation databases and training-free biophysical baselines.",
+        "Ran in-silico deep mutational scanning on an antibody Fab; coordinated experimental validation (DLS, BLI) with collaborators."
+      ]
+    },
+    {
       "name": "MetaCarto",
       "summary": "Automatic, deterministic layout of genome-scale metabolic models as Escher-compatible maps, with a browsable viewer for all 108 BiGG models.",
       "highlights": ["Metabolic networks", "Graph layout", "Open source"],
