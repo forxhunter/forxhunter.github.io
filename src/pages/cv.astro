@@ -45,8 +45,10 @@ if (format === 'rendercv' && rc) {
 } else if (format === 'jsonresume' && jr) {
   if (jr.basics) tocItems.push({ label: 'Contact Information', href: '#contact' });
   if (jr.work?.length) tocItems.push({ label: 'Experience', href: '#experience' });
+  if (jr.projects?.length) tocItems.push({ label: 'Projects', href: '#projects' });
   if (jr.education?.length) tocItems.push({ label: 'Education', href: '#education' });
   if (jr.publications?.length) tocItems.push({ label: 'Publications', href: '#publications' });
+  if (jr.volunteer?.length) tocItems.push({ label: 'Academic Service', href: '#service' });
   if (jr.awards?.length) tocItems.push({ label: 'Awards', href: '#awards' });
   if (jr.skills?.length) tocItems.push({ label: 'Skills', href: '#skills' });
   if (jr.languages?.length) tocItems.push({ label: 'Languages', href: '#languages' });
@@ -297,6 +299,22 @@ if (format === 'rendercv' && rc) {
                 </CVSection>
               )}
 
+              {jr?.projects && jr.projects.length > 0 && (
+                <CVSection title="Projects" id="projects">
+                  <ul class="card-text font-weight-light list-group list-group-flush">
+                    {jr.projects.map((e) => (
+                      <CVEntry
+                        title={e.name ?? ''}
+                        subtitle={e.summary}
+                        url={e.url}
+                        dates={formatDateRange(e.startDate, e.endDate)}
+                        highlights={e.highlights}
+                      />
+                    ))}
+                  </ul>
+                </CVSection>
+              )}
+
               {jr?.education && jr.education.length > 0 && (
                 <CVSection title="Education" id="education">
                   <ul class="card-text font-weight-light list-group list-group-flush">
@@ -323,6 +341,22 @@ if (format === 'rendercv' && rc) {
                         url={e.url}
                         dates={formatCVDate(e.releaseDate)}
                         highlights={e.summary ? [e.summary] : []}
+                      />
+                    ))}
+                  </ul>
+                </CVSection>
+              )}
+
+              {jr?.volunteer && jr.volunteer.length > 0 && (
+                <CVSection title="Academic Service" id="service">
+                  <ul class="card-text font-weight-light list-group list-group-flush">
+                    {jr.volunteer.map((e) => (
+                      <CVEntry
+                        title={e.position ?? ''}
+                        subtitle={e.organization}
+                        url={e.url}
+                        dates={formatDateRange(e.startDate, e.endDate)}
+                        highlights={e.summary ? [e.summary, ...(e.highlights ?? [])] : e.highlights}
                       />
                     ))}
                   </ul>

@@ -1124,6 +1124,106 @@
     line-height: 1.7;
   }
 
+  /*
+   * Block spacing and list markers for rendered Markdown. `prose` is the class
+   * name of @tailwindcss/typography, which this project does not install, and
+   * Tailwind's preflight zeroes every margin and list style. Without these
+   * rules headings render at body size and paragraphs run together.
+   * :where() keeps specificity at a single class, so component styles inside
+   * a post (figure panels, callouts) still win.
+   */
+  .prose :where(p, ul, ol, blockquote, pre, table, figure, hr) {
+    margin-top: 0;
+    margin-bottom: 1.1rem;
+  }
+
+  .prose :where(h1, h2, h3, h4, h5, h6) {
+    color: var(--global-text-color);
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.75rem;
+  }
+
+  .prose :where(h1) {
+    font-size: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  .prose :where(h2) {
+    font-size: 1.6rem;
+    margin-top: 2.25rem;
+  }
+
+  .prose :where(h3) {
+    font-size: 1.3rem;
+    margin-top: 1.75rem;
+  }
+
+  .prose :where(h4, h5, h6) {
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+  }
+
+  .prose > :where(:first-child) {
+    margin-top: 0;
+  }
+
+  .prose :where(ul, ol) {
+    padding-left: 1.6rem;
+  }
+
+  .prose :where(ul) {
+    list-style: disc;
+  }
+
+  .prose :where(ol) {
+    list-style: decimal;
+  }
+
+  .prose :where(li) {
+    margin-bottom: 0.3rem;
+  }
+
+  .prose :where(li > ul, li > ol) {
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .prose :where(blockquote) {
+    padding: 0.2rem 0 0.2rem 1rem;
+    border-left: 3px solid var(--global-divider-color);
+    color: var(--global-text-color-light);
+  }
+
+  .prose :where(hr) {
+    border: 0;
+    border-top: 1px solid var(--global-divider-color);
+  }
+
+  .prose :where(figure) {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .prose :where(:not(pre) > code) {
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    background-color: var(--global-code-bg-color);
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+  }
+
+  .prose :where(th, td) {
+    padding: 0.4rem 0.6rem;
+    border-bottom: 1px solid var(--global-divider-color);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .prose :where(th) {
+    font-weight: 600;
+  }
+
   .prose a {
     color: var(--global-theme-color);
   }

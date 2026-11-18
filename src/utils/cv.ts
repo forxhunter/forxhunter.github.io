@@ -76,6 +76,25 @@ export interface JSONResumeEducation {
   courses?: string[];
 }
 
+export interface JSONResumeProject {
+  name?: string;
+  summary?: string;
+  url?: string;
+  startDate?: string;
+  endDate?: string;
+  highlights?: string[];
+}
+
+export interface JSONResumeVolunteer {
+  organization?: string;
+  position?: string;
+  url?: string;
+  startDate?: string;
+  endDate?: string;
+  summary?: string;
+  highlights?: string[];
+}
+
 export interface JSONResumeAward {
   title?: string;
   date?: string;
@@ -126,6 +145,8 @@ export interface JSONResume {
   };
   work?: JSONResumeWork[];
   education?: JSONResumeEducation[];
+  projects?: JSONResumeProject[];
+  volunteer?: JSONResumeVolunteer[];
   awards?: JSONResumeAward[];
   publications?: JSONResumePublication[];
   skills?: JSONResumeSkill[];
@@ -152,13 +173,19 @@ export function formatCVDate(d: string | number | undefined): string {
   return str;
 }
 
-/** Format a date range like "Jan 2020 – Present". */
+/**
+ * Format a date range like "Jan 2020 – Present".
+ *
+ * A missing end date means "ongoing" only when there is a start date to be
+ * ongoing from. With neither date the range is unknown, so it renders as
+ * nothing rather than claiming the entry is current.
+ */
 export function formatDateRange(
   start: string | number | undefined,
   end: string | number | undefined,
 ): string {
   const s = formatCVDate(start);
-  const e = end === 'present' || !end ? 'Present' : formatCVDate(end);
+  const e = end === 'present' ? 'Present' : end ? formatCVDate(end) : s ? 'Present' : '';
   if (!s && !e) return '';
   if (!s) return e;
   if (!e || s === e) return s;

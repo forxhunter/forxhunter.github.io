@@ -138,7 +138,7 @@ const jsonLd = {
     <div class="flex gap-8">
       <!-- TOC sidebar (desktop only) -->
       {
-        headings.length > 0 && (
+        post.data.toc && headings.length > 0 && (
           <aside class="hidden lg:block w-52 flex-shrink-0">
             <TOC headings={headings} />
           </aside>

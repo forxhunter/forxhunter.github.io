@@ -39,7 +39,7 @@ const rt = post.body ? calcReadingTime(post.body) : 1;
     <div class="mx-auto flex max-w-5xl gap-8 px-4">
       <!-- TOC sidebar (desktop only) -->
       {
-        headings.length > 0 && (
+        post.data.toc && headings.length > 0 && (
           <aside class="hidden w-52 flex-shrink-0 lg:block">
             <TOC headings={headings} />
           </aside>

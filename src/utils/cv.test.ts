@@ -56,9 +56,11 @@ describe('formatDateRange', () => {
     expect(formatDateRange('2024', '2024')).toBe('2024');
   });
 
-  it('returns "Present" when both start and end are undefined (undefined end → Present)', () => {
+  it('returns an empty string when both start and end are undefined', () => {
     // undefined end is treated as ongoing (→ 'Present'); undefined start yields no prefix
-    expect(formatDateRange(undefined, undefined)).toBe('Present');
+    // No dates means the range is unknown, not ongoing: an undated past role
+    // must not be labelled "Present".
+    expect(formatDateRange(undefined, undefined)).toBe('');
   });
 
   it('returns just the end when start is undefined', () => {
