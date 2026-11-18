@@ -235,8 +235,14 @@ layout: default
         </div>
 
         {% if site.data.resume.work %}
+          {% comment %}
+            No entry carries a startDate yet, and the CV page sorts on it, which
+            leaves the CV showing the file in reverse. Reverse here too so both
+            pages list the same group first.
+          {% endcomment %}
+          {% assign home_work = site.data.resume.work | reverse %}
           <ul class="home-timeline">
-            {% for job in site.data.resume.work %}
+            {% for job in home_work %}
               <li>
                 <div class="role">{{ job.position }}</div>
                 <div class="org">{{ job.name }}</div>
