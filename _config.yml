@@ -197,6 +197,7 @@ kramdown:
 # Includes & excludes
 include: ["_pages", "_scripts"]
 exclude:
+  - assets/video/tutorial_al_folio.mp4 # 25 MB al-folio demo video, unused and only linked from INSTALL.md
   - bin/
   - CONTRIBUTING.md
   - CUSTOMIZE.md

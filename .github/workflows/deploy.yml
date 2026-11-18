@@ -15,6 +15,7 @@ on:
       - "**.liquid"
       - "**/*.md"
       - "**.yml"
+      - "**.json"
       - "Gemfile"
       - "Gemfile.lock"
       - "!.github/workflows/axe.yml"
@@ -44,6 +45,7 @@ on:
       - "**.liquid"
       - "**/*.md"
       - "**.yml"
+      - "**.json"
       - "Gemfile"
       - "Gemfile.lock"
       - "!.github/workflows/axe.yml"
@@ -64,6 +66,14 @@ on:
 permissions:
   contents: write
 
+# Only one deploy per branch at a time. Two pushes in quick succession used to
+# race each other onto gh-pages, and the slower one failed with
+# "cannot lock ref 'refs/heads/gh-pages'". Superseding the older run also
+# avoids spending CI minutes on a commit that is already out of date.
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
     # available images: https://github.com/actions/runner-images#available-images
@@ -80,7 +90,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-          cache: "pip" # caching pip dependencies
+      - name: Install nbconvert 📓
+        run: pip3 install --upgrade --quiet nbconvert
       - name: Update _config.yml ⚙️
         uses: fjogeleit/yaml-update-action@main
         with:
@@ -88,18 +99,23 @@ jobs:
           valueFile: "_config.yml"
           propertyPath: "giscus.repo"
           value: ${{ github.repository }}
-      - name: Install and Build 🔧
+      - name: Build 🔧
         run: |
-          sudo apt-get update && sudo apt-get install -y imagemagick
-          pip3 install --upgrade nbconvert
           export JEKYLL_ENV=production
-          bundle exec jekyll build
+          bundle exec jekyll build --profile
       - name: Purge unused CSS 🧹
-        run: |
-          npm install -g purgecss
-          purgecss -c purgecss.config.js
+        run: npx --yes purgecss@6 -c purgecss.config.js
       - name: Deploy 🚀
         if: github.event_name != 'pull_request'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: _site
+      # Runs against the site we just built, so it needs no second build of its
+      # own. It reports after the deploy: a broken link turns the run red
+      # without holding up the site.
+      - name: Check for broken links 🔗
+        uses: lycheeverse/lychee-action@v1.9.0
+        with:
+          fail: true
+          # only check local links
+          args: --offline --remap '_site(/?.*)/assets/(.*) _site/assets/$2' --no-progress '_site/**/*.html'
