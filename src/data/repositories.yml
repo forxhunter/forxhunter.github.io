@@ -1,13 +1,8 @@
 github_users:
-  - torvalds
-  - dadangnh
-
-github_repos:
-  - dadangnh/as-folio
-  - torvalds/linux
-  - git/git
-  - python/cpython
-  - astro/astro
-  - tailwindlabs/tailwindcss
+  - forxhunter
 
 repo_description_lines_max: 2
+
+github_repos:
+  - forxhunter/LLM-system-prompt-everyone-understands
+  - Luthey-Schulten-Lab/Yeast_Galactose_Switch_RDMEODE

@@ -20,7 +20,7 @@ interface Props {
 }
 
 const {
-  title = site.author.name,
+  title = site.title,
   description = site.description,
   image = site.og.image || undefined,
   noindex = false,
@@ -28,7 +28,9 @@ const {
   isHome = false,
 } = Astro.props;
 
-const pageTitle = title === site.author.name ? title : `${title} | ${site.author.name}`;
+// The home page is titled with the site title alone, every other page with
+// "<page> | <site title>", as the Jekyll site did. Search engines show this.
+const pageTitle = title === site.title ? title : `${title} | ${site.title}`;
 const canonicalURL = new URL(Astro.url.pathname, site.url);
 // Prepend base path to root-relative images before resolving to absolute URL
 const resolvedImage = image?.startsWith('/')
@@ -79,8 +81,8 @@ const personJsonLd = isHome ? JSON.stringify({
     <title>{pageTitle}</title>
 
     <!-- Favicon -->
-    <link rel="icon" href={`${site.base}/favicon.svg`} type="image/svg+xml" />
-    <link rel="alternate icon" href={`${site.base}/favicon.ico`} />
+    <link rel="icon" href={`${site.base}/favicon.png`} type="image/png" />
+    <link rel="apple-touch-icon" href={`${site.base}/favicon.png`} />
 
     <!-- Fonts are self-hosted via Fontsource (imported in global.css) — no FOUT -->
 

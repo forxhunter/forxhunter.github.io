@@ -32,10 +32,11 @@ export const site = {
   // ─── Identity ──────────────────────────────────────────────────────────────
 
   /** Site title. Shown in the browser tab and navbar. */
-  title: 'Albert Einstein',
+  title: 'Tianyu Wu | UIUC Biophysics',
 
   /** Site description. Used in meta tags. */
-  description: 'A simple, clean, and responsive Astro template for academics. Powered by as-folio.',
+  description:
+    'Tianyu Wu, Ph.D. candidate in Biophysics and Quantitative Biology at the University of Illinois Urbana-Champaign (UIUC). Research in AI for Biology and protein design: generative AI systems that propose scientific hypotheses and designs.',
 
   /** Language code for the site. */
   lang: 'en',
@@ -44,30 +45,30 @@ export const site = {
 
   author: {
     /** Full name shown in navbar, about page heading, and footer. */
-    name: 'Albert Einstein',
+    name: 'Tianyu Wu',
 
     /** Short email address (used in social links). */
-    email: 'einstein@example.com',
+    email: 'tianyu16@illinois.edu',
 
     /** Path to profile photo. Place image in public/assets/img/. */
-    avatar: '/assets/img/prof_pic.jpg',
+    avatar: '/assets/img/pro_pic.jpg',
 
     /**
      * Subtitle below your name on the about page.
      * HTML is supported.
      */
-    subtitle: `Theoretical Physicist
-      &nbsp;·&nbsp;
-      <a href="https://en.wikipedia.org/wiki/Institute_for_Advanced_Study">Institute for Advanced Study</a>,
-      Princeton`,
+    subtitle: `<b>Affiliation:</b> Center for Biophysics and Quantitative Biology, University of Illinois Urbana-Champaign, Urbana, IL.
+      <br /><b>Email:</b> <a href="mailto:tianyu16@illinois.edu">tianyu16@illinois.edu</a>`,
 
     /**
      * Address block below profile photo.
      * HTML is supported.
      */
-    moreInfo: `<p>Institute for Advanced Study</p>
-      <p>Einstein Drive</p>
-      <p>Princeton, NJ 08540</p>`,
+    moreInfo: `<p>Tianyu Wu</p>
+      <p>Graduate Student, Computational and Biophysics</p>
+      <p>Diwakar Shukla Group</p>
+      <p>Roger Adams Laboratory, Room 101</p>
+      <p>University of Illinois at Urbana-Champaign</p>`,
   },
 
   // ─── Social links ──────────────────────────────────────────────────────────
@@ -79,16 +80,16 @@ export const site = {
   //   bluesky_handle, medium_username, cv_pdf, rss_icon
 
   socials: {
-    email: 'einstein@example.com',
+    email: 'tianyu16@illinois.edu',
     x_username: undefined as string | undefined,
-    linkedin_username: undefined as string | undefined,
+    linkedin_username: 'tianyu-wu-914669290' as string | undefined,
     github_username: undefined as string | undefined,
     gitlab_username: undefined as string | undefined,
     /** Google Scholar user ID — the part after user= in your Scholar URL */
-    scholar_userid: 'qc6CJjYAAAAJ',
-    orcid_id: undefined as string | undefined,
+    scholar_userid: undefined as string | undefined,
+    orcid_id: '0009-0000-1436-6167' as string | undefined,
     /** Inspire HEP author ID */
-    inspire_id: '1010907',
+    inspire_id: undefined as string | undefined,
     researchgate_username: undefined as string | undefined,
     arxiv_id: undefined as string | undefined,
     youtube_id: undefined as string | undefined,
@@ -97,7 +98,7 @@ export const site = {
     bluesky_handle: undefined as string | undefined,
     medium_username: undefined as string | undefined,
     /** Path to CV PDF in public/assets/pdf/ */
-    cv_pdf: '/assets/pdf/example_pdf.pdf',
+    cv_pdf: undefined as string | undefined,
     /** Show RSS icon in social links */
     rss_icon: true,
   },
@@ -122,15 +123,6 @@ export const site = {
       { label: 'publications', href: '/publications/' },
       { label: 'projects', href: '/projects/' },
       { label: 'repositories', href: '/repositories/' },
-      { label: 'cv', href: '/cv/' },
-      {
-        label: 'more',
-        children: [
-          { label: 'teaching', href: '/teaching/' },
-          { label: 'people', href: '/people/' },
-          { label: 'books', href: '/books/' },
-        ],
-      },
     ] as NavItem[],
   },
 
@@ -141,10 +133,10 @@ export const site = {
      * Text shown in footer. HTML is supported.
      * Leave empty string to hide.
      */
-    text: `Powered by <a href="https://github.com/dadangnh/as-folio" target="_blank" rel="noopener noreferrer">as-folio</a>.
+    text: `Powered by <a href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a> with <a href="https://github.com/dadangnh/as-folio" target="_blank" rel="noopener noreferrer">as-folio</a>.
       Hosted by <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>.`,
     /** Show "Last updated" timestamp in footer. */
-    lastUpdated: false,
+    lastUpdated: true,
     /** Path to impressum/legal page (EU GDPR). Leave undefined to hide. */
     impressum: undefined as string | undefined,
     /**
@@ -164,26 +156,26 @@ export const site = {
      * 'rendercv' → reads src/data/cv.yml (RenderCV YAML format)
      * 'jsonresume' → reads src/data/resume.json (JSONResume format)
      */
-    format: 'rendercv' as 'rendercv' | 'jsonresume',
+    format: 'jsonresume' as 'rendercv' | 'jsonresume',
     /** Path to CV PDF for the download button in public/assets/pdf/. */
-    pdfPath: '/assets/pdf/example_pdf.pdf',
+    pdfPath: '',
   },
 
   // ─── Blog ──────────────────────────────────────────────────────────────────
 
   blog: {
     /** Name shown in the blog page heading. */
-    name: 'as-folio',
-    description: 'A simple, clean, and responsive Astro template for academics.',
+    name: "Tianyu's Blog",
+    description: 'Thoughts, research, and insights',
     /** Number of posts per page. */
     postsPerPage: 5,
     /**
      * Tags shown as badges on the blog listing page header.
      * Users can click them to filter posts by tag.
      */
-    displayTags: ['formatting', 'images', 'links', 'math', 'code', 'blockquotes'],
+    displayTags: ['research', 'yeast', 'gpu', 'wcm'],
     /** Categories shown as badges on the blog listing page header. */
-    displayCategories: [] as string[],
+    displayCategories: ['tutorials'] as string[],
     /**
      * External post sources (fetched at build time).
      * Each entry is either an RSS feed URL or a list of individual post objects.
@@ -255,7 +247,7 @@ export const site = {
      * Enable Astro View Transitions for smooth page-to-page animations.
      * Disable if you prefer full page reloads (e.g. for accessibility reasons).
      */
-    viewTransitions: true,
+    viewTransitions: false,
     /** Show social sharing links (X, LinkedIn, Facebook, email) at the bottom of blog posts. */
     socialShare: true,
   },
@@ -265,20 +257,20 @@ export const site = {
 
   giscus: {
     /** Set to true once you've configured the fields below. */
-    enabled: false,
+    enabled: true,
     /**
      * When true, Giscus is hidden behind a "Load comments" button — the
      * giscus.app script is only fetched after the user opts in.
      * Recommended for GDPR compliance (giscus sets third-party cookies).
      * Default: true.
      */
-    lazyLoad: true,
-    repo: '' as `${string}/${string}`,
-    repoId: '',
-    category: 'Comments',
-    categoryId: '',
+    lazyLoad: false,
+    repo: 'forxhunter/forxhunter.github.io' as `${string}/${string}`,
+    repoId: 'R_kgDOPWM87g',
+    category: 'Q&A',
+    categoryId: 'DIC_kwDOPWM87s4Cztyt',
     /** How to map discussions to pages. */
-    mapping: 'title' as 'pathname' | 'url' | 'title' | 'og:title',
+    mapping: 'pathname' as 'pathname' | 'url' | 'title' | 'og:title',
     strict: true,
     reactionsEnabled: true,
     inputPosition: 'bottom' as 'top' | 'bottom',
@@ -310,7 +302,7 @@ export const site = {
     /** Include Open Graph meta tags. */
     enabled: true,
     /** Default OG image path (in public/). */
-    image: '' as string,
+    image: '/assets/img/yeast.png' as string,
   },
 
   // ─── Newsletter ───────────────────────────────────────────────────────────
@@ -328,7 +320,7 @@ export const site = {
      * Set to a calendar address like 'user@gmail.com' to show the embed.
      * Leave empty string to hide the calendar section entirely.
      */
-    calendarId: 'test@gmail.com' as string,
+    calendarId: '' as string,
     /** Timezone for the Google Calendar embed (e.g., 'America/New_York'). */
     timezone: 'America/New_York' as string,
   },
@@ -341,10 +333,10 @@ export const site = {
      * Can be disabled globally here; also toggleable per entry in BibTeX.
      */
     badges: {
-      altmetric: true,
-      dimensions: true,
-      googleScholar: true,
-      inspirehep: true,
+      altmetric: false,
+      dimensions: false,
+      googleScholar: false,
+      inspirehep: false,
     },
     /**
      * Max number of authors shown before "and N more..." link.
@@ -408,7 +400,7 @@ export const site = {
   pages: {
     projects: {
       /** Description shown below the "projects" heading on the projects page. */
-      description: 'A growing collection of your cool projects.',
+      description: 'A showcase of my research projects and academic work.',
     },
     teaching: {
       /** Description shown below the "teaching" heading on the teaching page. */
