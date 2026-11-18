@@ -18,6 +18,13 @@ profile:
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 
+# One-page home: each section is rendered in order on this page and links out
+# to its own full page.
+home_sections:
+  research: true
+  publications: true
+  experience: true
+
 announcements:
   enabled: true # includes a list of news items
   scrollable: true # adds a vertical scroll bar if there are more than 3 news items

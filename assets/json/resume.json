@@ -53,6 +53,16 @@
       ]
     }
   ],
+  "volunteer": [
+    {
+      "organization": "International Conference on Machine Learning (ICML)",
+      "position": "Reviewer"
+    },
+    {
+      "organization": "PLOS Computational Biology",
+      "position": "Reviewer"
+    }
+  ],
   "education": [
     {
       "institution": "University of Illinois Urbana-Champaign",
