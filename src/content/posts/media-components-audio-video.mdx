@@ -1,0 +1,178 @@
+---
+title: Audio, Video, and Tabbed Content
+date: 2025-06-05
+description: Embedding HTML5 audio players, responsive video embeds, and tabbed content sections in blog posts.
+tags: [media, formatting, audio, video]
+categories: [demo]
+toc: true
+relatedPosts: true
+---
+
+import AudioPlayer from '@components/AudioPlayer.astro';
+import VideoEmbed from '@components/VideoEmbed.astro';
+import Tabs from '@components/Tabs.astro';
+
+Three built-in components that extend what your posts can do: `AudioPlayer`, `VideoEmbed`,
+and `Tabs`. No CDN flags needed — import them directly in any MDX file.
+
+## AudioPlayer
+
+An accessible HTML5 audio player with title, caption, and auto-detected MIME type.
+The audio below is a public domain piano recording from [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Fr%C3%A9d%C3%A9ric_Chopin_-_Nocturne_op._9_No._2.ogg):
+
+<AudioPlayer
+  src="/assets/audio/chopin-nocturne.ogg"
+  title="Frédéric Chopin — Nocturne Op. 9, No. 2"
+  caption="Public domain recording. Pianist: Mathieu Laplante."
+  type="audio/ogg"
+/>
+
+A second example using an MP3 file — the player auto-detects the type from the extension:
+
+<AudioPlayer
+  src="https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg"
+  title="J.S. Bach — Fugue in A minor, BWV 543"
+  caption="Public domain organ recording from Wikimedia Commons."
+/>
+
+**Props:**
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| `src` | `string` | Audio file URL or path |
+| `title` | `string` | Display title (optional) |
+| `caption` | `string` | Caption below the player (optional) |
+| `type` | `string` | MIME type override (e.g. `"audio/ogg"`); auto-detected from extension by default |
+
+---
+
+## VideoEmbed
+
+A responsive wrapper for YouTube, Vimeo, or direct video files. The aspect ratio is
+maintained at any container width.
+
+### YouTube
+
+Richard Feynman's famous lecture on the pleasure of finding things out:
+
+<VideoEmbed
+  src="https://www.youtube.com/watch?v=lmTmGLzPVyM"
+  title="Richard Feynman — The Pleasure of Finding Things Out (BBC, 1981)"
+  caption="A 47-minute interview that shaped how many scientists think about curiosity."
+  aspect={16/9}
+/>
+
+### Direct Video File
+
+You can also embed a self-hosted `.mp4` or `.webm`:
+
+<VideoEmbed
+  src="https://www.w3schools.com/html/mov_bbb.mp4"
+  title="Big Buck Bunny (excerpt)"
+  caption="CC-BY Blender Foundation. Swap the src for your own hosted video."
+  aspect={16/9}
+/>
+
+**Props:**
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `src` | `string` | — | YouTube URL, Vimeo URL, or direct `.mp4`/`.webm` URL |
+| `title` | `string` | — | Caption / accessible label |
+| `caption` | `string` | — | Optional text below the embed |
+| `aspect` | `number` | `16/9` | Aspect ratio (`16/9`, `4/3`, `1/1`, `9/16`) |
+
+---
+
+## Tabs
+
+A lightweight tabbed interface — no JavaScript framework, no CSS framework dependency.
+
+<Tabs tabs={["Python", "TypeScript", "Rust"]} id="lang-tabs">
+  <div slot="tab-0">
+
+**Euler's method in Python:**
+
+```python
+def euler(f, y0, t_span, dt):
+    """Solve dy/dt = f(t, y) with initial value y0."""
+    t_start, t_end = t_span
+    t, y = t_start, y0
+    result = [(t, y)]
+    while t < t_end:
+        y = y + dt * f(t, y)
+        t = t + dt
+        result.append((t, y))
+    return result
+
+# Example: dy/dt = -y, y(0) = 1 → exact: y = e^{-t}
+solution = euler(lambda t, y: -y, 1.0, (0, 5), dt=0.01)
+```
+
+  </div>
+  <div slot="tab-1">
+
+**Euler's method in TypeScript:**
+
+```typescript
+function euler(
+  f: (t: number, y: number) => number,
+  y0: number,
+  tSpan: [number, number],
+  dt: number,
+): [number, number][] {
+  const [tStart, tEnd] = tSpan;
+  let t = tStart, y = y0;
+  const result: [number, number][] = [[t, y]];
+  while (t < tEnd) {
+    y = y + dt * f(t, y);
+    t = t + dt;
+    result.push([t, y]);
+  }
+  return result;
+}
+
+// Example: dy/dt = -y, y(0) = 1
+const solution = euler((t, y) => -y, 1.0, [0, 5], 0.01);
+```
+
+  </div>
+  <div slot="tab-2">
+
+**Euler's method in Rust:**
+
+```rust
+fn euler<F>(f: F, y0: f64, t_start: f64, t_end: f64, dt: f64) -> Vec<(f64, f64)>
+where
+    F: Fn(f64, f64) -> f64,
+{
+    let mut t = t_start;
+    let mut y = y0;
+    let mut result = vec![(t, y)];
+    while t < t_end {
+        y += dt * f(t, y);
+        t += dt;
+        result.push((t, y));
+    }
+    result
+}
+
+// Example: dy/dt = -y, y(0) = 1
+fn main() {
+    let solution = euler(|_t, y| -y, 1.0, 0.0, 5.0, 0.01);
+    println!("y(5) ≈ {:.6}", solution.last().unwrap().1);
+}
+```
+
+  </div>
+</Tabs>
+
+**Props:**
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| `tabs` | `string[]` | Tab labels — defines the number of tabs |
+| `id` | `string` | Optional unique ID prefix (needed when multiple Tabs appear on one page) |
+
+Use named slots `tab-0`, `tab-1`, `tab-2`, … for each tab's content. Content can be any
+Markdown, MDX, or raw HTML.

@@ -1,0 +1,74 @@
+---
+title: Math Typesetting with KaTeX
+date: 2025-01-08
+description: as-folio renders LaTeX math beautifully using KaTeX — both inline and display equations are supported.
+tags: [math, formatting]
+categories: [tutorial]
+math: true
+toc: true
+---
+
+as-folio uses [KaTeX](https://katex.org/) to render LaTeX mathematics. Enable it per-post with `math: true` in the frontmatter.
+
+## Inline math
+
+Write inline math between single dollar signs: `$...$`. For example, the energy-mass equivalence $E = mc^2$ is one of the most famous equations in physics.
+
+The Euler identity $e^{i\pi} + 1 = 0$ is often cited as the most beautiful equation in mathematics.
+
+## Display equations
+
+Use double dollar signs for display (block) equations:
+
+$$
+\nabla \cdot \mathbf{E} = \frac{\rho}{\varepsilon_0}
+$$
+
+$$
+\nabla \times \mathbf{B} = \mu_0 \mathbf{J} + \mu_0 \varepsilon_0 \frac{\partial \mathbf{E}}{\partial t}
+$$
+
+These are two of Maxwell's equations for electromagnetism.
+
+## Fractions and integrals
+
+$$
+\int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}
+$$
+
+The Lorentz factor from special relativity:
+
+$$
+\gamma = \frac{1}{\sqrt{1 - v^2/c^2}}
+$$
+
+## Matrices
+
+$$
+\begin{pmatrix}
+  a & b \\
+  c & d
+\end{pmatrix}
+\begin{pmatrix}
+  x \\
+  y
+\end{pmatrix}
+=
+\begin{pmatrix}
+  ax + by \\
+  cx + dy
+\end{pmatrix}
+$$
+
+## Aligned equations
+
+The derivation of general relativity's field equations:
+
+$$
+\begin{aligned}
+G_{\mu\nu} + \Lambda g_{\mu\nu} &= \kappa T_{\mu\nu} \\
+\kappa &= \frac{8\pi G}{c^4}
+\end{aligned}
+$$
+
+where $G_{\mu\nu}$ is the Einstein tensor, $\Lambda$ is the cosmological constant, $g_{\mu\nu}$ is the metric tensor, and $T_{\mu\nu}$ is the stress-energy tensor.

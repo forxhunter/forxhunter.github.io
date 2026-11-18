@@ -1,0 +1,157 @@
+---
+import { site } from '@config/site';
+import Page from '@layouts/Page.astro';
+import { withBase } from '@utils/base';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('people');
+const current = all
+  .filter((p) => p.data.group === 'current')
+  .sort((a, b) => (a.data.importance ?? 999) - (b.data.importance ?? 999));
+const alumni = all
+  .filter((p) => p.data.group === 'alumni')
+  .sort((a, b) => (a.data.importance ?? 999) - (b.data.importance ?? 999));
+---
+
+<Page title="People" description={`Research group members of ${site.author.name}`}>
+  <header class="post-header">
+    <h1 class="post-title">people</h1>
+  </header>
+
+  {
+    current.length > 0 && (
+      <section class="mb-10">
+        <h2
+          class="mb-6 text-xl font-bold"
+          style="color: var(--global-theme-color); border-bottom: 1px solid var(--global-divider-color); padding-bottom: 0.25rem;"
+        >
+          Current Members
+        </h2>
+        <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {current.map((person) => (
+            <div class="person-card text-center">
+              {person.data.photo ? (
+                <img
+                  src={withBase(person.data.photo)}
+                  alt={person.data.name}
+                  loading="lazy"
+                  width="120"
+                  height="120"
+                  style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 0.75rem;"
+                />
+              ) : (
+                <div style="width: 120px; height: 120px; border-radius: 50%; background-color: var(--global-divider-color); margin: 0 auto 0.75rem; display: flex; align-items: center; justify-content: center;">
+                  <span style="font-size: 2rem; color: var(--global-text-color-light);">
+                    {person.data.name.charAt(0)}
+                  </span>
+                </div>
+              )}
+
+              <h3 class="text-sm font-semibold" style="color: var(--global-text-color);">
+                {person.data.website ? (
+                  <a
+                    href={person.data.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style="color: var(--global-text-color); text-decoration: none;"
+                  >
+                    {person.data.name}
+                  </a>
+                ) : (
+                  person.data.name
+                )}
+              </h3>
+              <p class="mt-0.5 text-xs" style="color: var(--global-text-color-light);">
+                {person.data.role}
+              </p>
+
+              {/* Social icons */}
+              <div class="mt-1 flex justify-center gap-2">
+                {person.data.github && (
+                  <a
+                    href={`https://github.com/${person.data.github}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-xs"
+                    style="color: var(--global-text-color-light); text-decoration: none;"
+                    aria-label="GitHub"
+                  >
+                    gh
+                  </a>
+                )}
+                {person.data.scholar && (
+                  <a
+                    href={`https://scholar.google.com/citations?user=${person.data.scholar}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-xs"
+                    style="color: var(--global-text-color-light); text-decoration: none;"
+                    aria-label="Google Scholar"
+                  >
+                    gs
+                  </a>
+                )}
+              </div>
+
+              {person.data.description && (
+                <p class="mt-1 text-xs" style="color: var(--global-text-color-light);">
+                  {person.data.description}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  {
+    alumni.length > 0 && (
+      <section class="mb-10">
+        <h2
+          class="mb-6 text-xl font-bold"
+          style="color: var(--global-theme-color); border-bottom: 1px solid var(--global-divider-color); padding-bottom: 0.25rem;"
+        >
+          Alumni
+        </h2>
+        <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+          {alumni.map((person) => (
+            <div class="flex items-center gap-3">
+              {person.data.photo && (
+                <img
+                  src={withBase(person.data.photo)}
+                  alt={person.data.name}
+                  loading="lazy"
+                  width="48"
+                  height="48"
+                  style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0;"
+                />
+              )}
+              <div>
+                <p class="text-sm font-semibold" style="color: var(--global-text-color);">
+                  {person.data.website ? (
+                    <a
+                      href={person.data.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style="color: var(--global-text-color); text-decoration: none;"
+                    >
+                      {person.data.name}
+                    </a>
+                  ) : (
+                    person.data.name
+                  )}
+                </p>
+                <p class="text-xs" style="color: var(--global-text-color-light);">
+                  {person.data.role}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  {all.length === 0 && <p style="color: var(--global-text-color-light);">No people entries yet.</p>}
+</Page>

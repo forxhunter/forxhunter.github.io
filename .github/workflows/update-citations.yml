@@ -1,0 +1,41 @@
+name: Update Citations
+
+on:
+  schedule:
+    # Runs every Sunday at 02:00 UTC
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Enable Corepack (Yarn 4)
+        run: corepack enable
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Fetch citation counts from OpenAlex
+        run: yarn citations:update
+
+      - name: Commit updated citations.yml
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/citations.yml
+          if git diff --cached --quiet; then
+            echo "No changes to citation counts."
+          else
+            git commit -m "chore: update citation counts [skip ci]"
+            git push
+          fi

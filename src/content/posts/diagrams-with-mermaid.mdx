@@ -1,0 +1,171 @@
+---
+title: Drawing Diagrams with Mermaid
+date: 2025-04-10
+description: Flowcharts, sequence diagrams, Gantt charts, and more — rendered from plain text using Mermaid.
+tags: [diagrams, visualization, formatting]
+categories: [demo]
+toc: true
+relatedPosts: true
+mermaid: true
+---
+
+[Mermaid](https://mermaid.js.org/) lets you write diagrams as code — no drawing tools needed.
+Enable it per post with `mermaid: true` in your frontmatter.
+
+## Flowchart
+
+A typical research workflow from hypothesis to publication:
+
+```mermaid
+flowchart TD
+    A([Hypothesis]) --> B[Design Experiment]
+    B --> C[Collect Data]
+    C --> D{Results Valid?}
+    D -- Yes --> E[Analyse & Interpret]
+    D -- No --> B
+    E --> F[Write Paper]
+    F --> G[Peer Review]
+    G --> H{Accepted?}
+    H -- Yes --> I([Published])
+    H -- Minor Revisions --> F
+    H -- Major Revisions --> E
+    H -- Rejected --> F
+```
+
+## Sequence Diagram
+
+The lifecycle of a manuscript through peer review:
+
+```mermaid
+sequenceDiagram
+    participant A as Author
+    participant J as Journal Editor
+    participant R1 as Reviewer 1
+    participant R2 as Reviewer 2
+
+    A->>J: Submit manuscript
+    J->>J: Desk review
+    J->>R1: Invite to review
+    J->>R2: Invite to review
+    R1-->>J: Agree to review
+    R2-->>J: Agree to review
+    R1->>J: Submit review
+    R2->>J: Submit review
+    J->>A: Decision with reviews
+    A->>J: Revised manuscript
+    J->>R1: Check revisions
+    R1-->>J: Accept
+    J->>A: Accepted for publication
+```
+
+## Gantt Chart
+
+A six-month grant project timeline:
+
+```mermaid
+gantt
+    title Research Project Timeline
+    dateFormat  YYYY-MM-DD
+    section Planning
+    Literature Review      :a1, 2025-01-01, 30d
+    Research Design        :a2, after a1, 14d
+    section Execution
+    Data Collection        :b1, after a2, 60d
+    Preliminary Analysis   :b2, after b1, 21d
+    section Dissemination
+    Paper Writing          :c1, after b2, 45d
+    Peer Review Response   :c2, after c1, 14d
+    Final Submission       :milestone, after c2, 0d
+```
+
+## Class Diagram
+
+A hierarchy of mechanics models:
+
+```mermaid
+classDiagram
+    class ClassicalMechanics {
+        +position: Vector3
+        +velocity: Vector3
+        +mass: float
+        +applyForce(F: Vector3) void
+    }
+    class RelativisticMechanics {
+        +lorentzFactor() float
+        +relativisticMomentum() Vector3
+    }
+    class QuantumMechanics {
+        +waveFunction: Psi
+        +observable(O: Operator) float
+        +commutator(A: Operator, B: Operator) Operator
+    }
+    ClassicalMechanics <|-- RelativisticMechanics
+    ClassicalMechanics <|-- QuantumMechanics
+```
+
+## State Diagram
+
+Manuscript states through the publishing pipeline:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Draft
+    Draft --> Submitted: submit()
+    Submitted --> UnderReview: editor_assigns()
+    UnderReview --> MajorRevision: reviewer_decision()
+    UnderReview --> MinorRevision: reviewer_decision()
+    UnderReview --> Rejected: reviewer_decision()
+    UnderReview --> Accepted: reviewer_decision()
+    MajorRevision --> Submitted: resubmit()
+    MinorRevision --> Submitted: resubmit()
+    Rejected --> [*]
+    Accepted --> Published: proofread()
+    Published --> [*]
+```
+
+## ER Diagram
+
+A simple citation graph schema:
+
+```mermaid
+erDiagram
+    PAPER {
+        string doi PK
+        string title
+        int year
+        string journal
+    }
+    AUTHOR {
+        string orcid PK
+        string name
+        string institution
+    }
+    PAPER ||--o{ AUTHORSHIP : "has"
+    AUTHOR ||--o{ AUTHORSHIP : "writes"
+    PAPER ||--o{ CITATION : "cites"
+    PAPER ||--o{ CITATION : "cited_by"
+    AUTHORSHIP {
+        string paper_doi FK
+        string author_orcid FK
+        int position
+    }
+    CITATION {
+        string citing_doi FK
+        string cited_doi FK
+    }
+```
+
+## Usage
+
+Enable Mermaid in any post by adding `mermaid: true` to frontmatter:
+
+```yaml
+---
+title: My Post
+mermaid: true
+---
+```
+
+Then write diagrams inside fenced code blocks tagged `mermaid`. All diagram types from
+[mermaid.js.org](https://mermaid.js.org/intro/) are supported, including pie charts, git graphs,
+mind maps, and timeline diagrams.

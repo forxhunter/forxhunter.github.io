@@ -1,133 +1,70 @@
-name: Deploy site
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - master
-      - main
-    paths:
-      - "assets/**"
-      - "_sass/**"
-      - "_scripts/**"
-      - "**.bib"
-      - "**.html"
-      - "**.js"
-      - "**.liquid"
-      - "**/*.md"
-      - "**.yml"
-      - "**.json"
-      - "Gemfile"
-      - "Gemfile.lock"
-      - "!.github/workflows/axe.yml"
-      - "!.github/workflows/broken-links.yml"
-      - "!.github/workflows/deploy-docker-tag.yml"
-      - "!.github/workflows/deploy-image.yml"
-      - "!.github/workflows/docker-slim.yml"
-      - "!.github/workflows/lighthouse-badger.yml"
-      - "!.github/workflows/prettier.yml"
-      - "!lighthouse_results/**"
-      - "!CONTRIBUTING.md"
-      - "!CUSTOMIZE.md"
-      - "!FAQ.md"
-      - "!INSTALL.md"
-      - "!README.md"
-  pull_request:
-    branches:
-      - master
-      - main
-    paths:
-      - "assets/**"
-      - "_sass/**"
-      - "_scripts/**"
-      - "**.bib"
-      - "**.html"
-      - "**.js"
-      - "**.liquid"
-      - "**/*.md"
-      - "**.yml"
-      - "**.json"
-      - "Gemfile"
-      - "Gemfile.lock"
-      - "!.github/workflows/axe.yml"
-      - "!.github/workflows/broken-links.yml"
-      - "!.github/workflows/deploy-docker-tag.yml"
-      - "!.github/workflows/deploy-image.yml"
-      - "!.github/workflows/docker-slim.yml"
-      - "!.github/workflows/lighthouse-badger.yml"
-      - "!.github/workflows/prettier.yml"
-      - "!lighthouse_results/**"
-      - "!CONTRIBUTING.md"
-      - "!CUSTOMIZE.md"
-      - "!FAQ.md"
-      - "!INSTALL.md"
-      - "!README.md"
+    branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: write
-
-# Only one deploy per branch at a time. Two pushes in quick succession used to
-# race each other onto gh-pages, and the slower one failed with
-# "cannot lock ref 'refs/heads/gh-pages'". Superseding the older run also
-# avoids spending CI minutes on a commit that is already out of date.
 concurrency:
-  group: deploy-${{ github.ref }}
-  cancel-in-progress: true
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  deploy:
-    # available images: https://github.com/actions/runner-images#available-images
+  build:
+    name: Build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v4
-      - name: Setup Ruby 💎
-        uses: ruby/setup-ruby@v1
+      - uses: actions/checkout@v5
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - uses: actions/setup-node@v5
         with:
-          ruby-version: "3.3"
-          bundler-cache: true
-      - name: Setup Python 🐍
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.13"
-      - name: Install nbconvert 📓
-        run: pip3 install --upgrade --quiet nbconvert
-      # Jekyll keys this cache by content digest, so restoring it across runs
-      # only skips re-converting Markdown and Sass that did not change.
-      # Deliberately not paired with --incremental, which reuses whole pages
-      # and misses edits to a layout or include they depend on.
-      - name: Restore Jekyll cache 🗃️
-        uses: actions/cache@v4
-        with:
-          path: .jekyll-cache
-          key: jekyll-cache-${{ runner.os }}-${{ hashFiles('_config.yml', 'Gemfile.lock') }}-${{ github.sha }}
-          restore-keys: |
-            jekyll-cache-${{ runner.os }}-${{ hashFiles('_config.yml', 'Gemfile.lock') }}-
-            jekyll-cache-${{ runner.os }}-
-      - name: Update _config.yml ⚙️
-        uses: fjogeleit/yaml-update-action@main
-        with:
-          commitChange: false
-          valueFile: "_config.yml"
-          propertyPath: "giscus.repo"
-          value: ${{ github.repository }}
-      - name: Build 🔧
+          node-version: '24'
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build site
+        run: yarn build
+        env:
+          # Deployment config is env-first.
+          # Forks should set these as repository variables in Settings → Secrets and variables → Actions.
+          # ASTRO_SITE: site origin, e.g. https://username.github.io
+          # ASTRO_BASE: project-page base path, e.g. /repo-name (leave empty for user/org pages)
+          # The fallbacks below are only for this template repository's own deployment.
+          ASTRO_SITE: ${{ vars.ASTRO_SITE || 'https://dadangnh.github.io' }}
+          ASTRO_BASE: ${{ vars.ASTRO_BASE || '/as-folio' }}
+
+      - name: Commit updated citations.yml
         run: |
-          export JEKYLL_ENV=production
-          bundle exec jekyll build --profile
-      - name: Purge unused CSS 🧹
-        run: npx --yes purgecss@6 -c purgecss.config.js
-      - name: Deploy 🚀
-        if: github.event_name != 'pull_request'
-        uses: JamesIves/github-pages-deploy-action@v4
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/citations.yml
+          if git diff --cached --quiet; then
+            echo "No citation changes to commit."
+          else
+            git commit -m "chore: update citation counts [skip ci]"
+            git push
+          fi
+
+      - uses: actions/upload-pages-artifact@v3
         with:
-          folder: _site
-      # Runs against the site we just built, so it needs no second build of its
-      # own. It reports after the deploy: a broken link turns the run red
-      # without holding up the site.
-      - name: Check for broken links 🔗
-        uses: lycheeverse/lychee-action@v1.9.0
-        with:
-          fail: true
-          # only check local links
-          args: --offline --remap '_site(/?.*)/assets/(.*) _site/assets/$2' --no-progress '_site/**/*.html'
+          path: dist/
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,208 @@
+---
+title: Advanced Post Features
+date: 2024-01-01
+lastmod: 2025-06-10
+description: A tour of post-level features — lastmod timestamp, hero image, reading progress, social share, pinning, draft workflow, and hidden posts.
+tags: [meta, formatting, features]
+categories: [tutorial]
+toc: true
+image: /assets/img/11.jpg
+relatedPosts: true
+---
+
+import Figure from '@components/Figure.astro';
+
+This post demonstrates several post-level frontmatter fields that control how a post appears in
+listings, how it behaves in search engines, and what UI features are active.
+
+## Last Modified Timestamp
+
+The `lastmod` field marks when a post was last meaningfully updated. Look at the header above —
+it shows an "Updated" line below the publication date.
+
+```yaml
+---
+date: 2024-01-01      # original publication date
+lastmod: 2025-06-10   # last significant update
+---
+```
+
+`lastmod` also populates the `dateModified` field in the post's JSON-LD schema, which search
+engines use to assess freshness.
+
+## Hero Image
+
+The `image` field sets a hero/thumbnail image used in two places:
+
+1. **Open Graph meta tag** — controls what image appears when the post is shared on social media
+2. **JSON-LD schema** — `image` property in the `BlogPosting` schema
+
+```yaml
+---
+image: /assets/img/11.jpg
+---
+```
+
+The path should be relative to `public/`. For Open Graph, recommended dimensions are
+1200 × 630 px. The template also auto-generates an OG image at `/og/blog/{slug}.png` if
+`site.og.enabled` is `true` — the `image` field overrides that.
+
+## Reading Progress Bar
+
+A thin bar at the top of the viewport fills as you scroll through the post. It is controlled by
+`site.features.progressBar` (enabled by default). The bar uses `--global-theme-color` so it
+automatically follows your configured accent colour.
+
+To disable it for the whole site:
+
+```typescript
+// src/config/site.ts
+features: {
+  progressBar: false,
+}
+```
+
+There is no per-post opt-out; it's a global feature toggle.
+
+## Social Share Buttons
+
+Below the post body you'll find sharing buttons for X (Twitter), LinkedIn, Facebook, and email.
+They appear when `site.features.socialShare` is `true` (the default).
+
+The native Web Share API is used on mobile browsers that support it, falling back to individual
+share URLs on desktop.
+
+To disable sharing site-wide:
+
+```typescript
+features: {
+  socialShare: false,
+}
+```
+
+## Pinned Posts
+
+Setting `pinned: true` moves a post to the top of the blog listing regardless of date.
+The `sortPosts()` utility sorts pinned posts first, then by date descending.
+
+```yaml
+---
+pinned: true
+---
+```
+
+Use sparingly — pinned posts always appear above newer content, which can surprise readers.
+
+## Table of Contents
+
+The TOC sidebar is visible on desktop when the post has `h2`/`h3` headings and `toc: true`
+(the default). It auto-highlights the current section as you scroll.
+
+```yaml
+---
+toc: false   # hide the TOC for short or non-structured posts
+---
+```
+
+The `TOC.astro` component is only rendered when the Astro build provides at least one heading.
+
+## Draft Posts
+
+Posts with `draft: true` are completely excluded from:
+
+- Blog listings and pagination
+- The search index (Pagefind)
+- The RSS feed
+- The sitemap
+
+They still build to HTML and are accessible at their direct URL, making them useful for
+staging content before a public announcement.
+
+```yaml
+---
+draft: true
+---
+```
+
+A companion file `src/content/posts/draft-example.md` in this repo has `draft: true` — you
+won't find it in the listing above.
+
+## Hidden Posts
+
+Posts with `hidden: true` are excluded from listings and RSS but are accessible via direct URL.
+Use this for posts that are linked from external sources but should not appear in the main archive.
+
+```yaml
+---
+hidden: true
+---
+```
+
+Unlike `draft: true`, hidden posts are indexed by Pagefind (they appear in search results).
+A companion file `src/content/posts/hidden-example.md` demonstrates this.
+
+## Related Posts
+
+Set `relatedPosts: true` to show a "Related Posts" section below the post body.
+The algorithm ranks posts by Jaccard similarity on their tag sets — posts with the most
+tags in common appear first.
+
+```yaml
+---
+relatedPosts: true
+tags: [physics, quantum]   # needs at least one matching tag on other posts
+---
+```
+
+## Robots Override
+
+Override the `robots` meta tag for a specific post — useful for disabling indexing on
+pages like staging previews:
+
+```yaml
+---
+robots: 'noindex, nofollow'
+---
+```
+
+The default is `index, follow` (or `noindex, nofollow` when `draft: true` is set).
+
+## Full Frontmatter Reference
+
+```yaml
+---
+title: Required — post title
+date: 2025-01-01           # required — publication date
+description: Optional      # used in meta tags and listings
+tags: [tag1, tag2]
+categories: [cat1]
+math: false                # enable KaTeX rendering
+toc: true                  # show table of contents sidebar
+relatedPosts: false        # show related posts section
+pinned: false              # pin to top of listing
+hidden: false              # hide from listings (still accessible)
+draft: false               # exclude from all output
+robots: ~                  # override robots meta (optional)
+lastmod: 2025-06-10        # last modified date (optional)
+image: /assets/img/...     # hero image for OG + JSON-LD (optional)
+# CDN widget flags (all optional, all default false):
+mermaid: false
+chart_js: false
+echarts: false
+vega: false
+plotly: false
+pseudocode: false
+typograms: false
+tikzjax: false
+map: false
+img_comparison: false
+code_diff: false
+gallery: false
+disqus: false
+# Distill layout (optional):
+distill: false
+distillAuthors: []
+bibliography: ~
+citation_key: ~
+---
+```

@@ -1,0 +1,96 @@
+---
+title: Dark Mode and Theming
+date: 2025-03-20
+description: How as-folio implements dark mode — no flash of unstyled content, CSS custom properties, and per-component theme awareness.
+tags: [theming, formatting]
+categories: [demo]
+math: false
+toc: true
+relatedPosts: true
+pinned: true
+---
+
+as-folio ships with a polished dark mode implementation that matches al-folio's visual identity. The toggle is in the navbar (☀/☽ icon). Preference is persisted to `localStorage` and restored before the page renders to avoid any flash of unstyled content.
+
+## How it works
+
+### 1. FOUC prevention
+
+An inline `<script>` in `<head>` — before any stylesheet — reads `localStorage` and sets `data-theme="dark"` on `<html>` before the browser paints:
+
+```js
+// Runs synchronously before first paint
+const theme = localStorage.getItem('theme') ?? 'light';
+document.documentElement.setAttribute('data-theme', theme);
+```
+
+Because this script is `is:inline` in Astro, it is never deferred or bundled — it runs at the earliest possible moment.
+
+### 2. CSS custom properties
+
+All colours live in `src/styles/_colors.css` as CSS custom properties, mirroring al-folio's variable names exactly:
+
+```css
+:root {
+  --global-bg-color: #ffffff;
+  --global-text-color: #000000;
+  --global-theme-color: #b509ac;
+  /* ... */
+}
+
+[data-theme='dark'] {
+  --global-bg-color: #1c1c1c;
+  --global-text-color: #ffffff;
+  --global-theme-color: #b509ac; /* same accent in dark */
+  /* ... */
+}
+```
+
+Every component references these variables rather than hard-coded colours, so toggling `data-theme` instantly re-paints the whole page without a single JavaScript re-render.
+
+### 3. The toggle component
+
+`ThemeToggle.astro` writes to `localStorage` and updates `data-theme`:
+
+```astro
+<script>
+  const toggle = document.getElementById('theme-toggle');
+  toggle?.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+</script>
+```
+
+### 4. Giscus comment theme sync
+
+When comments are enabled, `Giscus.astro` observes `data-theme` changes with a `MutationObserver` and posts a message to the Giscus `<iframe>` to switch its own theme:
+
+```js
+new MutationObserver(() => {
+  const theme = document.documentElement.getAttribute('data-theme');
+  giscusFrame.contentWindow.postMessage(
+    { giscus: { setConfig: { theme: theme === 'dark' ? 'dark' : 'light' } } },
+    'https://giscus.app',
+  );
+}).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+```
+
+## Customising the accent colour
+
+The theme colour is set in `src/config/site.ts` under `theme.color`. To change the accent, update `light` and `dark` (and optionally `hoverLight` and `hoverDark`) — each takes any CSS colour, or `'auto'` for the built-in default:
+
+```ts
+theme: {
+  color: {
+    light: '#0070f3', /* Vercel blue */
+    dark: '#68c0d9',
+    hoverLight: 'auto',
+    hoverDark: 'auto',
+  },
+},
+```
+
+That's all — every badge, link highlight, tag pill, and interactive element picks it up automatically.
