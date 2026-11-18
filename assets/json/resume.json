@@ -94,6 +94,16 @@
   ],
   "projects": [
     {
+      "name": "Computational Protein Engineering: Form II Rubisco (Rhodospirillum rubrum)",
+      "summary": "An end-to-end computational pipeline for engineering a carbon-fixing enzyme, from predictive models to designs a collaborating wet lab can test.",
+      "highlights": [
+        "Trained and benchmarked sequence- and structure-based models on deep mutational scanning data; established calibration and error floors before using predictions to rank candidates.",
+        "Ran molecular dynamics, free-energy, and quantum-chemical calculations on the catalytic site; built decoy and radial controls to test whether a proposed structural descriptor is actually site-local.",
+        "Designed de novo binders and redesigned active sites with generative backbone models; converted the surviving designs into ordered constructs, matched controls, and assay protocols for experimental validation."
+      ],
+      "startDate": "2026"
+    },
+    {
       "name": "MetaCarto",
       "summary": "Automatic, deterministic layout of genome-scale metabolic models as Escher-compatible maps, with a browsable viewer for all 108 BiGG models.",
       "highlights": ["Metabolic networks", "Graph layout", "Open source"],
