@@ -105,24 +105,6 @@ export async function GET(_ctx: APIContext): Promise<Response> {
       priority: 0.7,
     },
     {
-      url: loc('/teaching/'),
-      lastmod: gitLastmod('src/pages/teaching/index.astro'),
-      changefreq: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: loc('/people/'),
-      lastmod: gitLastmod('src/pages/people/index.astro'),
-      changefreq: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: loc('/books/'),
-      lastmod: gitLastmod('src/pages/books.astro'),
-      changefreq: 'monthly',
-      priority: 0.5,
-    },
-    {
       url: loc('/repositories/'),
       lastmod: gitLastmod('src/pages/repositories.astro'),
       changefreq: 'monthly',
@@ -151,7 +133,19 @@ export async function GET(_ctx: APIContext): Promise<Response> {
     priority: 0.7,
   }));
 
-  const allUrls = [...staticUrls, ...postUrls, ...projectUrls];
+  // News: the list page plus each announcement's own page.
+  const newsItems = (await getCollection('announcements')).filter((n) => !n.data.hidden);
+  const newsUrls: UrlEntry[] = [
+    { url: loc('/news/'), lastmod: gitLastmod('src/pages/news/index.astro'), changefreq: 'weekly', priority: 0.6 },
+    ...newsItems.map((n) => ({
+      url: loc(`/news/${n.id}/`),
+      lastmod: n.data.date.toISOString().split('T')[0],
+      changefreq: 'yearly',
+      priority: 0.5,
+    })),
+  ];
+
+  const allUrls = [...staticUrls, ...postUrls, ...projectUrls, ...newsUrls];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

@@ -55,17 +55,8 @@ const projects = (await getCollection('projects')).map(
   }),
 );
 
-const teaching = (await getCollection('teaching')).map(
-  (t): SearchItem => ({
-    id: `teaching-${t.id}`,
-    title: t.data.title,
-    section: 'Teaching',
-    href: `${base}/teaching/`,
-    keywords: t.data.term ?? '',
-  }),
-);
 
-const allItems: SearchItem[] = [...posts, ...projects, ...teaching];
+const allItems: SearchItem[] = [...posts, ...projects];
 ---
 
 <!-- ninja-keys web component -->

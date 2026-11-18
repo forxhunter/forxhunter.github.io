@@ -1,0 +1,53 @@
+---
+/**
+ * One page per announcement, at the /news/<id>/ URLs al-folio published. al-folio
+ * gave inline announcements a page too, so untitled ones get one, titled by date.
+ */
+import { site } from '@config/site';
+import Page from '@layouts/Page.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const items = await getCollection('announcements');
+  return items.filter((item) => !item.data.hidden).map((item) => ({ params: { slug: item.id }, props: { item } }));
+}
+
+const { item } = Astro.props;
+const { Content } = await render(item);
+const date = item.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const title = item.data.title ?? `News, ${date}`;
+---
+
+<Page title={title} description={`${title} — news from ${site.author.name}`}>
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">{title}</h1>
+      <p class="post-meta">{date}</p>
+    </header>
+    <div class="prose max-w-none">
+      <Content />
+    </div>
+    <p class="back"><a href={`${site.base}/news/`}>&larr; all news</a></p>
+  </article>
+</Page>
+
+<style>
+  .post-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--global-text-color);
+    font-family: var(--font-sans);
+    margin-bottom: 0.25rem;
+  }
+
+  .post-meta {
+    color: var(--global-text-color-light);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .back {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+  }
+</style>

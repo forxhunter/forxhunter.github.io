@@ -1,10 +1,17 @@
 import { glob } from 'astro/loaders';
 import { defineCollection, z } from 'astro:content';
 
+/**
+ * Use the file path, minus its extension, as the entry id, exactly as written.
+ * The default id generator lowercases and slugifies, which would change the
+ * URLs this site already published under Jekyll (e.g. /blog/2025/work_with_LLM/).
+ */
+const keepPath = ({ entry }: { entry: string }) => entry.replace(/\.mdx?$/, '');
+
 // ─── Posts ─────────────────────────────────────────────────────────────────
 
 const posts = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts', generateId: keepPath }),
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
@@ -79,7 +86,7 @@ const posts = defineCollection({
 // ─── Projects ──────────────────────────────────────────────────────────────
 
 const projects = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects', generateId: keepPath }),
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),
@@ -106,60 +113,16 @@ const projects = defineCollection({
   }),
 });
 
-// ─── People ────────────────────────────────────────────────────────────────
-
-const people = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/people' }),
-  schema: z.object({
-    name: z.string(),
-    role: z.string(),
-    /** Photo path in public/assets/img/. */
-    photo: z.string().optional(),
-    /** Brief description shown on profile card. */
-    description: z.string().optional(),
-    /** Personal website. */
-    website: z.string().url().optional(),
-    /** GitHub username. */
-    github: z.string().optional(),
-    /** Google Scholar user ID. */
-    scholar: z.string().optional(),
-    /** ORCID ID. */
-    orcid: z.string().optional(),
-    /** Sort order. */
-    importance: z.number().optional().default(999),
-    /** 'current' | 'alumni' */
-    group: z.enum(['current', 'alumni']).optional().default('current'),
-  }),
-});
-
-// ─── Teaching ──────────────────────────────────────────────────────────────
-
-const teaching = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/teaching' }),
-  schema: z.object({
-    title: z.string(),
-    /** Short code like 'PHY 101'. */
-    code: z.string().optional(),
-    description: z.string().optional(),
-    /** Term, e.g. 'Spring 2024'. */
-    term: z.string().optional(),
-    /** Institution. */
-    institution: z.string().optional(),
-    /** Course URL or syllabus. */
-    url: z.string().url().optional(),
-    /** Sort order. */
-    importance: z.number().optional().default(999),
-    /** 'current' | 'past' */
-    category: z.enum(['current', 'past']).optional().default('current'),
-  }),
-});
-
 // ─── Announcements ─────────────────────────────────────────────────────────
 
 const announcements = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/announcements' }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/announcements', generateId: keepPath }),
   schema: z.object({
     date: z.coerce.date(),
+    /** Title. An announcement with a title gets its own page under /news/. */
+    title: z.string().optional(),
+    /** Show the body inline in the news list instead of linking to its page. */
+    inline: z.boolean().optional().default(true),
     /** Pin this announcement to the top. */
     pinned: z.boolean().optional().default(false),
     /** Hide from the announcements list. */
@@ -167,40 +130,4 @@ const announcements = defineCollection({
   }),
 });
 
-// ─── Books ─────────────────────────────────────────────────────────────────
-
-const books = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/books' }),
-  schema: z.object({
-    title: z.string(),
-    author: z.string(),
-    /** Path to cover image in public/assets/img/book_covers/ */
-    cover: z.string().optional(),
-    /** Open Library ID for cover lookup (e.g. OL43499941M) */
-    olid: z.coerce.string().optional(),
-    /** ISBN for cover lookup (digits only, dashes optional) */
-    isbn: z.coerce.string().optional(),
-    /** Reading status */
-    status: z
-      .enum(['reading', 'finished', 'queued', 'paused', 'abandoned', 'interested', 'reread'])
-      .optional(),
-    /** Star rating 1-5 */
-    stars: z.number().min(1).max(5).optional(),
-    /** Date started reading */
-    started: z.coerce.date().optional(),
-    /** Date finished reading */
-    finished: z.coerce.date().optional(),
-    /** Original publication year */
-    released: z.number().optional(),
-    /** Link to buy the book */
-    buy_link: z.string().url().optional(),
-    /** Goodreads review ID */
-    goodreads_review: z.string().optional(),
-    /** Comma-separated categories/genres */
-    categories: z.string().optional(),
-    /** Sort order */
-    importance: z.number().optional().default(999),
-  }),
-});
-
-export const collections = { posts, projects, people, teaching, announcements, books };
+export const collections = { posts, projects, announcements };
