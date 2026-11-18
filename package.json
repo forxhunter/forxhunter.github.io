@@ -1,53 +1,15 @@
 {
-  "name": "as-folio",
-  "description": "A clean, responsive Astro theme for academics and researchers",
-  "version": "2.0.1",
-  "author": "Dadang NH <hello@dadangnh.com>",
-  "homepage": "https://github.com/dadangnh/as-folio",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/dadangnh/as-folio"
-  },
-  "bugs": {
-    "url": "https://github.com/dadangnh/as-folio/issues"
-  },
-  "keywords": [
-    "astro",
-    "astro-theme",
-    "astro-component",
-    "academic",
-    "portfolio",
-    "template",
-    "as-folio",
-    "bibtex",
-    "publications"
-  ],
+  "name": "forxhunter.github.io",
+  "description": "Tianyu Wu's personal site, built on the as-folio Astro template",
   "license": "MIT",
   "type": "module",
   "packageManager": "yarn@4.13.0",
   "engines": {
     "node": ">=24"
   },
-  "files": [
-    "src/",
-    "public/",
-    "astro.config.mjs",
-    "tsconfig.json",
-    ".prettierrc.yaml",
-    "netlify.toml",
-    "vercel.json",
-    "QUICKSTART.md",
-    "CUSTOMIZE.md",
-    "MIGRATE.md",
-    "LICENSE"
-  ],
-  "peerDependencies": {
-    "astro": ">=6.4.0"
-  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "prebuild": "node --strip-types scripts/update-citations.ts",
     "build": "astro build --timings && pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro",
@@ -59,11 +21,8 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:types": "astro check && tsc --noEmit",
-    "test:e2e": "playwright test",
-    "test:e2e:ci": "playwright test --reporter=junit",
-    "test:all": "yarn test:types && yarn lint:ci && yarn test && yarn test:e2e",
+    "test:all": "yarn test:types && yarn lint:ci && yarn test",
     "validate": "yarn test:all",
-    "prepare": "husky",
     "citations:update": "node --strip-types scripts/update-citations.ts"
   },
   "dependencies": {
@@ -96,10 +55,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
-    "@commitlint/cli": "^21.0.0",
-    "@commitlint/config-conventional": "^21.0.0",
     "@eslint/js": "^10.0.0",
-    "@playwright/test": "^1.61.0",
     "@tailwindcss/vite": "^4.3.1",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -119,8 +75,6 @@
     "eslint-plugin-simple-import-sort": "^13.0.0",
     "eslint-plugin-unused-imports": "^4.4.1",
     "happy-dom": "^20.10.6",
-    "husky": "^9.1.7",
-    "lint-staged": "^17.0.0",
     "pagefind": "^1.5.2",
     "prettier": "^3.8.4",
     "prettier-plugin-astro": "^0.14.1",
@@ -129,5 +83,6 @@
     "typescript": "^6.0.0",
     "typescript-eslint": "^8.61.1",
     "vitest": "^4.1.9"
-  }
+  },
+  "private": true
 }
