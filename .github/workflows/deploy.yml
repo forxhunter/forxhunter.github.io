@@ -1,70 +1,54 @@
-name: Deploy to GitHub Pages
+name: Deploy site
 
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
+# A newer push supersedes an in-flight deploy instead of racing it onto gh-pages.
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build:
-    name: Build
+  deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v5
+        with:
+          # The sitemap reads each file's last commit date from git history.
+          fetch-depth: 0
 
       - name: Enable Corepack
         run: corepack enable
 
       - uses: actions/setup-node@v5
         with:
-          node-version: '24'
+          node-version: "24"
+          cache: yarn
 
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Build site
+      - name: Build
         run: yarn build
-        env:
-          # Deployment config is env-first.
-          # Forks should set these as repository variables in Settings → Secrets and variables → Actions.
-          # ASTRO_SITE: site origin, e.g. https://username.github.io
-          # ASTRO_BASE: project-page base path, e.g. /repo-name (leave empty for user/org pages)
-          # The fallbacks below are only for this template repository's own deployment.
-          ASTRO_SITE: ${{ vars.ASTRO_SITE || 'https://dadangnh.github.io' }}
-          ASTRO_BASE: ${{ vars.ASTRO_BASE || '/as-folio' }}
 
-      - name: Commit updated citations.yml
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/data/citations.yml
-          if git diff --cached --quiet; then
-            echo "No citation changes to commit."
-          else
-            git commit -m "chore: update citation counts [skip ci]"
-            git push
-          fi
-
-      - uses: actions/upload-pages-artifact@v3
+      # Publishes to the gh-pages branch, which is what GitHub Pages already
+      # serves for this repository, so no Pages setting has to change.
+      - name: Deploy
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          path: dist/
+          folder: dist
 
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    permissions:
-      pages: write
-      id-token: write
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Check for broken links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          fail: true
+          # only check links within the site
+          args: --offline --root-dir ${{ github.workspace }}/dist --no-progress 'dist/**/*.html'
