@@ -363,10 +363,16 @@ const sections = [
     white-space: nowrap;
   }
 
+  /*
+   * ProjectCard sizes itself for a flex row: its root is .col, with its own
+   * 100% / 50% / 33.333% breakpoints. Use the same flex container the projects
+   * index uses so those apply; in a CSS grid they are ignored and every card
+   * collapses to min-content.
+   */
   .home-projects {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -0.5rem;
   }
 
   .home-year {

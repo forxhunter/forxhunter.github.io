@@ -1247,6 +1247,15 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 0.9rem;
+    /*
+     * A table too wide for the screen scrolls inside itself rather than
+     * pushing the whole page sideways. display:block makes this element the
+     * scroll container; the rows keep their table layout inside an anonymous
+     * table box, so nothing changes when the table already fits.
+     */
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
   }
 
   .prose table th,
