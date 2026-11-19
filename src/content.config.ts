@@ -96,6 +96,8 @@ const projects = defineCollection({
     img_alt: z.string().optional(),
     /** External URL (e.g. GitHub repo). */
     url: z.string().url().optional(),
+    /** Label for the `url` button. Defaults to 'Website'. */
+    url_label: z.string().optional(),
     /** GitHub repo in format owner/repo — auto-links to repo. */
     github: z.string().optional(),
     /** GitHub repo path (owner/repo) for fetching live star count. */
@@ -116,7 +118,11 @@ const projects = defineCollection({
 // ─── Announcements ─────────────────────────────────────────────────────────
 
 const announcements = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/announcements', generateId: keepPath }),
+  loader: glob({
+    pattern: '**/*.{md,mdx}',
+    base: './src/content/announcements',
+    generateId: keepPath,
+  }),
   schema: z.object({
     date: z.coerce.date(),
     /** Title. An announcement with a title gets its own page under /news/. */

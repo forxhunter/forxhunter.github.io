@@ -25,6 +25,7 @@ const {
   img,
   img_alt,
   url,
+  url_label,
   github,
   giscus_comments,
   related_publications,
@@ -110,7 +111,7 @@ const relatedEntries =
                   <polyline points="15 3 21 3 21 9" />
                   <line x1="10" y1="14" x2="21" y2="3" />
                 </svg>
-                Website
+                {url_label ?? 'Website'}
               </a>
             )}
           </div>

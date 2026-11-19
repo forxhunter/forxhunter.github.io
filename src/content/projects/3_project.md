@@ -2,7 +2,7 @@
 title: Can a metabolic network be drawn the way a curator would draw it?
 description: MetaCarto 2 draws any genome-scale model as publication-quality Escher maps, deterministically, with no hand editing. All 108 BiGG models are already drawn and browsable.
 img: /assets/img/project3.png
-importance: 3
+importance: 4
 category: research
 github: forxhunter/MetaCarto
 giscus_comments: true
@@ -16,7 +16,7 @@ giscus_comments: true
   <a class="btn btn-sm z-depth-0" role="button" href="https://github.com/forxhunter/MetaCarto/releases/tag/v2.0.0" target="_blank" rel="noopener noreferrer">Release v2.0.0</a>
 </p>
 
-# Project Overview
+## Project Overview
 
 Genome-scale metabolic models are routinely solved and almost never drawn. A force-directed layout of a few thousand reactions returns a hairball: every cofactor is a hub, every hub drags its neighbours together, and the pathway structure a biochemist would recognise disappears. Curators therefore draw maps by hand, which is why so few exist.
 
@@ -24,7 +24,7 @@ Genome-scale metabolic models are routinely solved and almost never drawn. A for
 
 <figure class="post-figure"><img src="/assets/img/metacarto/e_coli_core_canvas.svg" alt="e_coli_core on one canvas, drawn by MetaCarto 2" title="e_coli_core on one canvas, drawn by MetaCarto 2" class="img-fluid rounded z-depth-1" loading="eager" /><figcaption class="caption">All of <i>E. coli</i> core on one canvas, exactly as published, with no hand editing. Glycolysis is one straight vertical backbone, the TCA cycle is a ring with glutamate metabolism off 2-oxoglutarate, and transport and exchange sit along the bottom. Each KEGG superclass is one captioned region. Click to zoom.</figcaption></figure>
 
-# What MetaCarto 2 adds
+## What MetaCarto 2 adds
 
 [MetaCarto 2](https://github.com/forxhunter/MetaCarto/releases/tag/v2.0.0) is the current release. [MetaCarto 1](https://github.com/forxhunter/MetaCarto/releases/tag/v1.0.0), the version described in the [bioRxiv preprint](https://doi.org/10.64898/2026.09.19.752882), is frozen, and its 2,621 maps stay where they were published so existing links keep working.
 
@@ -38,33 +38,33 @@ Genome-scale metabolic models are routinely solved and almost never drawn. A for
 
 <figure class="post-figure"><img src="/assets/img/metacarto/central_carbon.png" alt="Central carbon metabolism, close up" title="Central carbon metabolism, close up" class="img-fluid rounded z-depth-1" loading="lazy" /><figcaption class="caption">Close-up of the canvas above. Every reaction contributes one main edge between the pair of compounds that share the most molecular skeleton. ATP, NAD(H), CoA and the rest fan off as grey side branches, both members of a pair on the same side.</figcaption></figure>
 
-# How It Works
+## How It Works
 
-## 1. Primary-compound reduction
+### 1. Primary-compound reduction
 
 A reaction such as `pyruvate + CoA + NAD⁺ → acetyl-CoA + CO₂ + NADH` contributes **one** directed edge, between the substrate/product pair sharing the most molecular skeleton. Here that pair is pyruvate → acetyl-CoA. Everything else becomes a side branch. Without this reduction each reaction node has degree 4–8 and no clean orthogonal drawing exists, which is precisely why naive layouts hairball.
 
 Cofactor-ness is applied as a **tier, not a score penalty**: a cofactor is never chosen while a non-cofactor alternative exists on its side. That is what stops CoA → acetyl-CoA, which shares 21 carbons, from beating pyruvate → acetyl-CoA.
 
-## 2. Direction from flux
+### 2. Direction from flux
 
 Reconstructions store reversible reactions in whichever direction the curator happened to write them, so glycolysis is often recorded partly backwards. Parsimonious FBA decides the drawn direction wherever a reaction carries flux, and antiparallel pairs are collapsed onto a single axis.
 
-## 3. Cycles drawn as cycles
+### 3. Cycles drawn as cycles
 
 Rings are detected on the whole-model graph, contracted for layering, then expanded onto a circle. The circle is rotated so its entry arc faces the pathway feeding it.
 
-## 4. Layered placement
+### 4. Layered placement
 
 Greedy feedback-arc-set, layer assignment, cluster-constrained crossing reduction, then **Brandes–Köpf** coordinate assignment. That last step is what produces straight vertical backbones; a barycentre assignment does not.
 
-## 5. Packing a species onto one page
+### 5. Packing a species onto one page
 
 The canvas is planned on each pathway's rasterised ink. Pathways cannot overlap, because placement tests collision on a grid with clearance. Small and mid-size models are packed several deterministic ways, and the tightest packing wins only if regions stay as cohesive and linked pathways stay as close as in the default.
 
 <figure class="post-figure"><img src="/assets/img/metacarto/recon3d_canvas.png" alt="Recon3D on one canvas" title="Recon3D on one canvas" class="img-fluid rounded z-depth-1" loading="lazy" /><figcaption class="caption">Recon3D, the human reconstruction: 10,598 of its 10,600 reactions on one page. At this size it is texture, not a figure. <a href='https://github.com/forxhunter/MetaCarto/blob/main/docs/figures/v2_Recon3D_Canvas.svg' target='_blank' rel='noopener noreferrer'>Open the 19 MB SVG</a> and zoom in, or load it in the viewer.</figcaption></figure>
 
-# The Generated Collection
+## The Generated Collection
 
 Every model in the [BiGG database](http://bigg.ucsd.edu/) is drawn and published under CC BY 4.0, as Escher JSON and SVG, at [Awesome_visualization_Metabolic_Network](https://github.com/forxhunter/Awesome_visualization_Metabolic_Network).
 
@@ -81,7 +81,7 @@ Every model in the [BiGG database](http://bigg.ucsd.edu/) is drawn and published
 
 Reactions are assigned to maps from the model's own `subsystem` annotation, then from KEGG pathways, and only failing both from network structure. Maps are named after the metabolic function they cover, following KEGG BRITE top-level categories.
 
-# Try It
+## Try It
 
 ```bash
 git clone --recurse-submodules https://github.com/forxhunter/MetaCarto.git
@@ -99,7 +99,7 @@ python diy_map.py --model Recon3D --reaction PGI,PFK,FBA --connect 3
 
 Every map is scored against explicit gates: orthogonality, crossings, node separation, label collisions, density and print legibility. `--strict` exits non-zero if a map breaks one.
 
-# Known Limitations
+## Known Limitations
 
 - 19 of 251,424 BiGG reactions have no drawable primary pair and are omitted.
 - Large merged pages of around 120 reactions still cross themselves. One page in ten has more than 0.4 crossings per edge.
@@ -107,12 +107,11 @@ Every map is scored against explicit gates: orthogonality, crossings, node separ
 - Whole-model canvases are for zooming, not printing. At 10,600 reactions a page, labels land well under a point however well the page is packed. The per-pathway maps are the printable artifact.
 - Compartments are not drawn as envelopes, because the Escher schema has no region primitive.
 
-# Cite
+## Cite
 
 MetaCarto and its maps are CC BY 4.0, so attribution is a term of the licence. If you use MetaCarto or a map it generated in a paper, figure, talk, poster, database or derived software, please cite the preprint:
 
 > Wu, T. (2026). MetaCarto: biologically faithful automatic layout for genome-scale metabolic maps. _bioRxiv_. [https://doi.org/10.64898/2026.09.19.752882](https://doi.org/10.64898/2026.09.19.752882)
-
 
 ```bibtex
 @article{wu_metacarto_2026,
@@ -124,9 +123,7 @@ MetaCarto and its maps are CC BY 4.0, so attribution is a term of the licence. I
 }
 ```
 
-
 and, if you used MetaCarto 2 specifically, the software as well:
-
 
 ```bibtex
 @software{Wu_MetaCarto_constructive_layout,
@@ -136,6 +133,5 @@ and, if you used MetaCarto 2 specifically, the software as well:
   url     = {https://github.com/forxhunter/MetaCarto}
 }
 ```
-
 
 Please also cite the underlying model from [BiGG Models](http://bigg.ucsd.edu/) and, where maps are displayed, [Escher](https://doi.org/10.1371/journal.pcbi.1004321).
