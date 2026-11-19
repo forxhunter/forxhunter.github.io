@@ -1,0 +1,303 @@
+<!DOCTYPE html><html lang="en" data-theme="light"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="One hundred de novo designs across the five challenges of the 2026 Anthropic × Adaptyv competition. Every threshold is read off a control, and the metrics that failed their own controls were dropped rather than trusted."><link rel="canonical" href="https://forxhunter.github.io/projects/adaptyv-binders/"><title>How do you pick twenty de novo binders when the confidence scores do not work? | Tianyu Wu | UIUC Biophysics</title><!-- Favicon --><link rel="icon" href="/favicon.png" type="image/png"><link rel="apple-touch-icon" href="/favicon.png"><!-- Fonts are self-hosted via Fontsource (imported in global.css) — no FOUT --><!-- KaTeX CSS is bundled via global.css (@import 'katex/dist/katex.min.css') --><!-- Theme color override (from site.theme.color — 'auto' means use _colors.css defaults) --><!-- Open Graph + Twitter Card --><meta property="og:title" content="How do you pick twenty de novo binders when the confidence scores do not work? | Tianyu Wu | UIUC Biophysics"><meta property="og:description" content="One hundred de novo designs across the five challenges of the 2026 Anthropic × Adaptyv competition. Every threshold is read off a control, and the metrics that failed their own controls were dropped rather than trusted."><meta property="og:url" content="https://forxhunter.github.io/projects/adaptyv-binders/"><meta property="og:type" content="website"><meta property="og:image" content="https://forxhunter.github.io/assets/img/adaptyv/preview.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="How do you pick twenty de novo binders when the confidence scores do not work? | Tianyu Wu | UIUC Biophysics"><meta name="twitter:description" content="One hundred de novo designs across the five challenges of the 2026 Anthropic × Adaptyv competition. Every threshold is read off a control, and the metrics that failed their own controls were dropped rather than trusted."><meta name="twitter:image" content="https://forxhunter.github.io/assets/img/adaptyv/preview.png"><!-- Analytics verification tags --><!-- GA4 via Partytown (production only) --><!-- Cronitor RUM --><!-- Pirsch analytics --><!-- OpenPanel analytics --><!-- Person JSON-LD (homepage only) --><!-- View Transitions (smooth page-to-page navigation) --><!-- Named slot for page-specific head content (e.g. JSON-LD from Post.astro) --><!--
+      Dark mode: must run BEFORE any CSS to prevent FOUC.
+      Reads stored preference, falls back to system preference, then site default.
+      Re-applies after each View Transition swap to keep the theme consistent.
+    --><script>(function(){const defaultTheme = "system";
+
+      function applyTheme() {
+        const stored = localStorage.getItem('theme');
+        let theme;
+        if (stored === 'light' || stored === 'dark') {
+          theme = stored;
+        } else if (defaultTheme === 'system') {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        } else {
+          theme = defaultTheme;
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-theme-setting', stored || 'system');
+      }
+      applyTheme();
+      document.addEventListener('astro:after-swap', applyTheme);
+    })();</script><style>.giscus-notice[data-astro-cid-an2nl7ar]{font-size:.85rem;color:var(--global-text-color-light);margin-bottom:.75rem}.giscus-notice[data-astro-cid-an2nl7ar] a[data-astro-cid-an2nl7ar]{color:var(--global-theme-color);text-decoration:none}.giscus-notice[data-astro-cid-an2nl7ar] a[data-astro-cid-an2nl7ar]:hover{text-decoration:underline}.giscus-btn[data-astro-cid-an2nl7ar]{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem 1.1rem;border-radius:4px;border:1px solid var(--global-divider-color);background:transparent;color:var(--global-text-color);font-size:.875rem;font-family:var(--font-sans);cursor:pointer;transition:border-color .15s ease,color .15s ease}.giscus-btn[data-astro-cid-an2nl7ar]:hover{border-color:var(--global-theme-color);color:var(--global-theme-color)}
+</style><link rel="stylesheet" href="/_s/BS69KsAo.css"><style>.post[data-astro-cid-ovxcmftc]{padding-top:0}.post-header[data-astro-cid-ovxcmftc]{margin-bottom:2rem}.post-title[data-astro-cid-ovxcmftc]{font-size:2rem;font-weight:700;color:var(--global-text-color);font-family:var(--font-sans);margin-bottom:.5rem}.post-description[data-astro-cid-ovxcmftc]{font-size:1.1rem;color:var(--global-text-color-light);margin-bottom:1rem}.project-links[data-astro-cid-ovxcmftc]{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1rem}.project-btn[data-astro-cid-ovxcmftc]{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem 1rem;border-radius:4px;font-size:.875rem;font-weight:500;text-decoration:none;transition:opacity .15s ease}.project-btn--primary[data-astro-cid-ovxcmftc]{background-color:var(--global-theme-color);color:var(--global-hover-text-color)}.project-btn--primary[data-astro-cid-ovxcmftc]:hover{opacity:.85}.project-btn--secondary[data-astro-cid-ovxcmftc]{background-color:transparent;color:var(--global-text-color);border:1px solid var(--global-divider-color);transition:border-color .15s ease,color .15s ease}.project-btn--secondary[data-astro-cid-ovxcmftc]:hover{border-color:var(--global-theme-color);color:var(--global-theme-color)}.project-hero[data-astro-cid-ovxcmftc]{margin-bottom:2rem}.img-fluid[data-astro-cid-ovxcmftc]{max-width:100%;height:auto;display:block}.rounded[data-astro-cid-ovxcmftc]{border-radius:4px}.z-depth-1[data-astro-cid-ovxcmftc]{box-shadow:0 2px 5px #00000029,0 2px 10px #0000001f}.references-section[data-astro-cid-ovxcmftc]{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--global-divider-color)}.references-section[data-astro-cid-ovxcmftc] h2[data-astro-cid-ovxcmftc]{font-size:1.25rem;font-weight:600;color:var(--global-text-color);margin-bottom:1rem;font-family:var(--font-sans)}.bibliography[data-astro-cid-ovxcmftc]{padding-left:1.5rem;color:var(--global-text-color);font-size:.9rem;line-height:1.7}.bibliography[data-astro-cid-ovxcmftc] li[data-astro-cid-ovxcmftc]{margin-bottom:.75rem}.ref-authors[data-astro-cid-ovxcmftc]{color:var(--global-text-color-light)}.ref-title[data-astro-cid-ovxcmftc] a[data-astro-cid-ovxcmftc]{color:var(--global-theme-color);text-decoration:none}.ref-title[data-astro-cid-ovxcmftc] a[data-astro-cid-ovxcmftc]:hover{text-decoration:underline}.ref-venue[data-astro-cid-ovxcmftc]{color:var(--global-text-color-light)}
+</style><script type="module" src="/_astro/page.52P97FCf.js"></script><script>!(function(w,p,f,c){if(!window.crossOriginIsolated && !navigator.serviceWorker) return;c=w[p]=Object.assign(w[p]||{},{"lib":"/~partytown/","debug":false});c[f]=(c[f]||[]).concat(["dataLayer.push"])})(window,'partytown','forward');/* Partytown 0.13.2 - MIT QwikDev */
+const t={preserveBehavior:!1},e=e=>{if("string"==typeof e)return[e,t];const[n,r=t]=e;return[n,{...t,...r}]},n=Object.freeze((t=>{const e=new Set;let n=[];do{Object.getOwnPropertyNames(n).forEach((t=>{"function"==typeof n[t]&&e.add(t)}))}while((n=Object.getPrototypeOf(n))!==Object.prototype);return Array.from(e)})());!function(t,r,o,i,a,s,c,l,d,p,u=t,f){function h(){f||(f=1,"/"==(c=(s.lib||"/~partytown/")+(s.debug?"debug/":""))[0]&&(d=r.querySelectorAll('script[type="text/partytown"]'),i!=t?i.dispatchEvent(new CustomEvent("pt1",{detail:t})):(l=setTimeout(v,(null==s?void 0:s.fallbackTimeout)||1e4),r.addEventListener("pt0",w),a?y(1):o.serviceWorker?o.serviceWorker.register(c+(s.swPath||"partytown-sw.js"),{scope:c}).then((function(t){t.active?y():t.installing&&t.installing.addEventListener("statechange",(function(t){"activated"==t.target.state&&y()}))}),console.error):v())))}function y(e){p=r.createElement(e?"script":"iframe"),t._pttab=Date.now(),e||(p.style.display="block",p.style.width="0",p.style.height="0",p.style.border="0",p.style.visibility="hidden",p.setAttribute("aria-hidden",!0)),p.src=c+"partytown-"+(e?"atomics.js?v=0.13.2":"sandbox-sw.html?"+t._pttab),r.querySelector(s.sandboxParent||"body").appendChild(p)}function v(n,o){for(w(),i==t&&(s.forward||[]).map((function(n){const[r]=e(n);delete t[r.split(".")[0]]})),n=0;n<d.length;n++)(o=r.createElement("script")).innerHTML=d[n].innerHTML,o.nonce=s.nonce,r.head.appendChild(o);p&&p.parentNode.removeChild(p)}function w(){clearTimeout(l)}s=t.partytown||{},i==t&&(s.forward||[]).map((function(r){const[o,{preserveBehavior:i}]=e(r);u=t,o.split(".").map((function(e,r,o){var a;u=u[o[r]]=r+1<o.length?u[o[r]]||(a=o[r+1],n.includes(a)?[]:{}):(()=>{let e=null;if(i){const{methodOrProperty:n,thisObject:r}=((t,e)=>{let n=t;for(let t=0;t<e.length-1;t+=1)n=n[e[t]];return{thisObject:n,methodOrProperty:e.length>0?n[e[e.length-1]]:void 0}})(t,o);"function"==typeof n&&(e=(...t)=>n.apply(r,...t))}return function(){let n;return e&&(n=e(arguments)),(t._ptf=t._ptf||[]).push(o,arguments),n}})()}))})),"complete"==r.readyState?h():(t.addEventListener("DOMContentLoaded",h),t.addEventListener("load",h))}(window,document,navigator,top,window.crossOriginIsolated);;(e=>{e.addEventListener("astro:before-swap",e=>{let r=document.body.querySelector("iframe[src*='/~partytown/']");if(r)e.newDocument.body.append(r)})})(document);</script></head> <body class="min-h-screen flex flex-col" style="padding-top: var(--navbar-height);" data-footer-position="sticky"> <!-- Skip to main content (accessibility) --> <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 px-4 py-2 rounded" style="background-color: var(--global-theme-color); color: var(--global-hover-text-color);">
+Skip to main content
+</a> <nav class="navbar fixed top-0 right-0 left-0 z-40" style="background-color: var(--global-bg-color); border-bottom: 1px solid var(--global-divider-color); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); height: 57px;" data-astro-cid-5blmo7yk> <div class="page-container flex h-full items-center justify-between" style="max-width: 930px; margin: 0 auto; padding: 0 1rem;" data-astro-cid-5blmo7yk> <!-- Brand --> <a href="/" class="text-lg font-bold" style="color: var(--global-text-color); text-decoration: none;" data-astro-cid-5blmo7yk> Tianyu Wu </a> <!-- Desktop nav --> <div class="hidden items-center gap-1 md:flex" data-astro-cid-5blmo7yk> <a href="/" class="px-3 py-1 text-sm transition-colors " style="color: var(--global-text-color); text-decoration: none;" data-astro-cid-5blmo7yk> about </a><a href="/blog/" class="px-3 py-1 text-sm transition-colors " style="color: var(--global-text-color); text-decoration: none;" data-astro-cid-5blmo7yk> blog </a><a href="/publications/" class="px-3 py-1 text-sm transition-colors " style="color: var(--global-text-color); text-decoration: none;" data-astro-cid-5blmo7yk> publications </a><a href="/projects/" class="px-3 py-1 text-sm transition-colors font-bold" style="color: var(--global-theme-color); text-decoration: none;" data-astro-cid-5blmo7yk> projects </a><a href="/repositories/" class="px-3 py-1 text-sm transition-colors " style="color: var(--global-text-color); text-decoration: none;" data-astro-cid-5blmo7yk> repositories </a> <!-- Search pill (desktop) --> <button id="search-toggle" class="search-pill" aria-label="Search" title="Search" type="button" data-astro-cid-5blmo7yk> <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-5blmo7yk> <circle cx="11" cy="11" r="8" data-astro-cid-5blmo7yk></circle> <line x1="21" y1="21" x2="16.65" y2="16.65" data-astro-cid-5blmo7yk></line> </svg> <span class="search-pill-text" data-astro-cid-5blmo7yk>Search…</span> <kbd class="search-kbd" data-astro-cid-5blmo7yk>⌘K</kbd> </button> <button data-light-toggle title="Toggle theme" aria-label="Toggle theme" style="padding: 0; border: 0; background-color: inherit; color: var(--global-text-color); width: 2rem; height: 2rem; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;"> <!-- Moon icon: shown in light mode (click to go dark) --> <span data-light-toggle-icon="moon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> <!-- Sun icon: shown in dark mode (click to go light) --> <span data-light-toggle-icon="sun" style="display: none;"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <circle cx="12" cy="12" r="5"></circle> <line x1="12" y1="1" x2="12" y2="3"></line> <line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line> <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line> <line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line> <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> </button> <script type="module">function e(t){document.querySelectorAll("[data-light-toggle-icon]").forEach(n=>{const c=t==="dark"&&n.getAttribute("data-light-toggle-icon")==="sun"||t==="light"&&n.getAttribute("data-light-toggle-icon")==="moon";n.style.display=c?"inline-block":"none"})}function d(t){document.documentElement.setAttribute("data-theme",t),localStorage.setItem("theme",t),e(t)}function o(){const t=document.documentElement.getAttribute("data-theme")??"light";d(t==="dark"?"light":"dark")}function a(){document.querySelectorAll("[data-light-toggle]").forEach(t=>{t.removeEventListener("click",o),t.addEventListener("click",o)})}a();e(document.documentElement.getAttribute("data-theme")??"light");document.addEventListener("astro:after-swap",()=>{a(),e(document.documentElement.getAttribute("data-theme")??"light")});window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",t=>{localStorage.getItem("theme")||(document.documentElement.setAttribute("data-theme",t.matches?"dark":"light"),e(t.matches?"dark":"light"))});</script> </div> <!-- Mobile controls (icon-only search + theme + hamburger) --> <div class="flex items-center gap-2 md:hidden" data-astro-cid-5blmo7yk> <button id="search-toggle" aria-label="Search" type="button" style="padding: 0; border: 0; background: inherit; color: var(--global-text-color); cursor: pointer;" data-astro-cid-5blmo7yk> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-5blmo7yk> <circle cx="11" cy="11" r="8" data-astro-cid-5blmo7yk></circle> <line x1="21" y1="21" x2="16.65" y2="16.65" data-astro-cid-5blmo7yk></line> </svg> </button> <button data-light-toggle title="Toggle theme" aria-label="Toggle theme" style="padding: 0; border: 0; background-color: inherit; color: var(--global-text-color); width: 2rem; height: 2rem; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;"> <!-- Moon icon: shown in light mode (click to go dark) --> <span data-light-toggle-icon="moon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </span> <!-- Sun icon: shown in dark mode (click to go light) --> <span data-light-toggle-icon="sun" style="display: none;"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <circle cx="12" cy="12" r="5"></circle> <line x1="12" y1="1" x2="12" y2="3"></line> <line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line> <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line> <line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line> <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> </span> </button>  <button id="navbar-toggler" class="navbar-toggler collapsed" aria-label="Toggle navigation" aria-expanded="false" type="button" style="padding: 0.25rem; border: 0; background: inherit; cursor: pointer;" data-astro-cid-5blmo7yk> <span class="icon-bar top-bar" style="display: block; width: 22px; height: 2px; background-color: var(--global-text-color); border-radius: 1px; margin-bottom: 4px;" data-astro-cid-5blmo7yk></span> <span class="icon-bar middle-bar" style="display: block; width: 22px; height: 2px; background-color: var(--global-text-color); border-radius: 1px; margin-bottom: 4px;" data-astro-cid-5blmo7yk></span> <span class="icon-bar bottom-bar" style="display: block; width: 22px; height: 2px; background-color: var(--global-text-color); border-radius: 1px;" data-astro-cid-5blmo7yk></span> </button> </div> </div> <!-- Mobile nav collapse --> <div id="navbar-collapse" class="hidden md:hidden" style="background-color: var(--global-bg-color); border-top: 1px solid var(--global-divider-color); padding: 0.5rem 0;" data-astro-cid-5blmo7yk> <a href="/" class="block px-4 py-2 text-sm" style="color: var(--global-text-color); font-weight: 400; text-decoration: none;" data-astro-cid-5blmo7yk> about </a><a href="/blog/" class="block px-4 py-2 text-sm" style="color: var(--global-text-color); font-weight: 400; text-decoration: none;" data-astro-cid-5blmo7yk> blog </a><a href="/publications/" class="block px-4 py-2 text-sm" style="color: var(--global-text-color); font-weight: 400; text-decoration: none;" data-astro-cid-5blmo7yk> publications </a><a href="/projects/" class="block px-4 py-2 text-sm" style="color: var(--global-theme-color); font-weight: 700; text-decoration: none;" data-astro-cid-5blmo7yk> projects </a><a href="/repositories/" class="block px-4 py-2 text-sm" style="color: var(--global-text-color); font-weight: 400; text-decoration: none;" data-astro-cid-5blmo7yk> repositories </a> </div> </nav> <!-- Platform detection: update ⌘K / Ctrl K label before first paint --> <script>
+  (function () {
+    var isMac = /Mac|iPhone|iPad|iPod/.test(navigator.platform);
+    document.querySelectorAll('.search-kbd').forEach(function (el) {
+      el.textContent = isMac ? '⌘K' : 'Ctrl K';
+    });
+  })();
+</script>  <script type="module">let c=null;function f(){c?.abort(),c=new AbortController;const{signal:a}=c,o=document.getElementById("navbar-toggler"),d=document.getElementById("navbar-collapse");o?.addEventListener("click",()=>{!d?.classList.contains("hidden")?(d?.classList.add("hidden"),o.setAttribute("aria-expanded","false"),o.classList.add("collapsed"),document.body.style.overflow=""):(d?.classList.remove("hidden"),o.setAttribute("aria-expanded","true"),o.classList.remove("collapsed"),document.body.style.overflow="hidden")},{signal:a}),document.querySelectorAll("#navbar-collapse a").forEach(e=>{e.addEventListener("click",()=>{d?.classList.add("hidden"),o?.setAttribute("aria-expanded","false"),o?.classList.add("collapsed"),document.body.style.overflow=""},{signal:a})}),document.querySelectorAll(".mobile-dropdown-trigger").forEach(e=>{e.addEventListener("click",()=>{const t=e.closest(".mobile-dropdown")?.querySelector(".mobile-dropdown-children"),r=e.querySelector(".mobile-dropdown-chevron");!t?.classList.contains("hidden")?(t?.classList.add("hidden"),e.setAttribute("aria-expanded","false"),r&&(r.style.transform="")):(t?.classList.remove("hidden"),e.setAttribute("aria-expanded","true"),r&&(r.style.transform="rotate(180deg)"))},{signal:a})}),document.querySelectorAll(".nav-dropdown").forEach(e=>{const l=e.querySelector(".nav-dropdown-trigger"),t=[...e.querySelectorAll('[role="menuitem"]')];function r(){e.classList.add("is-open"),l?.setAttribute("aria-expanded","true"),t[0]?.focus()}function i(){e.classList.remove("is-open"),l?.setAttribute("aria-expanded","false")}l?.addEventListener("keydown",n=>{n.key==="Enter"||n.key===" "||n.key==="ArrowDown"?(n.preventDefault(),r()):n.key==="ArrowUp"&&(n.preventDefault(),r(),t[t.length-1]?.focus())},{signal:a}),t.forEach((n,u)=>{n.setAttribute("tabindex","-1"),n.addEventListener("keydown",s=>{s.key==="ArrowDown"?(s.preventDefault(),t[(u+1)%t.length]?.focus()):s.key==="ArrowUp"?(s.preventDefault(),t[(u-1+t.length)%t.length]?.focus()):(s.key==="Escape"||s.key==="Tab")&&(i(),s.key==="Escape"&&(s.preventDefault(),l?.focus()))},{signal:a})}),document.addEventListener("click",n=>{e.contains(n.target)||i()},{signal:a})})}f();document.addEventListener("astro:after-swap",f);document.addEventListener("astro:before-swap",()=>{document.body.style.overflow=""});</script> <!-- ⌘K Search (ninja-keys + Pagefind) — persisted across View Transitions --> <!-- ninja-keys web component --><ninja-keys id="ninja-search" placeholder="Search or jump to…" hideBreadcrumbs="true" data-nav-items="[{&quot;id&quot;:&quot;nav-about&quot;,&quot;title&quot;:&quot;About&quot;,&quot;section&quot;:&quot;Navigation&quot;,&quot;href&quot;:&quot;/&quot;},{&quot;id&quot;:&quot;nav-blog&quot;,&quot;title&quot;:&quot;Blog&quot;,&quot;section&quot;:&quot;Navigation&quot;,&quot;href&quot;:&quot;/blog/&quot;},{&quot;id&quot;:&quot;nav-publications&quot;,&quot;title&quot;:&quot;Publications&quot;,&quot;section&quot;:&quot;Navigation&quot;,&quot;href&quot;:&quot;/publications/&quot;},{&quot;id&quot;:&quot;nav-projects&quot;,&quot;title&quot;:&quot;Projects&quot;,&quot;section&quot;:&quot;Navigation&quot;,&quot;href&quot;:&quot;/projects/&quot;},{&quot;id&quot;:&quot;nav-repositories&quot;,&quot;title&quot;:&quot;Repositories&quot;,&quot;section&quot;:&quot;Navigation&quot;,&quot;href&quot;:&quot;/repositories/&quot;}]" data-content-items="[{&quot;id&quot;:&quot;post-2025/cutile&quot;,&quot;title&quot;:&quot;Goodbye, Thread Indexing? Hello, cuTile Python&quot;,&quot;section&quot;:&quot;Blog Posts&quot;,&quot;href&quot;:&quot;/blog/2025/cutile/&quot;,&quot;keywords&quot;:&quot;gpu tutorials&quot;},{&quot;id&quot;:&quot;post-2025/gpu-basics&quot;,&quot;title&quot;:&quot;The Beginner's Guide to Understanding NVIDIA GPUs&quot;,&quot;section&quot;:&quot;Blog Posts&quot;,&quot;href&quot;:&quot;/blog/2025/gpu-basics/&quot;,&quot;keywords&quot;:&quot;gpu introduction&quot;},{&quot;id&quot;:&quot;post-2025/TPU-vs-GPU&quot;,&quot;title&quot;:&quot;The Generalist and the Specialist: Understanding the NVIDIA GPU and Google TPU Architectures&quot;,&quot;section&quot;:&quot;Blog Posts&quot;,&quot;href&quot;:&quot;/blog/2025/TPU-vs-GPU/&quot;,&quot;keywords&quot;:&quot;gpu introduction&quot;},{&quot;id&quot;:&quot;post-2025/welcome-to-my-blog&quot;,&quot;title&quot;:&quot;Welcome to My Blog&quot;,&quot;section&quot;:&quot;Blog Posts&quot;,&quot;href&quot;:&quot;/blog/2025/welcome-to-my-blog/&quot;,&quot;keywords&quot;:&quot;tutorials&quot;},{&quot;id&quot;:&quot;post-2025/whole-cell-model-overview&quot;,&quot;title&quot;:&quot;The Race for the Digital Twin: State of Whole-Cell Modeling in 2025&quot;,&quot;section&quot;:&quot;Blog Posts&quot;,&quot;href&quot;:&quot;/blog/2025/whole-cell-model-overview/&quot;,&quot;keywords&quot;:&quot;wcm introduction&quot;},{&quot;id&quot;:&quot;post-2025/work_with_LLM&quot;,&quot;title&quot;:&quot;The Era of the \&quot;AI Architect\&quot;: Why We Must Master, Not Avoid, Intelligent Tools&quot;,&quot;section&quot;:&quot;Blog Posts&quot;,&quot;href&quot;:&quot;/blog/2025/work_with_LLM/&quot;,&quot;keywords&quot;:&quot;AI introduction&quot;},{&quot;id&quot;:&quot;post-2026/metabolic-hairballs&quot;,&quot;title&quot;:&quot;Why metabolic maps turn into hairballs, and how to draw one that doesn't&quot;,&quot;section&quot;:&quot;Blog Posts&quot;,&quot;href&quot;:&quot;/blog/2026/metabolic-hairballs/&quot;,&quot;keywords&quot;:&quot;metabolism visualization research&quot;},{&quot;id&quot;:&quot;post-2026/plug-not-fork&quot;,&quot;title&quot;:&quot;Domain Models Need a Plug, Not a Fork&quot;,&quot;section&quot;:&quot;Blog Posts&quot;,&quot;href&quot;:&quot;/blog/2026/plug-not-fork/&quot;,&quot;keywords&quot;:&quot;AI research&quot;},{&quot;id&quot;:&quot;post-2026/silent-pathway&quot;,&quot;title&quot;:&quot;Can a virtual cell predict a pathway it has never seen switch on?&quot;,&quot;section&quot;:&quot;Blog Posts&quot;,&quot;href&quot;:&quot;/blog/2026/silent-pathway/&quot;,&quot;keywords&quot;:&quot;virtual-cell single-cell perturbation research&quot;},{&quot;id&quot;:&quot;project-1_project&quot;,&quot;title&quot;:&quot;Why we should include spatial information in whole cell modeling&quot;,&quot;section&quot;:&quot;Projects&quot;,&quot;href&quot;:&quot;/projects/1_project/&quot;,&quot;keywords&quot;:&quot;research&quot;},{&quot;id&quot;:&quot;project-2_project&quot;,&quot;title&quot;:&quot;What must a host and its engineered endosymbiont exchange?&quot;,&quot;section&quot;:&quot;Projects&quot;,&quot;href&quot;:&quot;/projects/2_project/&quot;,&quot;keywords&quot;:&quot;research&quot;},{&quot;id&quot;:&quot;project-3_project&quot;,&quot;title&quot;:&quot;Can a metabolic network be drawn the way a curator would draw it?&quot;,&quot;section&quot;:&quot;Projects&quot;,&quot;href&quot;:&quot;/projects/3_project/&quot;,&quot;keywords&quot;:&quot;research&quot;},{&quot;id&quot;:&quot;project-adaptyv-binders&quot;,&quot;title&quot;:&quot;How do you pick twenty de novo binders when the confidence scores do not work?&quot;,&quot;section&quot;:&quot;Projects&quot;,&quot;href&quot;:&quot;/projects/adaptyv-binders/&quot;,&quot;keywords&quot;:&quot;research&quot;}]" data-pagefind-base></ninja-keys> <script type="module" src="/_astro/SearchTrigger.astro_astro_type_script_index_0_lang.CLmTwsfW.js"></script> <main id="main-content" class="flex-1" data-pagefind-body>   <div class="page-container py-8">  <div class="post" data-astro-cid-ovxcmftc> <!-- Breadcrumb --> <nav aria-label="Breadcrumb" class="breadcrumb-nav" data-astro-cid-ovxcmftc> <a href="/projects/" class="breadcrumb-link" data-astro-cid-ovxcmftc>← Projects</a> </nav> <!-- Page header --> <header class="post-header" data-astro-cid-ovxcmftc> <h1 class="post-title" data-astro-cid-ovxcmftc>How do you pick twenty de novo binders when the confidence scores do not work?</h1> <p class="post-description" data-astro-cid-ovxcmftc>One hundred de novo designs across the five challenges of the 2026 Anthropic × Adaptyv competition. Every threshold is read off a control, and the metrics that failed their own controls were dropped rather than trusted.</p> <!-- External links --> <div class="project-links" data-astro-cid-ovxcmftc>  <a href="https://proteinbase.com/competitions/anthropic-adaptyv-2026" target="_blank" rel="noopener noreferrer" class="project-btn project-btn--secondary" data-astro-cid-ovxcmftc> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true" data-astro-cid-ovxcmftc> <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" data-astro-cid-ovxcmftc></path> <polyline points="15 3 21 3 21 9" data-astro-cid-ovxcmftc></polyline> <line x1="10" y1="14" x2="21" y2="3" data-astro-cid-ovxcmftc></line> </svg> Competition </a> </div> </header> <article data-astro-cid-ovxcmftc> <!-- Hero image --> <div class="project-hero" data-astro-cid-ovxcmftc> <img src="/assets/img/adaptyv/preview.png" alt="Five de novo designed binders, one per competition challenge" loading="eager" class="img-fluid z-depth-1 rounded" data-astro-cid-ovxcmftc> </div> <!-- Body content --> <div class="prose" id="project-content" data-astro-cid-ovxcmftc> <h2 id="project-overview">Project Overview</h2>
+<p>Five challenges, twenty de novo designs each, all zero-shot: no natural binder as a
+starting point and no experimental feedback between rounds. Backbones from
+RFdiffusion4 conditioned on the target alone, sequences from ProteinMPNN and ESM-IF1,
+and every design re-measured through one code path before anything was submitted.</p>
+<p>The problem running through all five is that the obvious way to choose designs does not
+work. The standard practice is to rank candidates by a structure predictor’s interface
+confidence. On 380 Adaptyv-tested EGFR designs from the previous competition, with
+2000-sample bootstrap intervals, ipTM separates binders from non-binders at AUC 0.636
+[0.556, 0.716]. For medium-or-strong binding it reaches 0.568 [0.464, 0.671], an interval
+that contains 0.5, and its top decile holds no more strong binders than a random decile.
+Across 129 metrics the best AUC for strong binding was 0.707, from glycine content.</p>
+<p>So the pipeline is built around a different question: for each gate, what does it do to a
+control that is known to be wrong? Every structure-prediction threshold here is a
+percentile of a scrambled-sequence null that went through the identical prediction path,
+and a gate is applied only if designs clear it more often than the null does by a
+one-sided Fisher exact test. Three gates failed that test and were dropped.</p>
+<h2 id="the-five-challenges">The five challenges</h2>
+<p>Each clip below is a generation run on that challenge’s target. RFdiffusion4 denoises a
+chain of the submitted length from noise, one frame per step, and the finished complex
+then turns once. The target is a grey surface, a presented peptide is blue, and the
+designed chain is an orange cartoon whose colour comes up as the noise comes down. Early
+frames are a tangle because that is what the model is holding at that point.</p>
+<p>The design in each clip is not a submitted sequence. Twelve samples were generated per
+target for these figures and the one shown was chosen the way the panels were chosen, on
+how much of its interface lands on the site the generator was conditioned on. The
+submitted panels, and the measurements they were selected by, are described under each
+clip.</p>
+<h3 id="challenge-1--egfr-domain-iii-ph-conditional-and-mouse-cross-reactive">Challenge 1 — EGFR domain III, pH-conditional and mouse cross-reactive</h3>
+<div class="row justify-content-sm-center">
+  <div class="col-sm-10 mt-3 mt-md-0">
+    <video class="img-fluid rounded z-depth-1" autoplay loop muted playsinline poster="/assets/img/adaptyv/r1_egfr.png">
+      <source src="/assets/video/adaptyv/r1_egfr.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
+<div class="caption">
+  A 70-residue chain generated on EGFR domain III, one frame per denoising step, then a turn. The first frames are the sample the model is actually holding, which is a cloud of residues with no backbone, drawn as spheres until the chain closes to real bond lengths. This is sample 11 of twelve: 242 of its 301 heavy-atom contacts within 4.5 Å land on the epitope the generator was conditioned on, the highest of the batch. The submitted panel for this challenge is described below; it was built the same way, from a pool of 463.
+</div>
+<p>Twenty designs, 70 to 214 residues, cysteine-free, from two pipelines whose candidate
+pools share no sequence and no 20-mer. All 463 candidates were re-measured through one
+code path, because interface metrics from two pipelines are not comparable across a
+three-fold difference in binder length. Six gates clear 52 of the 463.</p>
+<p>The pH switch is computed as Wyman–Tanford linkage over PROPKA3 pKa shifts on the
+minimised complex, calibrated on ten reference complexes: four of five experimentally
+pH-dependent ones score +0.76 to +3.12 kcal/mol and the five pH-independent ones at most
++0.38, which sets the threshold at +0.76. Mutating each design’s named driver residue to
+alanine drops the switch by a median 0.80 kcal/mol against 0.03 for a sham control, and
+14 of the 20 localise to the group named. The rest are reported as distributed rather
+than assigned a driver they do not have.</p>
+<h3 id="challenge-2--tnf-α-binding-at-ph-74-and-not-at-ph-60">Challenge 2 — TNF-α, binding at pH 7.4 and not at pH 6.0</h3>
+<div class="row justify-content-sm-center">
+  <div class="col-sm-10 mt-3 mt-md-0">
+    <video class="img-fluid rounded z-depth-1" autoplay loop muted playsinline poster="/assets/img/adaptyv/r2_tnf.png">
+      <source src="/assets/video/adaptyv/r2_tnf.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
+<div class="caption">
+  A 70-residue chain generated in the receptor groove of the TNF-α trimer. Sample 4 of twelve, 252 of 254 contacts on the conditioned epitope. The three-helix bundle forms across two protomers, which is the site the submitted panel binds and the reason pose agreement in this challenge has to be minimised over the trimer’s symmetry.
+</div>
+<p>The pH requirement is inverted from challenge 1, which asked for tighter binding in acid.
+Twenty designs, 70 to 90 residues, also required to cross-react with mouse TNF-α.</p>
+<p>The target is a homotrimer, and that turned out to matter for the measurement rather than
+the design. Any comparison of two predicted poses has to be minimised over the three
+chain assignments, because the protomers are interchangeable. Before that fix, two
+predictions of the same pose could read 40 Å apart.</p>
+<h3 id="challenge-3--glp-1r-an-agonist">Challenge 3 — GLP-1R, an agonist</h3>
+<div class="row justify-content-sm-center">
+  <div class="col-sm-10 mt-3 mt-md-0">
+    <video class="img-fluid rounded z-depth-1" autoplay loop muted playsinline poster="/assets/img/adaptyv/r3_glp1r.png">
+      <source src="/assets/video/adaptyv/r3_glp1r.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
+<div class="caption">
+  A 69-residue chain generated against the GLP-1 receptor. The first nine residues are the GLP-1 peptide, held fixed, and the remaining sixty are designed around it, so the clip shows a scaffold growing onto a bound ligand rather than a free binder docking. Sample 11 of twelve, 620 of 661 contacts on the conditioned epitope.
+</div>
+<p>A binder that does not activate the receptor scores nothing on the second objective, and
+GLP-1R is a class B GPCR, where activation requires reproducing the N-terminal pharmacophore
+geometry inside the transmembrane bundle. A molecule can have high affinity and no
+activation. The designs are 30 to 89 residues and were ranked on six axes, with the
+functional readout taken on the tagged construct because that is what the assay expresses.</p>
+<h3 id="challenge-4--tfr1-ph-switchable-and-mouse-cross-reactive">Challenge 4 — TfR1, pH-switchable and mouse cross-reactive</h3>
+<div class="row justify-content-sm-center">
+  <div class="col-sm-10 mt-3 mt-md-0">
+    <video class="img-fluid rounded z-depth-1" autoplay loop muted playsinline poster="/assets/img/adaptyv/r4_tfr1.png">
+      <source src="/assets/video/adaptyv/r4_tfr1.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
+<div class="caption">
+  A 70-residue chain generated on the TfR1 apical domain. Round 4 gave the generator nine cut surface segments rather than the ectodomain, to keep the token count down; the whole receptor is drawn here, superposed back onto those segments over 212 paired Cα at 0.40 Å rmsd. The design makes 588 contacts with the surface it was shown and none at all with the receptor that was cut away, so this one did not bind an interface the cut invented. Sample 6 of twelve, 408 of 420 contacts on the conditioned epitope.
+</div>
+<p>Nine of thirty-eight pooled candidates pass every gate. The other eleven slots were not
+filled with the next-best scores, which would have submitted designs the method’s own
+gates reject and returned nothing about why. Each of the eleven instead fails exactly one
+named gate, so the assay result measures that gate directly whichever way it comes out.
+The rule was written down and timestamped before the second predictor’s scores were read.</p>
+<p>The arithmetic that shaped the panel: one ordinary surface histidine at the interface
+buys a 3.6-fold pH ratio, 0.76 kcal/mol. A fittable KD at 7.4 with nothing detectable at
+6.0 is roughly 50- to 1000-fold on this assay, so the switch needs four such histidines
+monovalently, or two per arm bivalently.</p>
+<h3 id="challenge-5--a-kras-g12d-neoantigen-against-the-self-peptide">Challenge 5 — a KRAS G12D neoantigen, against the self peptide</h3>
+<div class="row justify-content-sm-center">
+  <div class="col-sm-10 mt-3 mt-md-0">
+    <video class="img-fluid rounded z-depth-1" autoplay loop muted playsinline poster="/assets/img/adaptyv/r5_kras.png">
+      <source src="/assets/video/adaptyv/r5_kras.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
+<div class="caption">
+  An 85-residue chain generated on HLA-A*11:01 with β2-microglobulin, the KRAS G12D peptide in blue. Sample 4 of twelve, and the one case where selection was on the peptide rather than on an epitope patch: 59 of its 138 contacts are with the peptide itself. That share, 42.8 percent, is the quantity the whole challenge turns on, because a design that reads the MHC helices instead of the peptide cannot tell G12D from wild type.
+</div>
+<p>The target peptide differs from the self peptide displayed by healthy cells at one
+position. We first asked whether any confidence score can see a difference that small, and
+calibrated four of them on the one molecule known to tell the two complexes apart: a T cell
+receptor with 743 pM affinity for the mutant and 3.0 µM for the wild type. AlphaFold3’s
+interface confidence gave <strong>0.470 for both</strong>, identical to three decimal places across a
+4000-fold difference in binding. The other three failed on the same control in their own
+ways.</p>
+<p>The two complexes do differ in something a predictor is not asked for. In the crystal
+structures the free wild-type peptide follows a defined path through the groove while the
+mutant is disordered at the mutated position, so a binder can be selected for a backbone
+that physically cannot accommodate the wild-type path. That is a statement about
+coordinates and holds whatever a confidence score says. Selection ran on that and two
+related geometric mechanisms over 2,376 generated backbones.</p>
+<h2 id="how-it-works">How it works</h2>
+<h3 id="1-backbone-generation-conditioned-on-the-target-alone">1. Backbone generation, conditioned on the target alone</h3>
+<p>RFdiffusion4 replaced RFdiffusion3 after a 50-backbone head-to-head at one epitope,
+both scored by the same filter: RFdiffusion3 passed 0 of 30 across three arms, RFD4 passed
+9 of 10 on its best arm. Epitope coverage decided it, 24 to 27 of 27 core residues against
+8 to 14. RFD4 is also cheaper, 3,928 MiB at 346 tokens against roughly 9,300.</p>
+<p>Each challenge runs five arms that differ only in their conditions, so the comparison
+between arms is a measurement. The condition that decides whether a design can block is
+the one marking the target surface more than 8 Å from the epitope as exposed. Without it a
+generator finds the largest contiguous surface, which is the wrong one: on a TNF-family
+trimer it is the flank, and on a two-domain receptor ectodomain it is the back of the beta
+sandwich. Either produces a binder that does not block.</p>
+<h3 id="2-shell-cutting-makes-surface-that-is-not-there">2. Shell cutting makes surface that is not there</h3>
+<p>Predicting a design against the whole receptor is often too large for one card, so the
+target gets cut to a shell around the epitope. A 291-residue shell cut 12 Å around a TfR1
+epitope leaves 86 residues with more than 0.15 more relative SASA than they have in the
+whole dimer. The first designs spent 14 to 21% of their buried area on that invented
+surface and made 48 to 72 target contacts, against 20 to 25 for a normal minibinder. A
+design that binds invented surface cannot survive re-prediction against the whole
+receptor, so every downstream job spent on it is wasted. Per-residue SASA is now compared
+between shell and full assembly, and the invented surface is gated at the backbone stage.</p>
+<h3 id="3-the-thresholds-come-from-scrambled-controls">3. The thresholds come from scrambled controls</h3>
+<p>Every design gets a length-matched, composition-matched scrambled sequence that runs the
+identical prediction path. Thresholds are the 95th percentile of that null. A gate is then
+armed only if designs clear it more often than the null at one-sided Fisher p &#x3C; 0.05 and
+its AUC exceeds 0.5. The AUC condition is not redundant: on one target a blocking gate
+reached p = 0.037 on 19 of 169 designs against 9 of 169 scrambles while the statistic as a
+whole ran backwards, putting a scrambled sequence on the epitope 44% of the time against
+28% for a design, AUC 0.431. A statistic that ranks scrambles above designs is not
+evidence for the designs, whatever one tail of it does.</p>
+<h3 id="4-a-second-predictor-where-it-earns-its-place">4. A second predictor, where it earns its place</h3>
+<p>A second structure predictor catches systematic error that more seeds of the first cannot.
+It is held to the same standard as everything else, and on one target it was disarmed by
+its own control. Cross-model agreement is measured as the RMSD between the two predicted
+placements in a common target frame. An earlier version subtracted each model’s distance
+to the designed pose, which is a lower bound and reads zero when the two predictions sit
+on opposite sides of the design; it scored a 40.8 Å disagreement as 0.19 Å.</p>
+<h3 id="5-things-that-are-part-of-the-molecule">5. Things that are part of the molecule</h3>
+<p>The assay expresses the design with a 64-residue C-terminal tag, so the tag is modelled.
+On the pH-switch challenges it moves the answer: the linker decides how much, it reorders
+the panel, and C-terminal clearance does not predict it. The designed interface runs to
+the C-terminus in all three pH panels, which makes a C-terminal Fc a redesign rather than
+a tag choice and settles the expression system by structure.</p>
+<p>Generators emit side chains along with the backbone, and those side chains are replaced
+when the sequence is designed. A selectivity measurement that counts them describes a
+molecule nobody will make; restricting every readout to main chain plus CB dropped one
+panel’s carboxylate contacts from 7 to 1.</p>
+<h2 id="the-panels">The panels</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>target</th><th>objectives</th><th>designs</th><th>length</th><th>novelty</th></tr></thead><tbody><tr><td>Challenge 1</td><td>EGFR domain III</td><td>pH-conditional, mouse cross-reactive, affinity</td><td>20</td><td>70–214</td><td>3–4</td></tr><tr><td>Challenge 2</td><td>TNF-α trimer</td><td>pH-conditional, mouse cross-reactive, affinity</td><td>20</td><td>70–90</td><td>—</td></tr><tr><td>Challenge 3</td><td>GLP-1R</td><td>receptor activation, affinity</td><td>20</td><td>30–89</td><td>3–4</td></tr><tr><td>Challenge 4</td><td>TfR1 ectodomain</td><td>pH selectivity, mouse cross-reactivity, affinity</td><td>20</td><td>55–96</td><td>3–4</td></tr><tr><td>Challenge 5</td><td>KRAS G12D pMHC</td><td>mutant-over-wild-type selectivity, affinity</td><td>20</td><td>65–120</td><td>3–4</td></tr></tbody></table>
+<p>Novelty is a hard floor, not a ranking term: level 3 or above, judged on the ESMFold model
+of each sequence against the PDB, prior competition entries and published minibinder sets.
+Every panel is cysteine-free, and no submitted sequence starts with methionine because the
+platform prepends one.</p>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>No experimental result has come back yet. Everything above is a statement about what was
+measured in silico and about which measurements survived their own controls.</li>
+<li>Thermostability has no proxy in this campaign beyond ESMFold pLDDT and self-consistency
+RMSD, and non-specific binding outside one challenge has only sequence-level evidence:
+net charge, hydrophobic patch length and glycosylation sequons. No off-target structure
+screen was run.</li>
+<li>The ranking weights for two challenges are inferred. The pages publish an objective
+order and no numeric table, so the submitted order rests on an inference, and a sweep
+over the weights measures how much of the order depends on it.</li>
+<li>The self-consistency floor, ESMFold RMSD ≤ 2.0 Å and pLDDT ≥ 80, rejects about 97% of
+designed sequences on some targets. It is a compute budget inherited from an earlier
+round rather than a threshold calibrated against anything.</li>
+<li>All structural evidence is predicted. There is no experimental structure of any design.</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<p>The same codebase is now running two further challenges, TL1A and the prolactin receptor,
+for a second competition on the same targets. Figures on this page are rendered from the
+deposited model files with PyMOL; the submitted sequence was matched against the chain in
+each file, so the coloured molecule is the one that was submitted and not an earlier
+variant.</p> </div> </article> <!-- References section -->  <!-- Giscus comments --> <section class="giscus-comments mt-12 pt-8" style="border-top: 1px solid var(--global-divider-color);" data-astro-cid-an2nl7ar> <div class="giscus" data-astro-cid-an2nl7ar></div> </section>  <script src="https://giscus.app/client.js" data-repo="forxhunter/forxhunter.github.io" data-repo-id="R_kgDOPWM87g" data-category="Q&amp;A" data-category-id="DIC_kwDOPWM87s4Cztyt" data-mapping="pathname" data-strict="1" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async></script> <script>(function(){const darkTheme = "dark";
+const lightTheme = "light";
+
+      function sendGiscusTheme(theme) {
+        var iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: { setConfig: { theme: theme } } }, 'https://giscus.app');
+      }
+      new MutationObserver(function() {
+        var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        sendGiscusTheme(isDark ? darkTheme : lightTheme);
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    })();</script>  </div>  </div>  </main> <!-- Newsletter (shown in footer area if enabled) -->  <footer style="background-color: var(--global-footer-bg-color); color: var(--global-footer-text-color); padding: 1rem 0; position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;" data-astro-cid-sz7xmlte> <div class="page-container text-center text-sm" data-astro-cid-sz7xmlte> <p data-astro-cid-sz7xmlte>
+&copy; 2026 Tianyu Wu.
+<span data-astro-cid-sz7xmlte>Powered by <a href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a> with <a href="https://github.com/dadangnh/as-folio" target="_blank" rel="noopener noreferrer">as-folio</a>.
+      Hosted by <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>.</span> <span class="ml-2" data-astro-cid-sz7xmlte>Last updated: November 19, 2026.</span> </p>  </div> </footer> <!-- Cookie consent (vanilla-cookieconsent via CDN) -->  <!-- Back to top button --> <button id="back-to-top" aria-label="Back to top" title="Back to top"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="m18 15-6-6-6 6"></path> </svg> </button> <script type="module">let t=document.getElementById("back-to-top");function e(){t?.classList.toggle("visible",window.scrollY>300)}function o(){t?.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}))}window.addEventListener("scroll",e,{passive:!0});o();document.addEventListener("astro:after-swap",()=>{t=document.getElementById("back-to-top"),o(),e()});</script> </body> </html> <!-- Medium zoom for project images --> <script type="module" src="/_astro/_slug_.astro_astro_type_script_index_0_lang.BOG_3Scv.js"></script>
