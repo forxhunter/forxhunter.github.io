@@ -188,20 +188,36 @@ warnings.
 
 ## Common pitfalls
 
-| Issue                                   | Fix                                                                |
-| --------------------------------------- | ------------------------------------------------------------------ |
-| Markdown renders unstyled               | `.prose` rules in `global.css`, not a Tailwind plugin              |
-| Project cards collapse to a sliver      | `ProjectCard` needs a flex container, not CSS grid                 |
-| Clicking a project card leaves the site | `url` is a button; `redirect` replaces the page                    |
-| A URL 404s after a rename               | `generateId: keepPath` — ids are the file path, verbatim           |
-| LaTeX breaks the build                  | Keep the file `.md`; MDX reads `{` as JavaScript                   |
-| Emoji shows as `:name:`                 | No jemoji; write the character                                     |
-| Date test fails locally only            | Timezone — `vitest.setup.ts` pins UTC                              |
-| `git status` shows ~100 changed files   | `yarn format` ran; `git diff --name-only` shows the real set       |
-| TOC crowds a wide figure                | Set `toc: false` in the post's frontmatter                         |
-| `render()` error                        | `const { Content } = await render(entry)`                          |
-| Dark mode flash                         | `<script is:inline>` reading `localStorage` in `<head>` before CSS |
-| Icon not found at build                 | `~icons/<collection>/<name>`; unknown names are build errors       |
+| Issue                                   | Fix                                                                 |
+| --------------------------------------- | ------------------------------------------------------------------- |
+| Markdown renders unstyled               | `.prose` rules in `global.css`, not a Tailwind plugin               |
+| Project cards collapse to a sliver      | `ProjectCard` needs a flex container, not CSS grid                  |
+| Clicking a project card leaves the site | `url` is a button; `redirect` replaces the page                     |
+| A URL 404s after a rename               | `generateId: keepPath` — ids are the file path, verbatim            |
+| LaTeX breaks the build                  | Keep the file `.md`; MDX reads `{` as JavaScript                    |
+| Emoji shows as `:name:`                 | No jemoji; write the character                                      |
+| Date test fails locally only            | Timezone — `vitest.setup.ts` pins UTC                               |
+| `git status` shows ~100 changed files   | `yarn format` ran; `git diff --name-only` shows the real set        |
+| A commit is missing most of its changes | `git add` hit a bad path and staged nothing; check `--cached` first |
+| TOC crowds a wide figure                | Set `toc: false` in the post's frontmatter                          |
+| `render()` error                        | `const { Content } = await render(entry)`                           |
+| Dark mode flash                         | `<script is:inline>` reading `localStorage` in `<head>` before CSS  |
+| Icon not found at build                 | `~icons/<collection>/<name>`; unknown names are build errors        |
+
+---
+
+## Committing
+
+**Check what is staged before every commit**, with `git diff --cached --stat`. A clean
+`git log` afterwards proves only that a commit was made, not that it contains the work.
+
+`git add` fails on an unmatched pathspec and then stages **nothing at all** — not even
+the paths that did match. Naming a file you have already deleted (or mistyping one) is
+enough. This happened in 7790498: the commit landed with a deleted image and none of the
+three changes that stopped referencing it, so the site deployed with dead image links and
+the build's link check went red.
+
+Never redirect git's stderr to `/dev/null`. That is what hid the error.
 
 ---
 
