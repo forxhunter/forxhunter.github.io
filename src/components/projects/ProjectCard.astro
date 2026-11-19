@@ -8,7 +8,11 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const href = project.data.redirect ?? project.data.url ?? `${site.base}/projects/${project.id}/`;
+// `redirect` is the field that replaces the project page with an external
+// site. `url` is only a link shown on the page, so it must not capture the
+// card: a project with a url still opens its own write-up. The isExternal
+// line below already reads it this way.
+const href = project.data.redirect ?? `${site.base}/projects/${project.id}/`;
 const isExternal = !!project.data.redirect;
 ---
 

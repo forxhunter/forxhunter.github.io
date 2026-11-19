@@ -1,8 +1,8 @@
 ---
 title: How do you pick twenty de novo binders when the confidence scores do not work?
 description: One hundred de novo designs across the five challenges of the 2026 Anthropic × Adaptyv competition. Every threshold is read off a control, and the metrics that failed their own controls were dropped rather than trusted.
-img: /assets/img/adaptyv/preview.png
-img_alt: Five de novo designed binders, one per competition challenge
+img: /assets/img/adaptyv/cover.png
+img_alt: A designed three-helix bundle bound in the receptor groove of the TNF-alpha trimer
 url: https://proteinbase.com/competitions/anthropic-adaptyv-2026
 url_label: Competition
 importance: 2
